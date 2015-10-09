@@ -1,5 +1,6 @@
 package fr.aqamad.tutoyoyo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -139,17 +140,17 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_my) {
             //Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
-            currentFragment = new MyTutsFragment();
+            currentFragment = new MyTutsFragment(this);
 
         } else if (id == R.id.nav_yyb) {
 
-            currentFragment  = new YoyoBlastFragment();
+            currentFragment  = new YoyoBlastFragment(this);
 
         } else if (id == R.id.nav_clyw) {
-            currentFragment  = new ClywFragment();
+            currentFragment  = new ClywFragment(this);
 
         } else if (id == R.id.nav_yye) {
-            currentFragment  = new YoyoExpertFragment();
+            currentFragment  = new YoyoExpertFragment(this);
 
         } else if (id == R.id.nav_share) {
 

@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Welcome to TutoYoyo"
+                    android:text="@string/welcomeTitle"
                     android:id="@+id/textView3"
                     android:layout_gravity="center_horizontal|top" />
 
@@ -43,11 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="This app was designed to help you progress in your yoyo play and provide quick and easy access to your favorites tutorials.
-                    The crew would like to thanks the producers of each and every tutorial on this app for their support.
-                    You may start by opening the left menu and browsing your favorite sources of tutorials, when you find one you like, simply press the add button to add it to your tuts.
-                    Once a few tuts are in your tuts, activate synchronisation to download the tuts for offline viewing.
-                    Open a tut and user our advanced player options, like repeat, slowmo or punch in/punch out."
+                    android:text="@string/welcomeText"
                     android:id="@+id/textView5"
                     android:layout_gravity="center" />
             </LinearLayout>

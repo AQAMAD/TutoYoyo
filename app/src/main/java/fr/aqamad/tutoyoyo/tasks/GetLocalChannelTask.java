@@ -1,6 +1,7 @@
 package fr.aqamad.tutoyoyo.tasks;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,22 +38,24 @@ public class GetLocalChannelTask implements Runnable {
     private final Handler replyTo;
     // The user we are querying on YouTube for videos
     private final String channelId;
+    private final Activity mAct;
 
     /**
      * Don't forget to call run(); to start this task
      * @param replyTo - the handler you want to receive the response when this task has finished
      * @param channelId - the username of who on YouTube you are browsing
      */
-    public GetLocalChannelTask(Handler replyTo, String channelId) {
+    public GetLocalChannelTask(Handler replyTo, String channelId,Activity act) {
         this.replyTo = replyTo;
         this.channelId = channelId;
+        this.mAct=act;
     }
 
     @Override
     public void run() {
         try {
 
-            TutorialSource source=TutorialSource.getByName(channelId);
+            TutorialSource source=TutorialSource.getByKey(channelId);
 
             YoutubeChannel channel=new YoutubeChannel("",source.name,source.description);
 

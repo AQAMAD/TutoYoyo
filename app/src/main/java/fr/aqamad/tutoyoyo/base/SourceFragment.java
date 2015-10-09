@@ -51,6 +51,15 @@ public abstract class SourceFragment extends Fragment {
         mChannel=c;
     }
 
+    public Activity parentActivity;
+
+    public SourceFragment(Activity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
+
+    public SourceFragment() {
+        super();
+    }
 
     /**
      * This interface must be implemented by activities that contain this

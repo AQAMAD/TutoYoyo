@@ -14,6 +14,8 @@ Persistent storage for
 -Share your tutos
 -Watch later
 
+Sync locally stored playlists for offline viewing
+
 Social integration (share action, send action)
 
 Integrated player and dedicated functions like 

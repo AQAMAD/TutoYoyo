@@ -2,6 +2,7 @@
 <resources>
 
     <string name="youtubeapikey">AIzaSyDTNiK7x2pPlTYWyq9UGv8bBWUrqP06UAs</string>
+    <string name="localChannelKey">LOCAL_CHANNEL_KEY</string>
 
     <string-array name="sourceids">
         <item>@id/nav_yyb</item>

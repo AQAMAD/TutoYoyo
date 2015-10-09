@@ -14,10 +14,17 @@
     <string name="Share">Share</string>
     <string name="Send">Send</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="title_activity_video">VideoActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="welcomeTitle">Welcome to TutoYoyo</string>
+    <string name="welcomeText">This app was designed to help you progress in your yoyo play and provide quick and easy access to your favorites tutorials. The crew would like to thanks the producers of each and every tutorial on this app for their support. You may start by opening the left menu and browsing your favorite sources of tutorials, when you find one you like, simply press the add button to add it to your tuts. Once a few tuts are in your tuts, activate synchronisation to download the tuts for offline viewing. Open a tut and user our advanced player options, like repeat, slowmo or punch in/punch out.</string>
+    <string name="favorites">Favorites</string>
+    <string name="favoritesDesc">Place your favorites tuts here</string>
+    <string name="favoritesThumb">http://farm4.static.flickr.com/3269/5837141773_c0d31d8424_o.jpg</string>
+    <string name="watchLater">Watch Later</string>
+    <string name="watchLaterDesc">Place here tutorials to watch later</string>
+    <string name="watchLaterThumb" formatted="false">http://www.eighties.fr/images/stories/Phototheque/divers/Yoyo%20figures%20techniques%20roll%20in%20coca%20cola%20annees%2080%20grand%20format.jpg</string>
+    <string name="shareable">Shareable</string>
+    <string name="shareableDesc">Place here tutorials to share with your friends</string>
+    <string name="shareableThumb">http://www.monquotidien.fr/media/Images/Video-yoyo-zach.jpg</string>
+    <string name="myTutsTitle">My Tutorials</string>
+    <string name="myTutsDesc">Add tutorials to these playlists so you can remember them and sync them.</string>
 </resources>

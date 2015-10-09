@@ -48,6 +48,8 @@ public class ClywFragment extends YoutubeFragment {
     private String mParam2;
 
 
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -68,6 +70,11 @@ public class ClywFragment extends YoutubeFragment {
 
     public ClywFragment() {
         // Required empty public constructor
+    }
+
+
+    public ClywFragment(Activity mainActivity) {
+        super(mainActivity);
     }
 
     @Override

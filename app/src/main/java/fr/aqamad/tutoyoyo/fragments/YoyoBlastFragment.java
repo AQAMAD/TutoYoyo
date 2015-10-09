@@ -36,6 +36,9 @@ public class YoyoBlastFragment extends YoutubeFragment {
     private static final String ARG_PARAM2 = "param2";
     public static String YOYOBLAST_CHANNEL="UCJVkKRR1hf0aSZzrELEATRg";
 
+    public YoyoBlastFragment(Activity mainActivity) {
+        super(mainActivity);
+    }
 
     // TODO: Rename and change types of parameters
     private String mParam1;

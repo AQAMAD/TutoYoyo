@@ -26,9 +26,17 @@ import fr.aqamad.youtube.YoutubePlaylist;
  */
 public abstract class LocalFragment extends SourceFragment   {
 
+    public LocalFragment(Activity parentActivity) {
+        super(parentActivity);
+    }
+
+    public LocalFragment() {
+    }
+
+
     @Override
     public void fetchChannel(Handler handler,Activity act) {
-        new Thread(new GetLocalChannelTask(handler,  GetToutubeId() )).start();
+        new Thread(new GetLocalChannelTask(handler,  GetToutubeId(),act )).start();
     }
 
     @Override

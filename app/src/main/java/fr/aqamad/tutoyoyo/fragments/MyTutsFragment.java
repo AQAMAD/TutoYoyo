@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.Collections;
 import java.util.Comparator;
 
+import fr.aqamad.tutoyoyo.MainActivity;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.base.LocalFragment;
 import fr.aqamad.tutoyoyo.base.SourceFragment;
@@ -34,12 +35,16 @@ public class MyTutsFragment extends LocalFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final String MY_CHANNEL = "My Tutorials";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    public MyTutsFragment(Activity mainActivity) {
+        super(mainActivity);
+    }
+
+    public MyTutsFragment() {
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -59,9 +64,6 @@ public class MyTutsFragment extends LocalFragment {
         return fragment;
     }
 
-    public MyTutsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class MyTutsFragment extends LocalFragment {
 
     @Override
     public String GetToutubeId() {
-        return MY_CHANNEL;
+        return parentActivity.getString(R.string.localChannelKey);
     }
 
     @Override

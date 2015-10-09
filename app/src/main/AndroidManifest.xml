@@ -26,14 +26,6 @@
         <activity android:name=".YoutubePlaylistActivity" />
         <activity android:name=".PrefetchPlaylistActivity" />
         <activity android:name=".LocalPlaylistActivity" />
-        <activity
-            android:name=".VideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_video"
-            android:theme="@style/FullscreenTheme" >
-        </activity>
-        <activity
-            android:name="com.keyes.youtube.OpenYouTubePlayerActivity"></activity>
         <meta-data android:name="AA_DB_NAME" android:value="TutoYoyo.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
     </application>

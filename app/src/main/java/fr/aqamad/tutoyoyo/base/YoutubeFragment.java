@@ -30,6 +30,14 @@ import fr.aqamad.youtube.YoutubePlaylist;
  */
 public abstract class YoutubeFragment extends SourceFragment   {
 
+    public YoutubeFragment(Activity parentActivity) {
+        super(parentActivity);
+    }
+
+    public YoutubeFragment() {
+    }
+
+
     @Override
     public void fetchChannel(Handler handler,Activity act) {
         new Thread(new GetYouTubeChannelTask(handler,  GetToutubeId() , act.getString(R.string.youtubeapikey))).start();

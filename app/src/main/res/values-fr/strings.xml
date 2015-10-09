@@ -11,4 +11,14 @@
     <string name="Send">Envoyer</string>
     <string name="Share">Partager</string>
     <string name="Social">Social</string>
+    <string name="welcomeTitle">Bienvenue dans TutoYoyo</string>
+    <string name="welcomeText">Cette application a été conçue pour vous aider à apprendre et progresser dans la pratique de votre hobby, et founir un accès facile et rapide à vos tutoriels préféres. L\'équipe souhaite remercier les internautes ayant produit les vidéos indexées ici pour leur soutien à ce projet et à la communauté. Vous pouvez commencer par ouvrir le menu et jeter un coup d\'oeuil aux sources de tutoriels que nous avons retenues pour vous. Quand vous aurez trouvé un tutoriel qui vous intéresse, cliquez simplement sur le bouton "Ajouter" pour l\'ajouter à vos tutoriels. Les listes contenues dans vos tutoriels peuvent ètre synchronisées pour une lecture offline. Ouvrez une de ces vidéos et découvrez nos fonctionnalités de lecture avancées, comme le ralenti, la lecteure en boucle ou le punch in/out.</string>
+    <string name="favorites">Favoris</string>
+    <string name="favoritesDesc">Mettez ici vos tutos favoris</string>
+    <string name="myTutsTitle">Mes tutoriels</string>
+    <string name="myTutsDesc">Ajoutez vos tutoriels dans ces listes pour les garder ou les partager.</string>
+    <string name="shareable">Partage</string>
+    <string name="shareableDesc">Placez ici les tutoriels que vous souhaitez faire découvrir à vos amis.</string>
+    <string name="watchLater">A voir plus tard</string>
+    <string name="watchLaterDesc">Mettez dans cette liste les tutoriels que vous souhaiterez revoir ultérieurment.</string>
 </resources>

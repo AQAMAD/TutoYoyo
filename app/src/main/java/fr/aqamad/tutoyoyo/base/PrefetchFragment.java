@@ -25,6 +25,14 @@ import fr.aqamad.youtube.YoutubePlaylist;
  */
 public abstract class PrefetchFragment extends SourceFragment   {
 
+    public PrefetchFragment(Activity parentActivity) {
+        super(parentActivity);
+    }
+
+    public PrefetchFragment() {
+    }
+
+
     @Override
     public void fetchChannel(Handler handler,Activity act) {
         //ici on fetche depuis les assets et on charge la BDD
