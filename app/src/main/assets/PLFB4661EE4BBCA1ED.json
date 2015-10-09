@@ -1,0 +1,618 @@
+{
+  "kind": "youtube#playlistItemListResponse",
+  "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/1fiUygYvHyA8exKEffkFKlOzCWc\"",
+  "pageInfo": {
+    "totalResults": 16,
+    "resultsPerPage": 50
+  },
+  "items": [
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/asCig1PUiwpXtwdLbSA_EgvX-1g\"",
+      "id": "PLjcTyxM-jCWI2CKEpRaiPyUVedkWkzSsF",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:43.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Techniques for Yo-Yo Maintenance",
+        "description": "Learn how to take care of and improve your Yo-Yo in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/KMU4I4o6sgc/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/KMU4I4o6sgc/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/KMU4I4o6sgc/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 0,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "KMU4I4o6sgc"
+        }
+      },
+      "contentDetails": {
+        "videoId": "KMU4I4o6sgc"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/aV52HRhEJX2w6HboPAcayn_tphM\"",
+      "id": "PLjcTyxM-jCWJ8IVCRQqxNqXainCKyYCkM",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:19.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Types of Yo-Yos",
+        "description": "Learn how to take care of and improve your Yo-Yo in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/rj7cgZmCWCk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/rj7cgZmCWCk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/rj7cgZmCWCk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 1,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "rj7cgZmCWCk"
+        }
+      },
+      "contentDetails": {
+        "videoId": "rj7cgZmCWCk"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/Mfj5eRKMrRyASOVH4H_EScV8wis\"",
+      "id": "PLjcTyxM-jCWLbDbnQHLiqQYAoOMGhOUi7",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:19.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Clutch Mechanism in Yo-Yos",
+        "description": "Learn about clutch mechanisms in Yo-Yos in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/v-_uzOc9SCg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/v-_uzOc9SCg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/v-_uzOc9SCg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 2,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "v-_uzOc9SCg"
+        }
+      },
+      "contentDetails": {
+        "videoId": "v-_uzOc9SCg"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/H5zsOe8k5DPQ-Hy9VKjScUapnyM\"",
+      "id": "PLjcTyxM-jCWIEOWAUxwBbyot00o2R9-0C",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:19.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Improve Yo-Yo Axles",
+        "description": "Learn about Yo-Yo axles in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/y7DACblulkc/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/y7DACblulkc/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/y7DACblulkc/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 3,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "y7DACblulkc"
+        }
+      },
+      "contentDetails": {
+        "videoId": "y7DACblulkc"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/bUUIkgmzWsymuyJVQCgk3kmAe_E\"",
+      "id": "PLjcTyxM-jCWLT_KphB9ZzD55pGOo09jLS",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:43.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "The Yo-Yo Transaxle",
+        "description": "Learn about transaxles in Yo-Yos in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Tq8vz8wf0wU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Tq8vz8wf0wU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Tq8vz8wf0wU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 4,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "Tq8vz8wf0wU"
+        }
+      },
+      "contentDetails": {
+        "videoId": "Tq8vz8wf0wU"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/iG-rRPKy-P3L7jliA1VlrkG11Ec\"",
+      "id": "PLjcTyxM-jCWJCdxImPH_WBUR0X0lNHGNX",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:05:52.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Ways to Improve Ball Bearings in Yo-Yos",
+        "description": "Learn about ball bearings in Yo-Yos in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/pizuV_T743s/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/pizuV_T743s/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/pizuV_T743s/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 5,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "pizuV_T743s"
+        }
+      },
+      "contentDetails": {
+        "videoId": "pizuV_T743s"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/hE1bFwwqboyLiqq4RQcDJ8MBA7Y\"",
+      "id": "PLjcTyxM-jCWIxifr7WgwO0NvtSnQ5TDXx",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:05:52.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Responsiveness of Yo-Yos",
+        "description": "Learn how to take care of and improve your Yo-Yo in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/_X79-zPCZMI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/_X79-zPCZMI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/_X79-zPCZMI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 6,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "_X79-zPCZMI"
+        }
+      },
+      "contentDetails": {
+        "videoId": "_X79-zPCZMI"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/Q24EkLJEBoELEGjvgYMlzH6M0BM\"",
+      "id": "PLjcTyxM-jCWLVjfeYqtOpHeS1SrjL3wdG",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:05:52.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Types of Ball Bearings",
+        "description": "Learn about types of ball bearings in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ZFmtW7CfSCc/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ZFmtW7CfSCc/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ZFmtW7CfSCc/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 7,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "ZFmtW7CfSCc"
+        }
+      },
+      "contentDetails": {
+        "videoId": "ZFmtW7CfSCc"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/vTmTmO59NAOrjwl_C-Fa2NAt5IU\"",
+      "id": "PLjcTyxM-jCWJRxK9DwVUtP2Abb1uaDkiD",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:20.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Adjust Gaps in a Yo-Yo",
+        "description": "Learn how to take care of and improve your Yo-Yo in this free video clip about adjusting the gaps in a Yo-Yo.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/hN7_DKtyqPQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/hN7_DKtyqPQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/hN7_DKtyqPQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 8,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "hN7_DKtyqPQ"
+        }
+      },
+      "contentDetails": {
+        "videoId": "hN7_DKtyqPQ"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/zlfUmFpOMf8Lbd9A0OMMma-eBX8\"",
+      "id": "PLjcTyxM-jCWIBwrdmwlpjwZ4JQKTL56sE",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:19.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Use Spacers in a Yo-Yo",
+        "description": "Learn about spacers in a Yo-Yo in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/yP1_FdYRMt4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/yP1_FdYRMt4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/yP1_FdYRMt4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 9,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "yP1_FdYRMt4"
+        }
+      },
+      "contentDetails": {
+        "videoId": "yP1_FdYRMt4"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/YK96IA9B81BLsgJT--jqK90eHE8\"",
+      "id": "PLjcTyxM-jCWKJsw1QJJqxytYwA0ZTlfqf",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:19.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Lubricate Your Yo-Yo",
+        "description": "Learn about lubing a Yo-Yo in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/TVzhbUQvjBc/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/TVzhbUQvjBc/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/TVzhbUQvjBc/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 10,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "TVzhbUQvjBc"
+        }
+      },
+      "contentDetails": {
+        "videoId": "TVzhbUQvjBc"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/yqLobG5e7s9jaY0TkqIXvdfCN6E\"",
+      "id": "PLjcTyxM-jCWKxrzbj_XgENEmwSEFfSXJi",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:05:52.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Clean a Yo-Yo Bearing",
+        "description": "Learn about cleaning Yo-Yo bearings in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ZhcEqCiWZ2c/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ZhcEqCiWZ2c/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ZhcEqCiWZ2c/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 11,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "ZhcEqCiWZ2c"
+        }
+      },
+      "contentDetails": {
+        "videoId": "ZhcEqCiWZ2c"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/o5hoUqh6UudvimB7A4Fw7t4Mxmw\"",
+      "id": "PLjcTyxM-jCWLqUgeMCFMql4LVdyCKnJdk",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:05:52.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to String a Yo-Yo",
+        "description": "Learn about stringing a Yo-Yos in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/dt-Cyu0GDz0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/dt-Cyu0GDz0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/dt-Cyu0GDz0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 12,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "dt-Cyu0GDz0"
+        }
+      },
+      "contentDetails": {
+        "videoId": "dt-Cyu0GDz0"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/ukTbaXUDKkfPC6SPbZU121j6ZC8\"",
+      "id": "PLjcTyxM-jCWKowHN3TYsYkGoOEmYXas0R",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:05:52.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "Over Tightening a Yo-Yo",
+        "description": "Learn about over tightening a Yo-Yo in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/-_SFUyNaqcA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/-_SFUyNaqcA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/-_SFUyNaqcA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 13,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "-_SFUyNaqcA"
+        }
+      },
+      "contentDetails": {
+        "videoId": "-_SFUyNaqcA"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/jPq9bUEvymVW3_OZRxtrod_ReDs\"",
+      "id": "PLjcTyxM-jCWIEMZj9QORc1FFdf8N_Xf_z",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:19.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Fix a Loose Axle on a Yo-Yo",
+        "description": "Learn about loosening Yo-Yo axles in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lyFAz0_Q214/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lyFAz0_Q214/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lyFAz0_Q214/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 14,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "lyFAz0_Q214"
+        }
+      },
+      "contentDetails": {
+        "videoId": "lyFAz0_Q214"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/hozKVrwcNIDlSgsYFOZIUBPvQcE\"",
+      "id": "PLjcTyxM-jCWIOyX1Li5SC2P7C9lLdJZJc",
+      "snippet": {
+        "publishedAt": "2009-02-24T17:06:43.000Z",
+        "channelId": "UCjt9-TsmzQl1P9Vpt8sHYCA",
+        "title": "How to Remove a Yo-Yo Cap",
+        "description": "Learn about removing a Yo-Yo cap in this free yo-yo video.\n\nExpert: André Boulay\nBio: André Boulay\nFilmmaker: Christian Munoz-Donoso",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/-nBJyvgp68s/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/-nBJyvgp68s/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/-nBJyvgp68s/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "pikuotaku",
+        "playlistId": "PLFB4661EE4BBCA1ED",
+        "position": 15,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "-nBJyvgp68s"
+        }
+      },
+      "contentDetails": {
+        "videoId": "-nBJyvgp68s"
+      }
+    }
+  ]
+}

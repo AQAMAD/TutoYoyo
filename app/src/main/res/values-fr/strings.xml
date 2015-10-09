@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TutoYoyo</string>
+    <string name="action_settings">Réglages</string>
+    <string name="navigation_drawer_close">Fermer menu</string>
+    <string name="navigation_drawer_open">Ouvrir menu</string>
+    <string name="clyw">Caribou lodge</string>
+    <string name="mytutos">Mes tutos</string>
+    <string name="yoyoblast">Yoyoblast</string>
+    <string name="yoyoexpert">Yoyoexpert</string>
+    <string name="Send">Envoyer</string>
+    <string name="Share">Partager</string>
+    <string name="Social">Social</string>
+</resources>

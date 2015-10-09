@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="youtubeapikey">AIzaSyDTNiK7x2pPlTYWyq9UGv8bBWUrqP06UAs</string>
+
+    <string-array name="sourceids">
+        <item>@id/nav_yyb</item>
+        <item>@id/nav_yyb</item>
+    </string-array>
+
+</resources>
