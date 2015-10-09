@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.base.SourceFragment;
@@ -162,6 +163,14 @@ public class ClywFragment extends YoutubeFragment {
                 for (int j = 0; j < lst.size(); j++) {
                     tpl.getVideos().add(lst.get(j));
                 }
+                //playlist thumbs should point to one of the vids, so choose at random
+                Random rand = new Random();
+                int  n = rand.nextInt(tpl.getVideos().size()-1);
+                YoutubeVideo rndV=tpl.getVideos().get(n);
+                tpl.setDefaultThumb(rndV.getDefaultThumb());
+                tpl.setStandardThumb(rndV.getStandardThumb());
+                tpl.setMediumThumb(rndV.getMediumThumb());
+                tpl.setHighThumb(rndV.getHighThumb());
                 channel.getPlaylists().add(tpl);
             }
         }

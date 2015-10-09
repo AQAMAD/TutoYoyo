@@ -130,24 +130,24 @@ public class YoutubeUtils {
                         String url = thumb.getString("url");
                         int height = thumb.getInt("height");
                         int width = thumb.getInt("width");
-                        tVideo.setDefaultThumb(new YoutubeThumbnail(url, height, width));
+                        tVideo.setDefaultThumb(new YoutubeThumbnail(url, width, height));
                         thumb = jsonThumbs.getJSONObject("medium");
                         url = thumb.getString("url");
                         height = thumb.getInt("height");
                         width = thumb.getInt("width");
-                        tVideo.setMediumThumb(new YoutubeThumbnail(url, height, width));
+                        tVideo.setMediumThumb(new YoutubeThumbnail(url, width, height));
                         thumb = jsonThumbs.getJSONObject("high");
                         url = thumb.getString("url");
                         height = thumb.getInt("height");
                         width = thumb.getInt("width");
-                        tVideo.setHighThumb(new YoutubeThumbnail(url, height, width));
+                        tVideo.setHighThumb(new YoutubeThumbnail(url, width, height));
                         try {
                             //standard is optional
                             thumb = jsonThumbs.getJSONObject("standard");
                             url = thumb.getString("url");
                             height = thumb.getInt("height");
                             width = thumb.getInt("width");
-                            tVideo.setStandardThumb(new YoutubeThumbnail(url, height, width));
+                            tVideo.setStandardThumb(new YoutubeThumbnail(url, width, height));
                         } catch (JSONException e) {
                             //can safely ignore
                         }

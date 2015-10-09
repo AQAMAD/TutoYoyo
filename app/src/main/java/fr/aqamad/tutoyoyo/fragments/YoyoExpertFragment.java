@@ -69,6 +69,8 @@ public class YoyoExpertFragment extends PrefetchFragment {
 
     public YoyoExpertFragment(Activity mainActivity) {
         super(mainActivity);
+        setForeGroundColor(R.color.yoyoExpert);
+        setBackGroundColor(android.R.color.black);
     }
 
     @Override

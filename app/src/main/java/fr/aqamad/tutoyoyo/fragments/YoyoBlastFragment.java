@@ -38,6 +38,8 @@ public class YoyoBlastFragment extends YoutubeFragment {
 
     public YoyoBlastFragment(Activity mainActivity) {
         super(mainActivity);
+        setForeGroundColor(R.color.yoyoBlast);
+        setBackGroundColor(android.R.color.black);
     }
 
     // TODO: Rename and change types of parameters
