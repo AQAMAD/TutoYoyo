@@ -61,7 +61,7 @@ public class GetLocalChannelTask implements Runnable {
 
             for (int i = 0; i < source.channels().size(); i++) {
                 TutorialChannel playlist=source.channels().get(i);
-                YoutubePlaylist tPlayList=new YoutubePlaylist(playlist.youtubeId,playlist.name,playlist.description );
+                YoutubePlaylist tPlayList=new YoutubePlaylist(playlist.key,playlist.name,playlist.description );
                 tPlayList.setID(playlist.getId().toString());
                 try {
                     tPlayList.setDefaultThumb(new YoutubeThumbnail(playlist.defaultThumbnail, YoutubeUtils.DEFAULT_WIDTH, YoutubeUtils.DEFAULT_HEIGHT));

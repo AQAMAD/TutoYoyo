@@ -64,7 +64,7 @@ public class GetLocalPlaylistTask implements Runnable {
 
             for (int i = 0; i < channel.videos().size(); i++) {
                 TutorialVideo video=channel.videos().get(i);
-                YoutubeVideo tVideo=new YoutubeVideo(video.youtubeId,video.name,video.description );
+                YoutubeVideo tVideo=new YoutubeVideo(video.key,video.name,video.description );
                 try {
                     tVideo.setDefaultThumb(new YoutubeThumbnail(video.defaultThumbnail, YoutubeUtils.DEFAULT_WIDTH, YoutubeUtils.DEFAULT_HEIGHT));
                     tVideo.setMediumThumb(new YoutubeThumbnail(video.mediumThumbnail, YoutubeUtils.MEDIUM_WIDTH, YoutubeUtils.MEDIUM_HEIGHT));

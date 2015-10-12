@@ -60,6 +60,7 @@ public class TutorialSource extends Model {
         TutorialChannel tmpChannel=new TutorialChannel();
         tmpChannel.source=myTuts;
         tmpChannel.name=app.getString(R.string.favorites);
+        tmpChannel.key=app.getString(R.string.localFavoritesKey);
         tmpChannel.description=app.getString(R.string.favoritesDesc);
         tmpChannel.mediumThumbnail=app.getString(R.string.favoritesThumb);
         tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;
@@ -69,6 +70,7 @@ public class TutorialSource extends Model {
         tmpChannel=new TutorialChannel();
         tmpChannel.source=myTuts;
         tmpChannel.name=app.getString(R.string.watchLater);
+        tmpChannel.key=app.getString(R.string.localLaterKey);
         tmpChannel.description=app.getString(R.string.watchLaterDesc);
         tmpChannel.mediumThumbnail=app.getString(R.string.watchLaterThumb);
         tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;
@@ -78,6 +80,7 @@ public class TutorialSource extends Model {
         tmpChannel=new TutorialChannel();
         tmpChannel.source=myTuts;
         tmpChannel.name=app.getString(R.string.shareable);
+        tmpChannel.key=app.getString(R.string.localSocialKey);
         tmpChannel.description=app.getString(R.string.shareableDesc);
         tmpChannel.mediumThumbnail=app.getString(R.string.shareableThumb);
         tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;

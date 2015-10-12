@@ -23,9 +23,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".YoutubePlaylistActivity" />
-        <activity android:name=".PrefetchPlaylistActivity" />
-        <activity android:name=".LocalPlaylistActivity" />
+        <activity android:name=".YoutubePlaylistActivity"
+            android:parentActivityName=".MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".PrefetchPlaylistActivity"
+                android:parentActivityName=".MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+            </activity>
+        <activity android:name=".LocalPlaylistActivity"
+            android:parentActivityName=".MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <meta-data android:name="AA_DB_NAME" android:value="TutoYoyo.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
     </application>

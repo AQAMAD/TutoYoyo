@@ -3,6 +3,7 @@ package fr.aqamad.tutoyoyo.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class TutorialChannel extends Model {
     @Column(name = "Description")
     public String description;
 
-    @Column(name = "YoutubeId")
-    public String youtubeId;
+    @Column(name = "Key")
+    public String key;
 
     @Column(name = "MediumThumbnail")
     public String mediumThumbnail;
@@ -34,6 +35,14 @@ public class TutorialChannel extends Model {
 
     public List<TutorialVideo> videos() {
         return getMany(TutorialVideo.class, "Channel");
+    }
+
+    public static TutorialChannel getByKey(String keyId) {
+        return new Select()
+                .from(TutorialChannel.class)
+                .where("Key = ?",keyId)
+                .orderBy("Name ASC")
+                .executeSingle();
     }
 
 }

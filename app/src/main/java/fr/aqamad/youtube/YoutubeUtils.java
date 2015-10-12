@@ -1,5 +1,8 @@
 package fr.aqamad.youtube;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -235,6 +238,19 @@ public class YoutubeUtils {
             }
         }
         return jsonString;
+    }
+
+    public static String getVideoPlayUrl(String videoId){
+        return "http://www.youtube.com/watch?v=" + videoId;
+    }
+
+    public static Intent getYoutubeVideoIntent(String videoId){
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(getVideoPlayUrl(videoId)));
+    }
+
+    public static void PlayYoutubeVideo(String videoId,Activity currentActivity){
+        Intent intent = getYoutubeVideoIntent(videoId);
+        currentActivity.startActivity(intent);
     }
 
 }
