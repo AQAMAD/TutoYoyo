@@ -3,8 +3,6 @@
     android:layout_height="match_parent" tools:context="fr.aqamad.tutoyoyo.fragments.MyTutsFragment">
 
 
-
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -23,8 +21,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView2"
                 android:layout_gravity="left"
+                android:maxHeight="360px"
+                android:maxWidth="480px"
                 android:adjustViewBounds="true"
-                android:src="@drawable/drawer_header" />
+                android:src="@drawable/local_playlists_header" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -35,7 +35,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="My tutos"
+                    android:text="@string/myTutosChannelTitle"
                     android:id="@+id/textView2"
                     android:textColor="@android:color/black"
                     android:layout_gravity="left"
@@ -45,7 +45,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Here are your tutos, check below to sync them"
+                    android:text="@string/myTutosChannelDescription"
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:id="@+id/textView4" />

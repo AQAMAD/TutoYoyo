@@ -3,6 +3,7 @@ package fr.aqamad.tutoyoyo.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,32 +17,22 @@ import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LocalFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public abstract class LocalFragment extends SourceFragment   {
 
-    public LocalFragment(Activity parentActivity) {
-        super(parentActivity);
-    }
-
     public LocalFragment() {
+        Log.d("LF", "LocalFragment constructor" );
     }
-
 
     @Override
     public void fetchChannel(Handler handler,Activity act) {
-        new Thread(new GetLocalChannelTask(handler,  GetToutubeId(),act )).start();
+        new Thread(new GetLocalChannelTask(handler,  getChannelId(),act )).start();
+        Log.d("LF", "LocalFragment fetchChannel");
     }
 
     @Override
     public void prepareChannel() {
-        //todo : par défaut, on trie les playlists
+        //par défaut, on trie les playlists
         YoutubeChannel channel=this.getChannel();
         //Sorting by title
         Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
@@ -50,10 +41,12 @@ public abstract class LocalFragment extends SourceFragment   {
                 return pl1.getTitle().compareTo(pl2.getTitle());
             }
         });
+        Log.d("LF", "LocalFragment prepareChannel");
     }
 
     @Override
     public Class getPlaylistActivityClass() {
+        Log.d("LF", "LocalFragment getPlaylistActivityClass");
         return LocalPlaylistActivity.class;
     }
 

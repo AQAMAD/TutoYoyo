@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
+        android:animateLayoutChanges="true"
         >
 
 
@@ -25,14 +26,12 @@
             android:src="@drawable/waiting" />
 
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="right"
             >
-
             <TextView
                 android:id="@+id/vidName"
                 android:layout_width="match_parent"
@@ -41,11 +40,45 @@
                 android:textColor="@android:color/holo_orange_dark"
                 android:onClick="openVideo"
                 android:text="Name this is a long name a very long name" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_view"
+                    android:layout_gravity="right"
+                    android:onClick="addLater"
+                    android:id="@+id/btnLater"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_share"
+                    android:layout_gravity="right"
+                    android:onClick="addShare"
+                    android:id="@+id/btnShare"
+                    />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_add"
+                    android:layout_gravity="right"
+                    android:onClick="addFavorite"
+                    android:id="@+id/btnFavorites"
+                    />
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/vidDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/holo_orange_dark"
                 android:text="HomeTown" />
@@ -58,7 +91,8 @@
                 android:text="HomeTown" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
+
 
         <ImageView
             android:layout_width="wrap_content"
@@ -67,6 +101,7 @@
             android:onClick="expandSection"
             android:src="@android:drawable/ic_menu_more"
             android:rotation="270"
+            android:animateLayoutChanges="true"
             android:layout_gravity="right"/>
     </LinearLayout>
 
@@ -82,6 +117,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_height="wrap_content"
         android:id="@+id/expandSection"
+        android:animateLayoutChanges="true"
         >
 
         <LinearLayout
@@ -105,38 +141,7 @@
                 android:layout_weight="1"
                 android:text="HomeTown" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_view"
-                android:layout_gravity="right"
-                android:onClick="addLater"
-                android:id="@+id/btnLater"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_share"
-                android:layout_gravity="right"
-                android:onClick="addShare"
-                android:id="@+id/btnShare"
-                />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_add"
-                android:layout_gravity="right"
-                android:onClick="addFavorite"
-                android:id="@+id/btnFavorites"
-                />
-
-            </LinearLayout>
         </LinearLayout>
 
 

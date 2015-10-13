@@ -1,5 +1,6 @@
 package fr.aqamad.tutoyoyo.base;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -89,7 +94,13 @@ public abstract class PlaylistActivity extends AppCompatActivity {
         tvDesc.setTextColor(getResources().getColor(mFgColor));
         ImageView imThumb= (ImageView) findViewById(R.id.imgPlaylistThumb);
         tvTitle.setText(mTitle);
-        tvDesc.setText(mDescription);
+
+        String description=mDescription;
+        if (description.length()>90){
+            description=description.substring(0,89)+" (...)";
+        }
+        tvDesc.setText(description);
+
 
         RelativeLayout container=(RelativeLayout) findViewById(R.id.playContainer);
         container.setBackgroundColor(getResources().getColor(mBgColor));
@@ -98,6 +109,7 @@ public abstract class PlaylistActivity extends AppCompatActivity {
 
         Picasso.with(this).load(mThumb)
                 .placeholder(R.drawable.waiting)
+                .resize(YoutubeUtils.HIGH_WIDTH,YoutubeUtils.HIGH_HEIGHT)
                 .into(imThumb)
         ;
 
@@ -170,11 +182,42 @@ public abstract class PlaylistActivity extends AppCompatActivity {
         LinearLayout vwID = (LinearLayout) parent.findViewById(R.id.expandSection);
         int visibility=vwID.getVisibility();
         if (visibility==View.VISIBLE){
+            AnimationSet set = new AnimationSet(true);
+
+            Animation animation = new AlphaAnimation(1.0f, 0.0f);
+            animation.setDuration(250);
+            set.addAnimation(animation);
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+            );
+            animation.setDuration(150);
+            set.addAnimation(animation);
+            vwID.startAnimation(set);
             vwID.setVisibility(View.GONE);
-            view.setRotation(270);
+            ObjectAnimator animation1 = ObjectAnimator.ofFloat(view,
+                    "rotation", 270);
+            animation1.setDuration(400);
+            animation1.start();
         }else{
+            //animate visibility
+            AnimationSet set = new AnimationSet(true);
+            Animation animation = new AlphaAnimation(0.0f, 1.0f);
+            animation.setDuration(250);
+            set.addAnimation(animation);
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+            );
+            animation.setDuration(150);
+            set.addAnimation(animation);
+            vwID.startAnimation(set);
             vwID.setVisibility(View.VISIBLE);
-            view.setRotation(0);
+            ObjectAnimator animation1 = ObjectAnimator.ofFloat(view,
+                    "rotation", 0);
+            animation1.setDuration(400);
+            animation1.start();
+            //view.setRotation(0);
         }
     }
 

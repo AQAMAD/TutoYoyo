@@ -1,6 +1,7 @@
 package fr.aqamad.tutoyoyo;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -43,13 +45,42 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private SourceFragment currentFragment;
 
+    private MyTutsFragment mMyTuts;
+    private ClywFragment mClyw;
+    private YoyoExpertFragment mYYE;
+    private YoyoBlastFragment mYYB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //check the model has been created and perform initialisation otherwise
         checkDatabase();
-
         super.onCreate(savedInstanceState);
+        mMyTuts=MyTutsFragment.newInstance(getString(R.string.localChannelKey));
+        mClyw=ClywFragment.newInstance(getString(R.string.CLYW_CHANNEL));
+        mYYE=YoyoExpertFragment.newInstance(getString(R.string.YOYOEXPERT_CHANNEL));
+        mYYB=YoyoBlastFragment.newInstance(getString(R.string.YOYOBLAST_CHANNEL));
+
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            Log.d("MA", "Mainactivity onCreate bundle");
+            String state=savedInstanceState.getString("CurrentFragment");
+            if (state!=null){
+                if (state.equals("")){
+                    View frbck = findViewById(R.id.frameBackground);
+                    frbck.setVisibility(View.VISIBLE);
+                }else{
+                    hideHome();
+                }
+            }
+        } else {
+            //create and prepare different fragments
+            Log.d("MA", "Mainactivity onCreate nobundle");
+        }
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -80,11 +111,33 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("MA", "onSaveInstanceState");
+        if (mMyTuts.isAdded()){
+            getFragmentManager().putFragment(outState, "mMyTuts", mMyTuts);
+        }
+        if (mClyw.isAdded()){
+            getFragmentManager().putFragment(outState, "mClyw", mClyw);
+        }
+        if (mYYE.isAdded()){
+            getFragmentManager().putFragment(outState, "mYYE", mYYE);
+        }
+        if (mYYB.isAdded()){
+            getFragmentManager().putFragment(outState, "mYYB", mYYB);
+        }
+        if (currentFragment!=null){
+            outState.putString("CurrentFragment",currentFragment.getChannelId());
+        }
+        Log.d("MA", "Mainactivity onSaveInstanceState");
+    }
+
     private void checkDatabase() {
         //at the moment, delete everything before setting up a new DB
 
         //test for model creation
-        List<TutorialSource> sources=TutorialSource.getAll();
+        List<TutorialSource> sources =TutorialSource.getAll();
         if (sources.size()==0){
             TutorialSource.initializeDB(this.getApplication());
         }
@@ -96,8 +149,19 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            FragmentManager fragmentManager = getFragmentManager();
+            int backCount = fragmentManager.getBackStackEntryCount();
+            if (backCount>1){
+                fragmentManager.popBackStack();
+            }else if (backCount>0){
+                fragmentManager.popBackStack();
+                View frbck = findViewById(R.id.frameBackground);
+                frbck.setVisibility(View.VISIBLE);
+            }else{
+                super.onBackPressed();
+            }
         }
+        Log.d("MA", "Mainactivity onBackPressed");
     }
 
     @Override
@@ -114,6 +178,8 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        Log.d("MA", "Mainactivity onOptionItemsSelected");
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -126,6 +192,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Log.d("MA", "Mainactivity onNavigationItemSelected start");
+
         int id = item.getItemId();
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -136,17 +204,17 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_my) {
             //Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
-            currentFragment = new MyTutsFragment(this);
+            currentFragment = mMyTuts;
 
         } else if (id == R.id.nav_yyb) {
 
-            currentFragment  = new YoyoBlastFragment(this);
+            currentFragment  = mYYB;
 
         } else if (id == R.id.nav_clyw) {
-            currentFragment  = new ClywFragment(this);
+            currentFragment  = mClyw;
 
         } else if (id == R.id.nav_yye) {
-            currentFragment  = new YoyoExpertFragment(this);
+            currentFragment  = mYYE;
 
         } else if (id == R.id.nav_share) {
 
@@ -155,75 +223,28 @@ public class MainActivity extends AppCompatActivity
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame, currentFragment).commitAllowingStateLoss();
 
-        View frbck=findViewById(R.id.frameBackground);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        frbck.setVisibility(View.INVISIBLE);
+        fragmentTransaction.replace(R.id.frame, currentFragment);
+
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
+
+        hideHome();
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        currentFragment.fetchChannel(responseHandler, this);
+        Log.d("MA", "Mainactivity onNavigationItemSelected end");
 
         return true;
     }
 
-
-    // This is the handler that receives the response when the YouTube task has finished
-    Handler responseHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            populateListWithVideos(msg);
-        };
-    };
-
-    /**
-     * This method retrieves the Library of videos from the task and passes them to our ListView
-     * @param msg
-     */
-    private void populateListWithVideos(Message msg) {
-        // Retreive the videos are task found from the data bundle sent back
-        YoutubeChannel channel = (YoutubeChannel) msg.getData().get(GetYouTubeChannelTask.CHANNEL);
-        // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
-        // we can just call our custom method with the list of items we want to display
-
-        //postProcessing
-        currentFragment.setChannel(channel);
-        currentFragment.prepareChannel();
-
-        PlaylistsAdapter adapter = new PlaylistsAdapter(this, (ArrayList) channel.getPlaylists(), currentFragment.getForeGroundColor());
-
-        ListView listView= currentFragment.GetPlaylistView();
-        listView.setAdapter(adapter);
-
-    }
-
-    public void openPlayList(View view) {
-        //we got the view, let's just toast something here
-        //we will choose the implementation class dependant on the base fragment class type
-        //class identification magic
-        Class cl=YoutubePlaylistActivity.class;
-        if (currentFragment instanceof PrefetchFragment){
-            cl=PrefetchPlaylistActivity.class;
-        }
-        if (currentFragment instanceof LocalFragment){
-            cl=LocalPlaylistActivity.class;
-        }
-
-
-        TextView vwID = (TextView) view.findViewById(R.id.plID);
-        String plID=vwID.getText().toString();
-
-        Intent intent = new Intent(this, cl);
-
-        for (int i = 0; i < currentFragment.getChannel().getPlaylists().size(); i++) {
-            if (plID.equals(currentFragment.getChannel().getPlaylists().get(i).getID())){
-                intent.putExtra(PlaylistActivity.PLAYLIST, currentFragment.getChannel().getPlaylists().get(i) );
-            }
-        }
-
-        intent.putExtra(PlaylistActivity.BGCOLOR,  currentFragment.getBackGroundColor()  );
-        intent.putExtra(PlaylistActivity.FGCOLOR, currentFragment.getForeGroundColor() );
-        startActivity(intent);
+    private void hideHome() {
+        View frbck = findViewById(R.id.frameBackground);
+        frbck.setVisibility(View.INVISIBLE);
+        Log.d("MA", "Mainactivity hideHome");
     }
 
 

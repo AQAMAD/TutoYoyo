@@ -20,19 +20,8 @@ import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link YoutubeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link YoutubeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public abstract class YoutubeFragment extends SourceFragment   {
 
-    public YoutubeFragment(Activity parentActivity) {
-        super(parentActivity);
-    }
+public abstract class YoutubeFragment extends SourceFragment   {
 
     public YoutubeFragment() {
     }
@@ -40,7 +29,7 @@ public abstract class YoutubeFragment extends SourceFragment   {
 
     @Override
     public void fetchChannel(Handler handler,Activity act) {
-        new Thread(new GetYouTubeChannelTask(handler,  GetToutubeId() , act.getString(R.string.youtubeapikey))).start();
+        new Thread(new GetYouTubeChannelTask(handler,  getChannelId() , act.getString(R.string.youtubeapikey))).start();
     }
 
     @Override

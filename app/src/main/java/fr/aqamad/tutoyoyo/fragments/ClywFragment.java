@@ -35,19 +35,9 @@ import fr.aqamad.youtube.YoutubeVideo;
  * create an instance of this fragment.
  */
 public class ClywFragment extends YoutubeFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private static final String CLYW_CHANNEL = "UCXB5-ZaTfNXF6P3CBQfvE5g";
     private static final String CABIN_TUTORIALS_PLAYLIST="PLVLLF_sWPwMxR8TQv_FpKZC_W6knxdiln";
     private static final int PAGE_SIZE=25;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
 
 
 
@@ -55,36 +45,20 @@ public class ClywFragment extends YoutubeFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param channelID Parameter 1.
      * @return A new instance of fragment MyTutsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ClywFragment newInstance(String param1, String param2) {
+    public static ClywFragment newInstance(String channelID) {
         ClywFragment fragment = new ClywFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_CHANNELID, channelID);
         fragment.setArguments(args);
         return fragment;
     }
 
     public ClywFragment() {
         // Required empty public constructor
-    }
-
-
-    public ClywFragment(Activity mainActivity) {
-        super(mainActivity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -96,11 +70,6 @@ public class ClywFragment extends YoutubeFragment {
 
 
     @Override
-    public String GetToutubeId() {
-        return CLYW_CHANNEL;
-    }
-
-    @Override
     public ListView GetPlaylistView() {
         return (ListView) this.getActivity().findViewById(R.id.clywPlayLists);
     }
@@ -108,12 +77,12 @@ public class ClywFragment extends YoutubeFragment {
     @Override
     public void fetchChannel(Handler handler,Activity act) {
         //autoload cabin tutorials
-        new Thread(new GetYouTubeChannelFilledTask(handler,  GetToutubeId() , CABIN_TUTORIALS_PLAYLIST , act.getString(R.string.youtubeapikey))).start();
+        new Thread(new GetYouTubeChannelFilledTask(handler,  getChannelId() , CABIN_TUTORIALS_PLAYLIST , act.getString(R.string.youtubeapikey))).start();
     }
 
     @Override
     public void prepareChannel() {
-        //todo : reparse the cabin tutorials channel to a more manageable size
+        //reparse the cabin tutorials channel to a more manageable size
         YoutubeChannel channel=this.getChannel();
         YoutubePlaylist playlist=null;
 

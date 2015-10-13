@@ -18,6 +18,7 @@ import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
+import fr.aqamad.tutoyoyo.utils.PicassoHelper;
 import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeVideo;
 
@@ -67,6 +68,7 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
 
         TextView plDesc2 = (TextView) convertView.findViewById(R.id.vidDesc2);
         plDesc2.setText(vid.getDescription());
+        plDesc2.setTextColor(getContext().getResources().getColor(foreGroundColor));
         //detect video presence from local database
         List<TutorialVideo> lst=TutorialVideo.getByKey(vid.getID());
         boolean isFavorite=false;
@@ -98,7 +100,7 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
         btnWat.setColorFilter(getContext().getResources().getColor(color), PorterDuff.Mode.SRC_ATOP);
         btnWat.setTag(isLater);
         //load image with picasso
-        Picasso.with(parent.getContext()).load(vid.getHighThumb().getUrl().toString())
+        PicassoHelper.with(parent.getContext()).load(vid.getHighThumb().getUrl().toString())
                 .placeholder(R.drawable.waiting)
                 .into(imgThumb)
         ;

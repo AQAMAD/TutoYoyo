@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="fr.aqamad.tutoyoyo.fragments.MyTutsFragment"
-    android:background="@android:color/black">
+    android:background="@android:color/black"
+    >
 
 
 
@@ -14,19 +15,14 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:layout_gravity="left"
-                android:src="@drawable/logo_yoyoexpert_big" />
+            android:gravity="left" >
 
             <LinearLayout
                 android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -34,28 +30,55 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Yoyoexpert.com"
+                    android:text="YOYOEXPERT.COM"
                     android:id="@+id/textView2"
                     android:textColor="@android:color/white"
                     android:layout_gravity="left"
                     android:gravity="center" />
 
-                <TextView
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Make the simple amazing !"
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:id="@+id/textView4" />
+                    android:gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="MAKE THE SIMPLE "
+                        android:textColor="@android:color/white"
+                        android:id="@+id/textView5" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="AMAZING"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:id="@+id/textView4" />
+
+                </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:layout_gravity="right"
+                android:src="@drawable/logo_yoyoexpert_big" />
 
         </LinearLayout>
 
-        <ListView
+        <GridView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/yoyoexpertPlayLists"
+            android:numColumns="auto_fit"
+            android:columnWidth="90dp"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
             />
 
     </LinearLayout>

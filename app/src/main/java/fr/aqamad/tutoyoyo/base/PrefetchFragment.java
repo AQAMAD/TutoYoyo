@@ -15,19 +15,8 @@ import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PrefetchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public abstract class PrefetchFragment extends SourceFragment   {
 
-    public PrefetchFragment(Activity parentActivity) {
-        super(parentActivity);
-    }
+public abstract class PrefetchFragment extends SourceFragment   {
 
     public PrefetchFragment() {
     }
@@ -36,7 +25,7 @@ public abstract class PrefetchFragment extends SourceFragment   {
     @Override
     public void fetchChannel(Handler handler,Activity act) {
         //ici on fetche depuis les assets et on charge la BDD
-        new Thread(new GetPrefetchChannelTask(handler,  GetToutubeId(),act )).start();
+        new Thread(new GetPrefetchChannelTask(handler,  getChannelId(),act )).start();
     }
 
     @Override

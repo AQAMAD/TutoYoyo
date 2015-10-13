@@ -7,11 +7,14 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.base.PrefetchFragment;
@@ -30,33 +33,20 @@ import fr.aqamad.youtube.YoutubePlaylist;
  * create an instance of this fragment.
  */
 public class YoyoExpertFragment extends PrefetchFragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    public static String YOYOEXPERT_CHANNEL="YoyoExpertChannel";
-
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param channelID Parameter 1.
      * @return A new instance of fragment MyTutsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static YoyoExpertFragment newInstance(String param1, String param2) {
+    public static YoyoExpertFragment newInstance(String channelID) {
         YoyoExpertFragment fragment = new YoyoExpertFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_CHANNELID, channelID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,21 +55,7 @@ public class YoyoExpertFragment extends PrefetchFragment {
         // Required empty public constructor
         setForeGroundColor(R.color.yoyoExpert);
         setBackGroundColor(android.R.color.black);
-    }
-
-    public YoyoExpertFragment(Activity mainActivity) {
-        super(mainActivity);
-        setForeGroundColor(R.color.yoyoExpert);
-        setBackGroundColor(android.R.color.black);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        setItemRessourceId(R.layout.yoyo_expert_playlist_item);
     }
 
     @Override
@@ -90,13 +66,8 @@ public class YoyoExpertFragment extends PrefetchFragment {
     }
 
     @Override
-    public String GetToutubeId() {
-        return YOYOEXPERT_CHANNEL;
-    }
-
-    @Override
-    public ListView GetPlaylistView() {
-        return (ListView) this.getActivity().findViewById(R.id.yoyoexpertPlayLists);
+    public AdapterView GetPlaylistView() {
+        return (AdapterView) this.getActivity().findViewById(R.id.yoyoexpertPlayLists);
     }
 
     @Override
@@ -120,13 +91,26 @@ public class YoyoExpertFragment extends PrefetchFragment {
             }
         }
 
-        //Sorting by title
+        //Sorting by custom order
+        //playlist order
+        String[] plsOrder={"Yo-Yo Techniques for the Beginner","Basic","Yo Yo Maintenance",
+                "Intermediate","Advanced (Part 1)","Advanced (Part 2)",
+                "Expert (Part 1)","Expert (Part 2)","Master",
+                "Looping","Offstring","Counterweight",
+                "Double hand looping (2A)"};
+        final List<String> plsList= Arrays.asList(plsOrder);
+
+
         Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
             @Override
             public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
-                return pl1.getTitle().compareTo(pl2.getTitle());
+                int pl1Index=plsList.indexOf(pl1.getTitle());
+                int pl2Index=plsList.indexOf(pl2.getTitle());
+                return pl1Index-pl2Index;
             }
         });
+
+
     }
 
 

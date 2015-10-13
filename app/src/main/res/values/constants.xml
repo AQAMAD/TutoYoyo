@@ -6,6 +6,10 @@
     <string name="localFavoritesKey">LOCAL_FAVORITES_KEY</string>
     <string name="localSocialKey">LOCAL_SOCIAL_KEY</string>
     <string name="localLaterKey">LOCAL_LATER_KEY</string>
+    <string name="CLYW_CHANNEL">UCXB5-ZaTfNXF6P3CBQfvE5g</string>
+    <string name="YOYOEXPERT_CHANNEL">YoyoExpertChannel</string>
+    <string name="YOYOBLAST_CHANNEL">UCJVkKRR1hf0aSZzrELEATRg</string>
+
     <item type="id" name="standardThumb" />
     <item type="id" name="mediumThumb" />
     <item type="id" name="highThumb" />

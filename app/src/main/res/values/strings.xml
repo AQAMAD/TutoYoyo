@@ -27,4 +27,6 @@
     <string name="shareableThumb">http://www.monquotidien.fr/media/Images/Video-yoyo-zach.jpg</string>
     <string name="myTutsTitle">My Tutorials</string>
     <string name="myTutsDesc">Add tutorials to these playlists so you can remember them and sync them.</string>
+    <string name="myTutosChannelTitle">My tutos</string>
+    <string name="myTutosChannelDescription">Here are your tutos, check below to sync them</string>
 </resources>
