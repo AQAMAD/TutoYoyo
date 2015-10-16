@@ -22,7 +22,7 @@ public class TutorialVideo extends Model {
     public String key;
 
     @Column(name = "Channel")
-    public TutorialChannel channel;
+    public TutorialPlaylist channel;
 
     @Column(name = "MediumThumbnail")
     public String mediumThumbnail;
@@ -32,6 +32,15 @@ public class TutorialVideo extends Model {
 
     @Column(name = "DefaultThumbnail")
     public String defaultThumbnail;
+
+    @Column(name = "Duration")
+    public String duration;
+
+    @Column(name = "PublishedAt")
+    public String publishedAt;
+
+    @Column(name = "Caption")
+    public String caption;
 
     public static List<TutorialVideo> getByKey(String keyId) {
         return new Select()

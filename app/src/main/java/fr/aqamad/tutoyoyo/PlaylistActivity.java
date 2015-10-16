@@ -1,24 +1,18 @@
-package fr.aqamad.tutoyoyo.base;
+package fr.aqamad.tutoyoyo;
 
-import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,20 +23,25 @@ import com.activeandroid.query.Delete;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 
-import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.adapters.VideosAdapter;
-import fr.aqamad.tutoyoyo.model.TutorialChannel;
+import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
+import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
-import fr.aqamad.tutoyoyo.tasks.GetLocalPlaylistTask;
-import fr.aqamad.tutoyoyo.tasks.GetYouTubePlaylistTask;
+import fr.aqamad.tutoyoyo.tasks.GetPlaylistTask;
+import fr.aqamad.tutoyoyo.utils.PicassoHelper;
+import fr.aqamad.tutoyoyo.utils.UI;
 import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeUtils;
+import fr.aqamad.youtube.YoutubeVideo;
 
-public abstract class PlaylistActivity extends AppCompatActivity {
+public class PlaylistActivity extends AppCompatActivity {
 
     public static final String PLAYLIST = "fr.aqamad.youtube.playlist";
+    public static final String CHANNEL = "fr.aqamad.youtube.playlist.channel";
     public static final String BGCOLOR="fr.aqamad.youtube.playlist.bgcolor";
     public static final String FGCOLOR="fr.aqamad.youtube.playlist.fgcolor";
 
@@ -66,10 +65,12 @@ public abstract class PlaylistActivity extends AppCompatActivity {
 
     private int mBgColor;
     private int mFgColor;
+    private int highlightColor=android.R.color.holo_green_light;
     private String mTitle;
     private String mDescription;
     private String mThumb;
     private YoutubePlaylist mPlaylist;
+    private String mChannelID;
 
     View currentView;
 
@@ -83,6 +84,7 @@ public abstract class PlaylistActivity extends AppCompatActivity {
             mFgColor=getIntent().getIntExtra(FGCOLOR, android.R.color.black);
             mPlaylist=(YoutubePlaylist) getIntent().getSerializableExtra(PLAYLIST);
             mPlayListID=mPlaylist.getID();
+            mChannelID=getIntent().getStringExtra(CHANNEL);
             mTitle=mPlaylist.getTitle();
             mDescription=mPlaylist.getDescription();
             mThumb=mPlaylist.getHighThumb().getUrl().toString();
@@ -100,14 +102,20 @@ public abstract class PlaylistActivity extends AppCompatActivity {
             description=description.substring(0,89)+" (...)";
         }
         tvDesc.setText(description);
-
-
+        //hide description
+        LinearLayout llEx = (LinearLayout) this.findViewById(R.id.expandDescription);
+        llEx.setVisibility(View.GONE);
+        //set long description
+        TextView tvLongDesc= (TextView) findViewById(R.id.plLongDesc);
+        tvLongDesc.setText(mDescription);
+        tvLongDesc.setTextColor(getResources().getColor(mFgColor));
+        //set colors
         RelativeLayout container=(RelativeLayout) findViewById(R.id.playContainer);
         container.setBackgroundColor(getResources().getColor(mBgColor));
         ListView listView= (ListView) findViewById(R.id.videos);
         listView.setBackgroundColor(getResources().getColor(mBgColor));
 
-        Picasso.with(this).load(mThumb)
+        PicassoHelper.loadWeborDrawable(this, mThumb).centerCrop()
                 .placeholder(R.drawable.waiting)
                 .resize(YoutubeUtils.HIGH_WIDTH,YoutubeUtils.HIGH_HEIGHT)
                 .into(imThumb)
@@ -115,7 +123,7 @@ public abstract class PlaylistActivity extends AppCompatActivity {
 
         if (mPlaylist.getVideos().size()>0){
             Bundle data = new Bundle();
-            data.putSerializable(GetLocalPlaylistTask.PLAYLIST, mPlaylist);
+            data.putSerializable(GetPlaylistTask.PLAYLIST, mPlaylist);
             // Send the Bundle of data (our Library) back to the handler (our Activity)
             Message msg = Message.obtain();
             msg.setData(data);
@@ -127,8 +135,6 @@ public abstract class PlaylistActivity extends AppCompatActivity {
 
 
     }
-
-    public abstract void fetchVideos(Handler handler,String playlistId,String apiKey);
 
     // This is the handler that receives the response when the YouTube task has finished
     Handler responseHandler = new Handler() {
@@ -143,15 +149,61 @@ public abstract class PlaylistActivity extends AppCompatActivity {
      */
     public void populateListWithVideos(Message msg) {
         // Retreive the videos are task found from the data bundle sent back
-        YoutubePlaylist playlist = (YoutubePlaylist) msg.getData().get(GetYouTubePlaylistTask.PLAYLIST);
-        // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
+        YoutubePlaylist playlist = (YoutubePlaylist) msg.getData().get(GetPlaylistTask.PLAYLIST);
         // we can just call our custom method with the list of items we want to display
+        // Do a bit of data copy to simplify caching and accessing in case of fetch
+        playlist.setID(mPlaylist.getID());
+        playlist.setTitle(mPlaylist.getTitle());
+        playlist.setDescription(mPlaylist.getDescription());
+        playlist.setHighThumb(mPlaylist.getHighThumb());
+        playlist.setMediumThumb(mPlaylist.getMediumThumb());
+        playlist.setDefaultThumb(mPlaylist.getDefaultThumb());
+        playlist.setPublishedAt(mPlaylist.getPublishedAt());
 
-        VideosAdapter adapter = new VideosAdapter(this, (ArrayList) playlist.getVideos(), this.getFgColor());
+        //go through name cleaning
+        cleanPlaylist(playlist);
+
+        cachePlaylist(playlist);
+
+
+        VideosAdapter adapter = new VideosAdapter(this, (ArrayList) playlist.getVideos(), this.getFgColor(),this.getBgColor(),this.highlightColor);
 //
+
         ListView listView= (ListView) findViewById(R.id.videos);
         listView.setAdapter(adapter);
 
+    }
+
+    private void cleanPlaylist(YoutubePlaylist playlist) {
+        Iterator<YoutubeVideo> iter= playlist.getVideos().iterator();
+        while(iter.hasNext()){
+            YoutubeVideo vid=iter.next();
+            String title=vid.getTitle();
+            //get the ressources for cleaning
+            title=(title.replace(" - YoyoBlast", ""))
+                    .replace("CLYW Cabin Tutorials - ", "")
+                    .replace("CLYW Cabin Tutorial - ", "")
+                    .replace("Cabin Tutorial - ","")
+                    .replace("Learn to Yo-yo ", "")
+                    .replace("yoyo-france.net - tuto yoyo - debutant - ", "")
+                    .replace("yoyo-france.net - tuto yoyo - intermédiaire - ", "")
+                    .replace("yoyo-france.net - tuto yoyo - ", "")
+                    .replace("blackhop.com - tuto yoyo intermediaire - ", "")
+                    .replace("blackhop.com - tuto intermediaire - ", "")
+                    .replace("Yoyo Trick Tutorial - ", "")
+                    .replace("Yoyo Trick Tutorial-", "")
+                    .replace("Yoyo trick tutorial-", "")
+                    .replace("yoyo tutorial", "")
+                    .replace("Yoyo Tutorial - ", "")
+                    .replace("Yoyo Trick Tutorial ", "")
+                    .replace("1a Tutorial - ", "")
+                    .replace("1a Tutorial ", "")
+                    .replace("1a tutorial ", "")
+                    .replace("4a Tutorial - ", "4a - ");
+            //prettify first letter
+            title = title.substring(0, 1).toUpperCase() + title.substring(1);
+            vid.setTitle(title);
+        }
     }
 
 
@@ -182,42 +234,12 @@ public abstract class PlaylistActivity extends AppCompatActivity {
         LinearLayout vwID = (LinearLayout) parent.findViewById(R.id.expandSection);
         int visibility=vwID.getVisibility();
         if (visibility==View.VISIBLE){
-            AnimationSet set = new AnimationSet(true);
-
-            Animation animation = new AlphaAnimation(1.0f, 0.0f);
-            animation.setDuration(250);
-            set.addAnimation(animation);
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
-            );
-            animation.setDuration(150);
-            set.addAnimation(animation);
-            vwID.startAnimation(set);
-            vwID.setVisibility(View.GONE);
-            ObjectAnimator animation1 = ObjectAnimator.ofFloat(view,
-                    "rotation", 270);
-            animation1.setDuration(400);
-            animation1.start();
+            UI.getInstance().animHideCollapse(vwID);
+            UI.animRotate(view, 270, 400);
         }else{
             //animate visibility
-            AnimationSet set = new AnimationSet(true);
-            Animation animation = new AlphaAnimation(0.0f, 1.0f);
-            animation.setDuration(250);
-            set.addAnimation(animation);
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
-            );
-            animation.setDuration(150);
-            set.addAnimation(animation);
-            vwID.startAnimation(set);
-            vwID.setVisibility(View.VISIBLE);
-            ObjectAnimator animation1 = ObjectAnimator.ofFloat(view,
-                    "rotation", 0);
-            animation1.setDuration(400);
-            animation1.start();
-            //view.setRotation(0);
+            UI.animRevealExpand(vwID);
+            UI.animRotate(view, 360, 400);
         }
     }
 
@@ -226,13 +248,23 @@ public abstract class PlaylistActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // API 5+ solution
-                NavUtils.navigateUpFromSameTask(this);
+                // end activity
+                this.finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        // finish() is called in super: we only override this method to be able to override the transition
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
     public void addLater(View view) {
@@ -246,8 +278,8 @@ public abstract class PlaylistActivity extends AppCompatActivity {
             //toast some confirmation message and remove if necessary
             currentView=view;
             new AlertDialog.Builder(this)
-                    .setTitle("Alert")
-                    .setMessage("Do you really want to remove this video from your 'Watch Later' list ?")
+                    .setTitle(R.string.dialog_title_remove)
+                    .setMessage(R.string.dialog_msg_remove_later)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -274,8 +306,8 @@ public abstract class PlaylistActivity extends AppCompatActivity {
             //toast some confirmation message and remove if necessary
             currentView=view;
             new AlertDialog.Builder(this)
-                    .setTitle("Alert")
-                    .setMessage("Do you really want to remove this video from your 'Social' list ?")
+                    .setTitle(R.string.dialog_title_remove)
+                    .setMessage(R.string.dialog_msg_remove_share)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -299,10 +331,10 @@ public abstract class PlaylistActivity extends AppCompatActivity {
         TextView vwID = (TextView) parent.findViewById(R.id.vidID);
         String vidID = vwID.getText().toString();
         //let's delete
-        TutorialChannel later = TutorialChannel.getByKey(string);
+        TutorialPlaylist later = TutorialPlaylist.getByKey(string);
         new Delete().from(TutorialVideo.class).where("Key = ? and Channel = ?", vidID, later.getId()).execute();
         currentView.setTag(false);
-        ((ImageView) currentView).setColorFilter(currentView.getContext().getResources().getColor(android.R.color.holo_blue_light), PorterDuff.Mode.SRC_ATOP);
+        UI.colorize((ImageView) currentView,null);
     }
 
     public void addFavorite(View view) {
@@ -316,8 +348,8 @@ public abstract class PlaylistActivity extends AppCompatActivity {
             //toast some confirmation message and remove if necessary
             currentView=view;
             new AlertDialog.Builder(this)
-                    .setTitle("Alert")
-                    .setMessage("Do you really want to remove this video from your 'Favorites' list ?")
+                    .setTitle(R.string.dialog_title_remove)
+                    .setMessage(R.string.dialog_msg_remove_favorite)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -342,7 +374,7 @@ public abstract class PlaylistActivity extends AppCompatActivity {
         TextView vwID = (TextView) parent.findViewById(R.id.vidID);
         String vidID = vwID.getText().toString();
         //add to channel
-        TutorialChannel later = TutorialChannel.getByKey(string);
+        TutorialPlaylist later = TutorialPlaylist.getByKey(string);
         //channel is ok, build video model
         TutorialVideo vid = new TutorialVideo();
         vid.channel = later;
@@ -356,8 +388,93 @@ public abstract class PlaylistActivity extends AppCompatActivity {
         vid.defaultThumbnail = (String) imgThumb.getTag(R.id.defaultThumb);
         vid.mediumThumbnail = (String) imgThumb.getTag(R.id.mediumThumb);
         vid.highThumbnail = (String) imgThumb.getTag(R.id.highThumb);
+        TextView vwDuration = (TextView) parent.findViewById(R.id.vidDuration);
+        vid.duration= (String) vwDuration.getTag();
         vid.save();
         view.setTag(true);
-        ((ImageView) view).setColorFilter(view.getContext().getResources().getColor(android.R.color.holo_green_light), PorterDuff.Mode.SRC_ATOP);
+        UI.colorize((ImageView) view, highlightColor);
+        Snackbar.make(view, R.string.msg_video_added, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void expandDescription(View view) {
+
+        LinearLayout llex = (LinearLayout) this.findViewById(R.id.expandDescription);
+        int visibility=llex.getVisibility();
+        if (visibility==View.VISIBLE){
+            UI.getInstance().animHideCollapse(llex);
+            UI.animRotate(view, 270, 400);
+        }else{
+            //animate visibility
+            UI.animRevealExpand(llex);
+            UI.animRotate(view, 360, 400);
+        }
+
+    }
+
+    public void fetchVideos(Handler handler, String playlistId, String apiKey) {
+        new Thread(new GetPlaylistTask(handler,  playlistId, this)).start();
+    }
+
+
+    private void cachePlaylist(YoutubePlaylist playlist) {
+        Log.d("PACP", "Called Playlistactivity cachePlaylist for " + playlist.getID() + " aka " + playlist.getTitle());
+        TutorialPlaylist tutorialPlaylist = TutorialPlaylist.getByKey(playlist.getID());
+        if (tutorialPlaylist == null) {
+            Log.d("PACP","Playlist not found, caching");
+            YoutubeUtils.logPlaylist(playlist);
+            //loading source
+            TutorialSource source = TutorialSource.getByKey(mChannelID);
+            //we did a lookup, store in the database to avoid reparsing json
+            tutorialPlaylist = new TutorialPlaylist();
+            tutorialPlaylist.name = playlist.getTitle();
+            tutorialPlaylist.description = playlist.getDescription();
+            tutorialPlaylist.fetchedAt = new Date();
+            tutorialPlaylist.publishedAt=playlist.getPublishedAt();
+            tutorialPlaylist.defaultThumbnail=playlist.getDefaultThumb().getUrl();
+            tutorialPlaylist.mediumThumbnail=playlist.getMediumThumb().getUrl();
+            tutorialPlaylist.highThumbnail=playlist.getHighThumb().getUrl();
+            tutorialPlaylist.source= source;///problem, how to get the source...
+            tutorialPlaylist.key = playlist.getID();
+            tutorialPlaylist.save();
+            Log.d("PACP", "Playlist cached");
+            //now iterate to store playlists
+            Log.d("PACP", "Caching videos");
+            //if the playlists have videos, we store them too
+            for (YoutubeVideo vid :
+                    playlist.getVideos()  ) {
+                //repeat the deal
+                TutorialVideo vi = new TutorialVideo();
+                Log.d("PACP", "Caching video " + vid.getID() + " aka " + vid.getTitle());
+                vi.channel = tutorialPlaylist;
+                vi.key = vid.getID();
+                vi.name = vid.getTitle();
+                vi.description = vid.getDescription();
+                vi.duration=vid.getDuration();
+                vi.publishedAt = vid.getPublishedAt();
+                vi.defaultThumbnail = vid.getDefaultThumb().getUrl().toString();
+                vi.mediumThumbnail = vid.getMediumThumb().getUrl().toString();
+                vi.highThumbnail = vid.getHighThumb().getUrl().toString();
+                vi.caption=vid.getCaption();
+                vi.save();
+                Log.d("PACP", "Video " + vi.name + " cached");
+            }
+
+        }else{
+            Log.d("PACP", "Playlist " + tutorialPlaylist.name + " found");
+        }
+    }
+
+    public void shareVideo(View view) {
+        ViewGroup parent = (ViewGroup) view.getParent();
+        while (parent.getId() != R.id.parentofExpandable) {
+            parent = (ViewGroup) parent.getParent();
+        }
+        TextView vwID = (TextView) parent.findViewById(R.id.vidID);
+        String vidID = vwID.getText().toString();
+        //
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, YoutubeUtils.getVideoPlayUrl(vidID));
+        intent.setType("text/plain");
+        startActivity(intent);
     }
 }

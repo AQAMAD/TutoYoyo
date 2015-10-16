@@ -2,6 +2,8 @@ package fr.aqamad.youtube;
 
 import java.io.Serializable;
 
+import fr.aqamad.tutoyoyo.model.TutorialVideo;
+
 /**
  * Created by Gregoire on 07/10/2015.
  */
@@ -17,11 +19,52 @@ public class YoutubeVideo implements Serializable {
 
     private String mDescription;
 
+    public String getDuration() {
+        return mDuration;
+    }
+
+    public void setDuration(String mDuration) {
+        this.mDuration = mDuration;
+    }
+
+    public String getPublishedAt() {
+        return mPublishedAt;
+    }
+
+    public void setPublishedAt(String mPublishedAt) {
+        this.mPublishedAt = mPublishedAt;
+    }
+
+    private String mDuration;
+
+    private String mPublishedAt;
+
+    private String mCaption;
+
+    public String getCaption() {
+        return mCaption;
+    }
+
+    public void setCaption(String mCaption) {
+        this.mCaption = mCaption;
+    }
+
 
     public YoutubeVideo(String ID, String Title, String Description) {
         this.mID = ID;
         this.mTitle = Title;
         this.mDescription = Description;
+    }
+
+    public static YoutubeVideo fromModel(TutorialVideo vid){
+        YoutubeVideo newInstance=new YoutubeVideo(vid.key,vid.name,vid.description);
+        newInstance.setDefaultThumb(new YoutubeThumbnail(vid.defaultThumbnail, YoutubeUtils.DEFAULT_WIDTH, YoutubeUtils.DEFAULT_HEIGHT));
+        newInstance.setMediumThumb(new YoutubeThumbnail(vid.mediumThumbnail, YoutubeUtils.MEDIUM_WIDTH, YoutubeUtils.MEDIUM_HEIGHT));
+        newInstance.setHighThumb(new YoutubeThumbnail(vid.highThumbnail, YoutubeUtils.HIGH_WIDTH, YoutubeUtils.HIGH_HEIGHT));
+        newInstance.setDuration(vid.duration);
+        newInstance.setCaption(vid.caption);
+        newInstance.setPublishedAt(vid.publishedAt);
+        return newInstance;
     }
 
     public String getID() {

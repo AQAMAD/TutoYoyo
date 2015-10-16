@@ -10,26 +10,21 @@
         android:layout_gravity="center_vertical|top"
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:layout_gravity="left"
-                android:maxHeight="360px"
-                android:maxWidth="480px"
-                android:adjustViewBounds="true"
-                android:src="@drawable/local_playlists_header" />
+            android:gravity="right"
+            android:background="@drawable/drawer_header"
+        >
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout"
+                android:layout_alignParentTop="false"
+                android:layout_centerInParent="true">
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -37,21 +32,27 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/myTutosChannelTitle"
                     android:id="@+id/textView2"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:layout_gravity="left"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black_overlay"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="24"
+                    />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/myTutosChannelDescription"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:gravity="center"
                     android:id="@+id/textView4" />
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <ListView
             android:layout_width="fill_parent"

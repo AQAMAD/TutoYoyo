@@ -19,6 +19,17 @@ public class YoutubePlaylist implements Serializable {
 
     private String mDescription;
 
+    public String getPublishedAt() {
+        return mPublishedAt;
+    }
+
+    public void setPublishedAt(String mPublishedAt) {
+        this.mPublishedAt = mPublishedAt;
+    }
+
+    private String mPublishedAt;
+
+
     public int getNumberToFetch() {
         return mNumberToFetch;
     }
@@ -124,5 +135,28 @@ public class YoutubePlaylist implements Serializable {
         return theClone;
     }
 
+    public YoutubeVideo findByKey(String key){
+        for (YoutubeVideo vid :
+                getVideos()) {
+            if (vid.getID().equals(key)) {
+                return vid;
+            }
+            }
+        return null;
+    }
 
+    public String getVideoIds() {
+        StringBuilder sb=new StringBuilder();
+        boolean done=false;
+        for (YoutubeVideo vid :
+                getVideos()) {
+            if(!done){
+                done=true;
+            }else{
+                sb.append(",");
+            }
+            sb.append(vid.getID());
+        }
+        return sb.toString();
+    }
 }

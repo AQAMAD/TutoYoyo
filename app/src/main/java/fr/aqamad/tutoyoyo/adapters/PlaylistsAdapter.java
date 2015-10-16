@@ -1,5 +1,6 @@
 package fr.aqamad.tutoyoyo.adapters;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -65,13 +66,12 @@ public class PlaylistsAdapter extends ArrayAdapter<YoutubePlaylist> {
         //store id for later use
         plID.setText(pls.getID());
 
-        //load image with picasso
-        PicassoHelper.with(parent.getContext()).load(pls.getHighThumb().getUrl().toString())
+        String thumb=pls.getHighThumb().getUrl().toString();
+        PicassoHelper.loadWeborDrawable(parent.getContext(),thumb).centerCrop()
                 .placeholder(R.drawable.waiting)
-                .centerCrop()
                 .resize(pls.getHighThumb().getWidth(),pls.getHighThumb().getHeight())
-                .into(imgThumb)
-        ;
+                .into(imgThumb);
+
         // Return the completed view to render on screen
         return convertView;
     }

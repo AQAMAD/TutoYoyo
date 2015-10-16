@@ -9,15 +9,15 @@ import java.net.URL;
  */
 public class YoutubeThumbnail implements Serializable {
 
-    private URL mUrl;
+    private String mUrl;
     private int mWidth;
     private int mHeight;
 
-    public URL getUrl() {
+    public String getUrl() {
         return mUrl;
     }
 
-    public void setUrl(URL mUrl) {
+    public void setUrl(String mUrl) {
         this.mUrl = mUrl;
     }
 
@@ -37,15 +37,10 @@ public class YoutubeThumbnail implements Serializable {
         this.mHeight = mHeight;
     }
 
-    public YoutubeThumbnail(URL mUrl, int mWidth, int mHeight) {
+    public YoutubeThumbnail(String mUrl, int mWidth, int mHeight) {
         this.mUrl = mUrl;
         this.mWidth = mWidth;
         this.mHeight = mHeight;
     }
 
-    public YoutubeThumbnail(String mUrl, int mWidth, int mHeight) throws MalformedURLException {
-        this.mUrl = new URL(mUrl);
-        this.mWidth = mWidth;
-        this.mHeight = mHeight;
-    }
 }

@@ -1,25 +1,15 @@
 package fr.aqamad.tutoyoyo.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.Collections;
-import java.util.Comparator;
-
-import fr.aqamad.tutoyoyo.MainActivity;
 import fr.aqamad.tutoyoyo.R;
-import fr.aqamad.tutoyoyo.base.LocalFragment;
 import fr.aqamad.tutoyoyo.base.SourceFragment;
-import fr.aqamad.tutoyoyo.tasks.GetLocalChannelTask;
-import fr.aqamad.youtube.YoutubeChannel;
-import fr.aqamad.youtube.YoutubePlaylist;
 
 
 /**
@@ -30,7 +20,7 @@ import fr.aqamad.youtube.YoutubePlaylist;
  * Use the {@link MyTutsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTutsFragment extends LocalFragment {
+public class MyTutsFragment extends SourceFragment {
 
     public MyTutsFragment() {
         Log.d("MTF", "MyTutsFragment constructor");

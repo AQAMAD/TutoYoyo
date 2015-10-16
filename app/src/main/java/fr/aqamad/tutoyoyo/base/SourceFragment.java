@@ -4,27 +4,29 @@ package fr.aqamad.tutoyoyo.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
-import fr.aqamad.tutoyoyo.LocalPlaylistActivity;
-import fr.aqamad.tutoyoyo.PrefetchPlaylistActivity;
+import fr.aqamad.tutoyoyo.PlaylistActivity;
 import fr.aqamad.tutoyoyo.R;
-import fr.aqamad.tutoyoyo.YoutubePlaylistActivity;
 import fr.aqamad.tutoyoyo.adapters.PlaylistsAdapter;
-import fr.aqamad.tutoyoyo.tasks.GetYouTubeChannelTask;
+import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
+import fr.aqamad.tutoyoyo.model.TutorialSource;
+import fr.aqamad.tutoyoyo.model.TutorialVideo;
+import fr.aqamad.tutoyoyo.tasks.GetChannelTask;
 import fr.aqamad.youtube.YoutubeChannel;
+import fr.aqamad.youtube.YoutubePlaylist;
+import fr.aqamad.youtube.YoutubeVideo;
 
 public abstract class SourceFragment extends Fragment {
 
@@ -49,12 +51,6 @@ public abstract class SourceFragment extends Fragment {
     private YoutubeChannel mChannel;
 
     public abstract AdapterView GetPlaylistView();
-
-    public abstract void fetchChannel(Handler handler,Activity act);
-
-    public abstract Class getPlaylistActivityClass();
-
-    public abstract void prepareChannel();
 
     private OnFragmentInteractionListener mListener;
 
@@ -101,7 +97,7 @@ public abstract class SourceFragment extends Fragment {
             mChannel = (YoutubeChannel) savedInstanceState.getSerializable(ARG_CHANNELOBJECT);
             Log.d("SF","SourceFragment onCreate with saved state");
         }else{
-            Log.d("SF","SourceFragment onCreate");
+            Log.d("SF", "SourceFragment onCreate");
         }
     }
 
@@ -130,12 +126,10 @@ public abstract class SourceFragment extends Fragment {
                 //we got the view, let's just toast something here
                 //we will choose the implementation class dependant on the base fragment class type
                 //class identification magic
-                Class cl = getPlaylistActivityClass();
-
                 TextView vwID = (TextView) view.findViewById(R.id.plID);
                 String plID = vwID.getText().toString();
-
-                Intent intent = new Intent(parentActivity, cl);
+                Log.d("SFFV","In sourceFragment fillView, onItemClickListener called for ID : " + plID);
+                Intent intent = new Intent(parentActivity, PlaylistActivity.class);
 
                 for (int i = 0; i < getChannel().getPlaylists().size(); i++) {
                     if (plID.equals(getChannel().getPlaylists().get(i).getID())) {
@@ -143,15 +137,19 @@ public abstract class SourceFragment extends Fragment {
                     }
                 }
 
+                //intent.putExtra(PlaylistActivity.PLAYLIST, plID);
                 intent.putExtra(PlaylistActivity.BGCOLOR, getBackGroundColor());
                 intent.putExtra(PlaylistActivity.FGCOLOR, getForeGroundColor());
+                intent.putExtra(PlaylistActivity.CHANNEL, mChannel.getID());
                 startActivity(intent);
+
+                parentActivity.overridePendingTransition(R.anim.activity_out, R.anim.activity_in);
             }
         });
     }
 
     public String getChannelId() {
-        Log.d("SF","SourceFragment getChannelID : " + mChannelID);
+        Log.d("SF", "SourceFragment getChannelID : " + mChannelID);
         return mChannelID;
     }
 
@@ -216,15 +214,89 @@ public abstract class SourceFragment extends Fragment {
 
     private void populateListWithVideos(Message msg) {
         // Retreive the videos are task found from the data bundle sent back
-        YoutubeChannel channel = (YoutubeChannel) msg.getData().get(GetYouTubeChannelTask.CHANNEL);
+        YoutubeChannel channel = (YoutubeChannel) msg.getData().get(GetChannelTask.CHANNEL);
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
-
         //postProcessing
         this.setChannel(channel);
         this.prepareChannel();
-
+        //caching
+        cacheChannel(channel);
         fillView();
 
     }
+
+    private void cacheChannel(YoutubeChannel channel) {
+        Log.d("SFCC", "Called SourceFragment cacheChannel for " + channel.getID() + " aka " + channel.getTitle());
+        TutorialSource source = TutorialSource.getByKey(channel.getID());
+        if (source == null) {
+            Log.d("SFCC","Channel not found, caching");
+            //we did a lookup, store in the database to avoid reparsing json
+            source = new TutorialSource();
+            source.name = channel.getTitle();
+            source.description = channel.getDescription();
+            source.lastRefreshed = new Date();
+            source.key = channel.getID();
+            source.save();
+            Log.d("SFCC", "Channel cached");
+            //now iterate to store playlists
+            Log.d("SFCC", "Caching playlists");
+            for (YoutubePlaylist pl :
+                    channel.getPlaylists()) {
+                TutorialPlaylist ch = new TutorialPlaylist();
+                Log.d("SFCC", "Caching playlist" + pl.getID() + " aka " + pl.getTitle());
+                ch.source = source;
+                ch.key = pl.getID();
+                ch.name = pl.getTitle();
+                ch.description = pl.getDescription();
+                ch.fetchedAt = new Date();
+                ch.publishedAt = pl.getPublishedAt();
+                ch.defaultThumbnail = pl.getDefaultThumb().getUrl().toString();
+                ch.mediumThumbnail = pl.getMediumThumb().getUrl().toString();
+                ch.highThumbnail = pl.getHighThumb().getUrl().toString();
+                ch.save();
+                Log.d("SFCC", "Playlist " + ch.name + " cached");
+                Log.d("SFCC", "Caching videos");
+                //if the playlists have videos, we store them too
+                for (YoutubeVideo vid :
+                    pl.getVideos()  ) {
+                    //repeat the deal
+                    TutorialVideo vi = new TutorialVideo();
+                    Log.d("SFCC", "Caching video " + vid.getID() + " aka " + vid.getTitle());
+                    vi.channel = ch;
+                    vi.key = vid.getID();
+                    vi.name = vid.getTitle();
+                    vi.description = vid.getDescription();
+                    vi.duration=vid.getDuration();
+                    vi.publishedAt = vid.getPublishedAt();
+                    vi.defaultThumbnail = vid.getDefaultThumb().getUrl().toString();
+                    vi.mediumThumbnail = vid.getMediumThumb().getUrl().toString();
+                    vi.highThumbnail = vid.getHighThumb().getUrl().toString();
+                    vi.caption=vid.getCaption();
+                    vi.save();
+                    Log.d("SFCC", "Video " + vi.name + " cached");
+                }
+            }
+
+        }else{
+            Log.d("SFCC", "Source " + source.name + " found");
+        }
+    }
+
+    public void fetchChannel(Handler handler,Activity act) {
+        new Thread(new GetChannelTask(handler,  getChannelId() ,act)).start();
+    }
+
+    public void prepareChannel() {
+        //todo : par défaut, on trie les playlists
+        YoutubeChannel channel=this.getChannel();
+        //Sorting by title
+        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
+            @Override
+            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
+                return pl1.getTitle().compareTo(pl2.getTitle());
+            }
+        });
+    }
+
 }

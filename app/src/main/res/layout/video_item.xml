@@ -40,17 +40,27 @@
                 android:textColor="@android:color/holo_orange_dark"
                 android:onClick="openVideo"
                 android:text="Name this is a long name a very long name" />
+            <TextView
+                android:id="@+id/vidDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/holo_orange_dark"
+                android:text="00:00"
+                android:layout_below="@+id/vidName"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                >
+                android:layout_alignParentEnd="true">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_view"
+                    android:src="@android:drawable/ic_menu_recent_history"
                     android:layout_gravity="right"
                     android:onClick="addLater"
                     android:id="@+id/btnLater"
@@ -58,7 +68,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_share"
+                    android:src="@android:drawable/ic_menu_upload"
                     android:layout_gravity="right"
                     android:onClick="addShare"
                     android:id="@+id/btnShare"
@@ -67,7 +77,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_add"
+                    android:src="@android:drawable/btn_star"
                     android:layout_gravity="right"
                     android:onClick="addFavorite"
                     android:id="@+id/btnFavorites"
@@ -90,19 +100,31 @@
                 android:layout_height="wrap_content"
                 android:text="HomeTown" />
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/expandButton"
+                android:onClick="expandSection"
+                android:src="@android:drawable/ic_menu_more"
+                android:rotation="270"
+                />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_share"
+                    android:onClick="shareVideo"
+                    />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/expandButton"
-            android:onClick="expandSection"
-            android:src="@android:drawable/ic_menu_more"
-            android:rotation="270"
-            android:animateLayoutChanges="true"
-            android:layout_gravity="right"/>
     </LinearLayout>
 
 

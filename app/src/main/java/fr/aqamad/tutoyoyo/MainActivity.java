@@ -1,14 +1,14 @@
 package fr.aqamad.tutoyoyo;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.app.FragmentManager;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,25 +19,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.aqamad.tutoyoyo.adapters.PlaylistsAdapter;
-import fr.aqamad.tutoyoyo.base.PlaylistActivity;
-import fr.aqamad.tutoyoyo.base.LocalFragment;
-import fr.aqamad.tutoyoyo.base.PrefetchFragment;
 import fr.aqamad.tutoyoyo.base.SourceFragment;
+import fr.aqamad.tutoyoyo.fragments.BlackhopFragment;
 import fr.aqamad.tutoyoyo.fragments.ClywFragment;
 import fr.aqamad.tutoyoyo.fragments.MyTutsFragment;
 import fr.aqamad.tutoyoyo.fragments.YoyoBlastFragment;
 import fr.aqamad.tutoyoyo.fragments.YoyoExpertFragment;
+import fr.aqamad.tutoyoyo.fragments.YoyoThrowerFragment;
+import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
-import fr.aqamad.tutoyoyo.tasks.GetYouTubeChannelTask;
-import fr.aqamad.youtube.YoutubeChannel;
+import fr.aqamad.tutoyoyo.model.TutorialVideo;
+import fr.aqamad.youtube.YoutubeUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     private ClywFragment mClyw;
     private YoyoExpertFragment mYYE;
     private YoyoBlastFragment mYYB;
+    private YoyoThrowerFragment mMrYo;
+    private BlackhopFragment mBhop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +57,8 @@ public class MainActivity extends AppCompatActivity
         mClyw=ClywFragment.newInstance(getString(R.string.CLYW_CHANNEL));
         mYYE=YoyoExpertFragment.newInstance(getString(R.string.YOYOEXPERT_CHANNEL));
         mYYB=YoyoBlastFragment.newInstance(getString(R.string.YOYOBLAST_CHANNEL));
+        mMrYo=YoyoThrowerFragment.newInstance(getString(R.string.YOYOTHROWER_CHANNEL));
+        mBhop=BlackhopFragment.newInstance(getString(R.string.BLACKHOP_CHANNEL));
 
         setContentView(R.layout.activity_main);
 
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
             Log.d("MA", "Mainactivity onCreate bundle");
             String state=savedInstanceState.getString("CurrentFragment");
             if (state!=null){
+                Log.d("MA", "Mainactivity onCreate bundle, state=" + state);
                 if (state.equals("")){
                     View frbck = findViewById(R.id.frameBackground);
                     frbck.setVisibility(View.VISIBLE);
@@ -127,8 +128,14 @@ public class MainActivity extends AppCompatActivity
         if (mYYB.isAdded()){
             getFragmentManager().putFragment(outState, "mYYB", mYYB);
         }
+        if (mMrYo.isAdded()){
+            getFragmentManager().putFragment(outState, "mMrYo", mMrYo);
+        }
+        if (mBhop.isAdded()){
+            getFragmentManager().putFragment(outState, "mBhop", mBhop);
+        }
         if (currentFragment!=null){
-            outState.putString("CurrentFragment",currentFragment.getChannelId());
+            outState.putString("CurrentFragment", currentFragment.getChannelId());
         }
         Log.d("MA", "Mainactivity onSaveInstanceState");
     }
@@ -182,10 +189,45 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this,SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }else if (id==R.id.action_about){
+            showAboutBox();
+            return true;
+        }else if (id==R.id.action_credits){
+            showCreditsBox();
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showCreditsBox() {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle(getString(R.string.dialog_title_credits));
+        alertDialog.setMessage(getString(R.string.dialog_msg_credits));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private void showAboutBox() {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle(getString(R.string.dialog_title_about));
+        alertDialog.setMessage(getString(R.string.dialog_msg_about));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -197,48 +239,76 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-
         //Snackbar.make(navigationView, item.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
         item.setChecked(true);
 
-        if (id == R.id.nav_my) {
-            //Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
-            currentFragment = mMyTuts;
+        handleNavigation(id);
 
-        } else if (id == R.id.nav_yyb) {
-
-            currentFragment  = mYYB;
-
-        } else if (id == R.id.nav_clyw) {
-            currentFragment  = mClyw;
-
-        } else if (id == R.id.nav_yye) {
-            currentFragment  = mYYE;
-
-        } else if (id == R.id.nav_share) {
-
+        if (id == R.id.nav_share) {
+            //handle other actions
+            //get the "social playlist" and share it
+            TutorialPlaylist pl=TutorialPlaylist.getByKey(getString(R.string.localSocialKey));
+            if (pl.videos().size()==0){
+                Snackbar.make(navigationView, "First add something to your social playlist !!", Snackbar.LENGTH_LONG).show();
+            }else{
+                //build array
+                ArrayList<String> videoUrls = new ArrayList<String>();
+                for (TutorialVideo vid :
+                        pl.videos()) {
+                    videoUrls.add(YoutubeUtils.getVideoPlayUrl(vid.key));
+                }
+                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                intent.putStringArrayListExtra(Intent.EXTRA_STREAM, videoUrls);
+                intent.setType("text/plain");
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_send) {
-
+            //like sending for instance
         }
-
-        FragmentManager fragmentManager = getFragmentManager();
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.frame, currentFragment);
-
-        fragmentTransaction.addToBackStack(null);
-
-        fragmentTransaction.commit();
-
-        hideHome();
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
         Log.d("MA", "Mainactivity onNavigationItemSelected end");
 
         return true;
+    }
+
+    private void handleNavigation(int id) {
+        SourceFragment newFragment=null;
+
+        if (id == R.id.nav_my) {
+            //Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
+            newFragment = mMyTuts;
+        } else if (id == R.id.nav_yyb) {
+            newFragment  = mYYB;
+        } else if (id == R.id.nav_clyw) {
+            newFragment  = mClyw;
+        } else if (id == R.id.nav_yye) {
+            newFragment  = mYYE;
+        } else if (id == R.id.nav_yyt) {
+            newFragment  = mMrYo;
+        } else if (id == R.id.nav_bhop) {
+            newFragment  = mBhop;
+        }
+
+        if (newFragment!=null){
+            if (newFragment!=currentFragment){
+
+                currentFragment=newFragment;
+
+                FragmentManager fragmentManager = getFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.frame, currentFragment);
+
+                fragmentTransaction.addToBackStack(null);
+
+                fragmentTransaction.commit();
+
+                hideHome();
+            }
+        }
     }
 
     private void hideHome() {
@@ -248,4 +318,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void showAboutBox(View view) {
+        showAboutBox();
+    }
 }

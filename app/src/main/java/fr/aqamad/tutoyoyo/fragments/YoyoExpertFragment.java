@@ -1,14 +1,11 @@
 package fr.aqamad.tutoyoyo.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,9 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
-import fr.aqamad.tutoyoyo.base.PrefetchFragment;
 import fr.aqamad.tutoyoyo.base.SourceFragment;
-import fr.aqamad.tutoyoyo.tasks.GetYouTubeChannelTask;
 import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 
@@ -32,7 +27,7 @@ import fr.aqamad.youtube.YoutubePlaylist;
  * Use the {@link YoyoExpertFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class YoyoExpertFragment extends PrefetchFragment {
+public class YoyoExpertFragment extends SourceFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     /**
@@ -55,7 +50,7 @@ public class YoyoExpertFragment extends PrefetchFragment {
         // Required empty public constructor
         setForeGroundColor(R.color.yoyoExpert);
         setBackGroundColor(android.R.color.black);
-        setItemRessourceId(R.layout.yoyo_expert_playlist_item);
+        setItemRessourceId(R.layout.box_playlist_item);
     }
 
     @Override

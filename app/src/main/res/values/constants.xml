@@ -9,6 +9,8 @@
     <string name="CLYW_CHANNEL">UCXB5-ZaTfNXF6P3CBQfvE5g</string>
     <string name="YOYOEXPERT_CHANNEL">YoyoExpertChannel</string>
     <string name="YOYOBLAST_CHANNEL">UCJVkKRR1hf0aSZzrELEATRg</string>
+    <string name="YOYOTHROWER_CHANNEL">UC7iE1IfAFlLmEeHqU0a_MSQ</string>
+    <string name="BLACKHOP_CHANNEL">UCEYcymLnFYaTC8lv1iOaf4A</string>
 
     <item type="id" name="standardThumb" />
     <item type="id" name="mediumThumb" />

@@ -69,5 +69,13 @@ public class YoutubeChannel implements Serializable{
         }
         return null;
     }
-
+    public YoutubePlaylist findByKey(String key){
+        for (YoutubePlaylist pls :
+                getPlaylists()) {
+            if (pls.getID().equals(key)) {
+                return pls;
+            }
+        }
+        return null;
+    }
 }

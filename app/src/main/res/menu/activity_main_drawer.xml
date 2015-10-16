@@ -4,12 +4,16 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_my" android:icon="@android:drawable/ic_menu_save"
             android:title="@string/mytutos" />
+        <item android:id="@+id/nav_yyb" android:icon="@drawable/logo_yoyoblast_big_menu"
+            android:title="@string/yoyoblast" />
         <item android:id="@+id/nav_yye" android:icon="@drawable/logo_yoyoexpert_big_menu"
             android:title="@string/yoyoexpert" />
         <item android:id="@+id/nav_clyw" android:icon="@drawable/logo_clyw_big_menu"
             android:title="@string/clyw" />
-        <item android:id="@+id/nav_yyb" android:icon="@drawable/logo_yoyoblast_big_menu"
-            android:title="@string/yoyoblast" />
+        <item android:id="@+id/nav_yyt" android:icon="@drawable/logo_yoyothrower_big_menu"
+            android:title="@string/yoyothrower" />
+        <item android:id="@+id/nav_bhop" android:icon="@drawable/logo_blackhop_big_menu"
+            android:title="@string/blackhop" />
     </group>
 
     <item android:title="@string/Social">

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TutoYoyo</string>
+    <string name="app_name">YoyoTuts</string>
     <string name="action_settings">Réglages</string>
     <string name="navigation_drawer_close">Fermer menu</string>
     <string name="navigation_drawer_open">Ouvrir menu</string>
-    <string name="clyw">Caribou lodge</string>
+    <string name="clyw">Caribou lodge (en)</string>
     <string name="mytutos">Mes tutos</string>
     <string name="yoyoblast">Yoyoblast</string>
-    <string name="yoyoexpert">Yoyoexpert</string>
+    <string name="yoyoexpert">Yoyoexpert (en)</string>
     <string name="Send">Envoyer</string>
     <string name="Share">Partager</string>
     <string name="Social">Social</string>
-    <string name="welcomeTitle">Bienvenue dans TutoYoyo</string>
+    <string name="welcomeTitle">Bienvenue dans Yoyotuts</string>
     <string name="welcomeText">Cette application a été conçue pour vous aider à apprendre et progresser dans la pratique de votre hobby, et founir un accès facile et rapide à vos tutoriels préféres. L\'équipe souhaite remercier les internautes ayant produit les vidéos indexées ici pour leur soutien à ce projet et à la communauté. Vous pouvez commencer par ouvrir le menu et jeter un coup d\'oeuil aux sources de tutoriels que nous avons retenues pour vous. Quand vous aurez trouvé un tutoriel qui vous intéresse, cliquez simplement sur le bouton "Ajouter" pour l\'ajouter à vos tutoriels. Les listes contenues dans vos tutoriels peuvent ètre synchronisées pour une lecture offline. Ouvrez une de ces vidéos et découvrez nos fonctionnalités de lecture avancées, comme le ralenti, la lecteure en boucle ou le punch in/out.</string>
     <string name="favorites">Favoris</string>
     <string name="favoritesDesc">Mettez ici vos tutos favoris</string>
@@ -21,4 +21,19 @@
     <string name="shareableDesc">Placez ici les tutoriels que vous souhaitez faire découvrir à vos amis.</string>
     <string name="watchLater">A voir plus tard</string>
     <string name="watchLaterDesc">Mettez dans cette liste les tutoriels que vous souhaiterez revoir ultérieurment.</string>
+    <string name="action_thanks">Remerciements</string>
+    <string name="action_about">A propos</string>
+    <string name="dialog_title_about">A propos</string>
+    <string name="dialog_title_credits">Remerciements</string>
+    <string name="dialog_title_remove">Supprimer</string>
+    <string name="msg_video_added">La vidéo à été ajoutée</string>
+    <string name="myTutosChannelDescription">Voici vos listes personnelles de tutoriels.</string>
+    <string name="myTutosChannelTitle">Mes tutoriels</string>
+    <string name="dialog_msg_remove_favorite">Etes vous sûr de vouloir supprimer cette vidéo de vos \'Favoris\' ?</string>
+    <string name="dialog_msg_remove_later">Etes vous sûr de vouloir supprimer cette vidéo de votre liste \'A voir plus tard\' ?</string>
+    <string name="dialog_msg_remove_share">Etes vous sûr de vouloir supprimer cette vidéo de votre liste \'A partager\' ?</string>
+    <string name="dialog_msg_about">La mission de cette application est de référencer et de vous vous fournir un accès rapide à vos tutoriels favoris.\n Commencez par ouvrir le menu de gauche et visiter les sources de tutos référencées, quand une des vidéos vous plaît, cliquez sur un des boutons pour l\'ajouter à l\'une de vos listes personnelles.\n Quand vous aurez quelques vidéos dans vos listes, vous pourrez les partager avec vos amis.\n Pour une consultation hors-connexion, nous recommandons l\'excellente appli YTD de dentex (http://dentex.github.io/apps/youtubedownloader).</string>
+    <string name="dialog_msg_credits">Les créateurs aimeraient remercier, sans ordre particulier : \n  -Andre Boulay de yoyoeXpert\n  -Steve Brown et Chris Mikulin de Caribou Lodge\n  -Colinn de YoyoBlast\n  -Jeremy Meugens de MrYoyoThrower \n -Emmanuel Gabriel de Blackhop \n\n pour leur permission d\'indexer leur contenu, et tout simplement parce qu\'ils sont géniaux .</string>
+    <string name="yoyothrower">MrYoyothrower (en)</string>
+    <string name="blackhop">Blackhop.com</string>
 </resources>

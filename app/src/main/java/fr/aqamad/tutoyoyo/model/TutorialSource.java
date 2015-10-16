@@ -1,6 +1,7 @@
 package fr.aqamad.tutoyoyo.model;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
@@ -8,6 +9,7 @@ import com.activeandroid.Configuration;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.Date;
@@ -32,8 +34,8 @@ public class TutorialSource extends Model {
     @Column(name = "LastRefreshed")
     public Date lastRefreshed;
 
-    public List<TutorialChannel> channels() {
-        return getMany(TutorialChannel.class, "Source");
+    public List<TutorialPlaylist> channels() {
+        return getMany(TutorialPlaylist.class, "Source");
     }
 
     public static List<TutorialSource> getAll() {
@@ -43,11 +45,38 @@ public class TutorialSource extends Model {
                 .execute();
     }
 
-    public static void initializeDB(Application app) {
+    public static void clearDB() {
+        clearViewed();
+        new Delete().from(TutorialVideo.class).execute();
+        new Delete().from(TutorialPlaylist.class).execute();
+        new Delete().from(TutorialSource.class).execute();
+    }
+
+    public static void clearViewed() {
+        new Delete().from(TutorialSeenVideo.class).execute();
+    }
+    public static void clearCache(Context app) {
+        new Delete().from(TutorialVideo.class).where("Channel in (select Id from Channels where Source in (select Id from Sources where Key <> '" + app.getString(R.string.localChannelKey) + "'))").execute();
+        new Delete().from(TutorialPlaylist.class).where("Source in (select Id from Sources where Key <> '" + app.getString(R.string.localChannelKey) + "')").execute();
+        new Delete().from(TutorialSource.class).where("Key <> '" + app.getString(R.string.localChannelKey) + "'").execute();
+    }
+
+
+    public static void rebuildDB(Context app){
+        clearDB();
+        initializeData(app);
+    }
+
+    public static void initializeDB(Context app) {
         Configuration dbConfiguration = new Configuration.Builder( app ).setDatabaseName("TutoYoyo.db").create();
         ActiveAndroid.initialize(dbConfiguration);
         //
         Log.d("initDB", "Initialise DB called");
+        initializeData(app);
+
+    }
+
+    private static void initializeData(Context app) {
         //Create our tutorial sources
         //First is the "My tuts" source
         TutorialSource myTuts=new TutorialSource();
@@ -57,7 +86,7 @@ public class TutorialSource extends Model {
         myTuts.lastRefreshed=new Date();
         myTuts.save();
         //create channels
-        TutorialChannel tmpChannel=new TutorialChannel();
+        TutorialPlaylist tmpChannel=new TutorialPlaylist();
         tmpChannel.source=myTuts;
         tmpChannel.name=app.getString(R.string.favorites);
         tmpChannel.key=app.getString(R.string.localFavoritesKey);
@@ -67,7 +96,7 @@ public class TutorialSource extends Model {
         tmpChannel.highThumbnail=tmpChannel.mediumThumbnail;
         tmpChannel.save();
         //create channels
-        tmpChannel=new TutorialChannel();
+        tmpChannel=new TutorialPlaylist();
         tmpChannel.source=myTuts;
         tmpChannel.name=app.getString(R.string.watchLater);
         tmpChannel.key=app.getString(R.string.localLaterKey);
@@ -77,7 +106,7 @@ public class TutorialSource extends Model {
         tmpChannel.highThumbnail=tmpChannel.mediumThumbnail;
         tmpChannel.save();
         //create channels
-        tmpChannel=new TutorialChannel();
+        tmpChannel=new TutorialPlaylist();
         tmpChannel.source=myTuts;
         tmpChannel.name=app.getString(R.string.shareable);
         tmpChannel.key=app.getString(R.string.localSocialKey);
@@ -86,26 +115,24 @@ public class TutorialSource extends Model {
         tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;
         tmpChannel.highThumbnail=tmpChannel.mediumThumbnail;
         tmpChannel.save();
-//        //now create the Yoyoblast channel
+//        //now create the Yoyoblast cache channel
 //        myTuts=new TutorialSource();
 //        myTuts.name="Yoyoblast(fr)";
 //        myTuts.description="Yoyo store and Tutorials (Apprendre à faire du yoyo).";
 //        myTuts.lastRefreshed=null;
 //        myTuts.save();
-//        //now create the Yoyoexpert channel
+//        //now create the Yoyoexpert cache channel
 //        myTuts=new TutorialSource();
 //        myTuts.name="YoyoExpert";
 //        myTuts.description="Make the simple amazing !";
 //        myTuts.lastRefreshed=null;
 //        myTuts.save();
-//        //now create the various channel
+//        //now create the clyw  cache channel
 //        myTuts=new TutorialSource();
 //        myTuts.name="Other sources";
 //        myTuts.description="Various sources from all over the world";
 //        myTuts.lastRefreshed=null;
 //        myTuts.save();
-
-
     }
 
     public static TutorialSource getByName(String channelId) {

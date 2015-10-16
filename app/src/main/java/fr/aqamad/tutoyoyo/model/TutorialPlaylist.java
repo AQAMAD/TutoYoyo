@@ -5,13 +5,14 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Gregoire on 09/10/2015.
  */
 @Table(name="Channels")
-public class TutorialChannel extends Model {
+public class TutorialPlaylist extends Model {
     @Column(name = "Name")
     public String name;
 
@@ -33,13 +34,19 @@ public class TutorialChannel extends Model {
     @Column(name = "Source")
     public TutorialSource source;
 
+    @Column(name = "PublishedAt")
+    public String publishedAt;
+
+    @Column(name = "FetchedAt")
+    public Date fetchedAt;
+
     public List<TutorialVideo> videos() {
         return getMany(TutorialVideo.class, "Channel");
     }
 
-    public static TutorialChannel getByKey(String keyId) {
+    public static TutorialPlaylist getByKey(String keyId) {
         return new Select()
-                .from(TutorialChannel.class)
+                .from(TutorialPlaylist.class)
                 .where("Key = ?",keyId)
                 .orderBy("Name ASC")
                 .executeSingle();

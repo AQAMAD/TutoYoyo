@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Database and Cache">
+
+        <Preference android:title="Clear Cache"
+            android:key="@string/btn_pref_clear_cache_key"
+            android:summary="Clear out your cached content, you will lose nothing at all"/>
+
+        <Preference android:title="Clear Viewed vids"
+            android:key="@string/btn_pref_clear_viewed_key"
+            android:summary="Clear out your \'viewed\' status, you will lose nothing else"/>
+
+        <Preference android:title="Clear Database"
+            android:key="@string/btn_pref_clear_database_key"
+            android:summary="Clear out your database and cached content, you will lose your viewed statuses and personnal playlists"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>
