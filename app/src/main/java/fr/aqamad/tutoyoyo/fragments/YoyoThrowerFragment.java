@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.base.SourceFragment;
@@ -48,7 +52,7 @@ public class YoyoThrowerFragment extends SourceFragment {
         // Required empty public constructor
         setForeGroundColor(android.R.color.holo_blue_light);
         setBackGroundColor(android.R.color.black);
-        setItemRessourceId(R.layout.box_playlist_item);
+        setItemRessourceId(R.layout.playlist_item_box);
     }
 
     @Override
@@ -75,6 +79,25 @@ public class YoyoThrowerFragment extends SourceFragment {
                 iter.remove();
             }
         }
+
+        //Sorting by custom order
+        //playlist order
+        String[] plsOrder={"Beginner Tricks","Sport Ladder","Quick and Easy tricks",
+                "Mounts","Binds, Snap starts and string tension","Snap Start Tutorial Series",
+                "Difficulty 1","Difficulty 2","Difficulty 3",
+                "Difficulty 4","Difficulty 5","4a/Offstring",
+                "Repeaters","How to Build a Combo","Pun Tutorials"};
+        final List<String> plsList= Arrays.asList(plsOrder);
+
+
+        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
+            @Override
+            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
+                int pl1Index = plsList.indexOf(pl1.getTitle());
+                int pl2Index = plsList.indexOf(pl2.getTitle());
+                return pl1Index - pl2Index;
+            }
+        });
 
     }
 }

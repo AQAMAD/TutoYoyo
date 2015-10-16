@@ -1,9 +1,7 @@
 package fr.aqamad.tutoyoyo.adapters;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.graphics.Color;
-import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
+import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.youtube.YoutubePlaylist;
 
 /**
@@ -30,13 +26,15 @@ public class PlaylistsAdapter extends ArrayAdapter<YoutubePlaylist> {
     private int foreGroundColor;
     private int backGroundColor;
     private int itemResId;
+    private ScreenSize screenSize;
 
-    public PlaylistsAdapter(Context context, ArrayList<YoutubePlaylist> playlists,int foregroundColor,int backgroundColor,int ItemResId) {
+    public PlaylistsAdapter(Context context, ArrayList<YoutubePlaylist> playlists, ScreenSize screenSize,int foregroundColor,int backgroundColor,int ItemResId) {
         super(context, 0, playlists);
         mlist=playlists;
         this.foreGroundColor=foregroundColor;
         this.backGroundColor=backgroundColor;
         this.itemResId=ItemResId;
+        this.screenSize = screenSize;
     }
 
     @Override
@@ -65,11 +63,15 @@ public class PlaylistsAdapter extends ArrayAdapter<YoutubePlaylist> {
         plDesc.setTextColor(getContext().getResources().getColor(foreGroundColor));
         //store id for later use
         plID.setText(pls.getID());
-
+        //calculate sizes
+        int tWidth= (int) (screenSize.getWidth()/3);
+        Log.d("PA.GV", "Calculated Width is : " + tWidth);
         String thumb=pls.getHighThumb().getUrl().toString();
-        PicassoHelper.loadWeborDrawable(parent.getContext(),thumb).centerCrop()
+        PicassoHelper.loadWeborDrawable(parent.getContext(), thumb)
+//                .centerCrop()
                 .placeholder(R.drawable.waiting)
-                .resize(pls.getHighThumb().getWidth(),pls.getHighThumb().getHeight())
+                .resize(tWidth,0)
+//                .resize(pls.getHighThumb().getWidth(),pls.getHighThumb().getHeight())
                 .into(imgThumb);
 
         // Return the completed view to render on screen

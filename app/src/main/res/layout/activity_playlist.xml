@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="fr.aqamad.tutoyoyo.PlaylistActivity"
     android:id="@+id/playContainer">
 
@@ -28,13 +26,14 @@
                 android:onClick="expandDescription"
                 android:src="@android:drawable/ic_menu_more"
                 android:rotation="270"
-                android:layout_gravity="right" />
+                android:layout_gravity="top|right" />
 
             <RelativeLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="top">
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -63,8 +62,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imgPlaylistThumb"
-                android:layout_gravity="right"
-                android:src="@drawable/waiting" />
+                android:layout_gravity="top|right"
+                android:src="@drawable/waiting"
+                android:background="@android:color/darker_gray"
+                android:padding="1dp"
+                />
 
         </LinearLayout>
 
@@ -80,27 +82,16 @@
             android:id="@+id/expandDescription"
             android:animateLayoutChanges="true" >
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/plLongDesc"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:gravity="right" >
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/holo_orange_dark"
+                android:layout_weight="1"
+                android:autoLink="web"
+                android:text="Very long description including an url http://www.google.com and it keeps going on with another http://www.yahoo.fr bye bye" />
 
-                <TextView
-                    android:id="@+id/plLongDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:layout_weight="1"
-                    android:autoLink="web"
-                    android:text="Very ong description including an url http://www.google.com and it keeps going on with another http://www.yahoo.fr bye bye" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <ListView

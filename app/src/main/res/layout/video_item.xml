@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/videoitem_vertical_margin"
+    android:paddingBottom="@dimen/videoitem_vertical_margin"
+    android:paddingLeft="@dimen/videoitem_horizontal_margin"
+    android:paddingRight="@dimen/videoitem_horizontal_margin"
     android:id="@+id/parentofExpandable"
     >
 
@@ -23,7 +23,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/imgVidThumb"
             android:onClick="openVideo"
-            android:src="@drawable/waiting" />
+            android:src="@drawable/waiting"
+            android:background="@android:color/darker_gray"
+            android:padding="1dp"/>
 
 
         <RelativeLayout
@@ -31,6 +33,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="right"
+            android:layout_marginLeft="@dimen/videoitem_vertical_margin"
             >
             <TextView
                 android:id="@+id/vidName"

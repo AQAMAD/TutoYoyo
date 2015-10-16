@@ -1,15 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="fr.aqamad.tutoyoyo.fragments.YoyoBlastFragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical|top"
+    tools:context="fr.aqamad.tutoyoyo.fragments.YoyoBlastFragment"
     android:background="@android:color/black">
 
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical|top"
-        >
 
         <LinearLayout
             android:orientation="horizontal"
@@ -56,13 +54,10 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/yoyoblastPlayLists"
-            android:numColumns="auto_fit"
-            android:columnWidth="90dp"
+            android:numColumns="3"
             android:horizontalSpacing="10dp"
             android:verticalSpacing="10dp"
             android:gravity="center"
-            android:stretchMode="columnWidth"
             />
 
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>

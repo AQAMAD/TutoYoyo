@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Path;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.app.FragmentManager;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,6 +23,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,10 +98,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, "contact@aqamad.fr");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "TutoYoyo");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",getString(R.string.mailto_address),null));
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mailto_message));
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
@@ -198,10 +205,84 @@ public class MainActivity extends AppCompatActivity
         }else if (id==R.id.action_credits){
             showCreditsBox();
             return true;
+        }else if (id==R.id.action_report){
+            reportBug();
+            return true;
         }
-
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reportBug() {
+        Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        intent.setType("text/plain");
+        //add email address
+        intent.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{getString(R.string.mailto_address)});
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " [Bug Report] ");
+        //and bodytext
+//        ArrayList<String> extra_text = new ArrayList<String>();
+//        extra_text.add(getString(R.string.mailto_bugmessage));
+//        intent.putStringArrayListExtra(Intent.EXTRA_TEXT, extra_text);
+        //above code does not work, below code works but gets a warning in the logcat
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mailto_bugmessage));
+        //get the db filename here
+        String dbName="YoyoTuts.db";
+        //backup the database
+        File backupDB = null;
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "//data//" + getApplicationContext().getPackageName()
+                        + "//databases//" + dbName + "";
+                File currentDB = new File(data, currentDBPath);
+                backupDB = new File(sd, dbName);
+
+                if (currentDB.exists()) {
+
+                    FileChannel src = new FileInputStream(currentDB)
+                            .getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB)
+                            .getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+                else
+                {
+                    Log.d("MA.RB","Database not found at path : " + currentDBPath);
+                }
+            } else
+            {
+                Log.d("MA.RB","Unwritable sd : " + sd.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //log the db path
+        Log.d("MA.RB","Backup DatabasePath was : " + backupDB.getAbsolutePath() );
+        //now get the logcat
+        File filename = new File(Environment.getExternalStorageDirectory()+"/mylog.log");
+        try {
+            filename.createNewFile();
+            String cmd = "logcat -d -f"+filename.getAbsolutePath();
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //logically logcat was created
+        Log.d("MA.RB","Logfile Path was : " + filename.getAbsolutePath() );
+        //prepare array
+        //has to be an ArrayList
+        ArrayList<Uri> uris = new ArrayList<Uri>();
+        //convert from paths to Android friendly Parcelable Uri's
+        uris.add(Uri.fromFile(backupDB));
+        uris.add(Uri.fromFile(filename));
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     private void showCreditsBox() {
@@ -257,13 +338,35 @@ public class MainActivity extends AppCompatActivity
                         pl.videos()) {
                     videoUrls.add(YoutubeUtils.getVideoPlayUrl(vid.key));
                 }
-                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-                intent.putStringArrayListExtra(Intent.EXTRA_STREAM, videoUrls);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, TextUtils.join("\n", videoUrls));
                 intent.setType("text/plain");
                 startActivity(intent);
             }
         } else if (id == R.id.nav_send) {
-            //like sending for instance
+            //get the "social playlist" and share it
+            TutorialPlaylist pl=TutorialPlaylist.getByKey(getString(R.string.localSocialKey));
+            if (pl.videos().size()==0){
+                Snackbar.make(navigationView, "First add something to your social playlist !!", Snackbar.LENGTH_LONG).show();
+            }else {
+                //build array
+                ArrayList<String> videoUrls = new ArrayList<String>();
+                for (TutorialVideo vid :
+                        pl.videos()) {
+                    videoUrls.add(YoutubeUtils.getVideoPlayUrl(vid.key));
+                }
+                //like sending through mail for instance
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.mailto_examplefriend), null));
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mailto_letmeshare) + " " + getString(R.string.app_name));
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mailto_letmesharesubject) + " " +
+                                getString(R.string.app_name) +
+                                "\n\n" +
+                                TextUtils.join("\n", videoUrls)
+                                );
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -318,7 +421,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void showAboutBox(View view) {
-        showAboutBox();
+    public void showCredits(View view) {
+        showCreditsBox();
     }
 }

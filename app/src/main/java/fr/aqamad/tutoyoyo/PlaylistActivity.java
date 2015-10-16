@@ -3,7 +3,6 @@ package fr.aqamad.tutoyoyo;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.activeandroid.query.Delete;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,8 +30,8 @@ import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.tasks.GetPlaylistTask;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
+import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.tutoyoyo.utils.UI;
-import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeUtils;
 import fr.aqamad.youtube.YoutubeVideo;
@@ -114,10 +112,14 @@ public class PlaylistActivity extends AppCompatActivity {
         container.setBackgroundColor(getResources().getColor(mBgColor));
         ListView listView= (ListView) findViewById(R.id.videos);
         listView.setBackgroundColor(getResources().getColor(mBgColor));
-
-        PicassoHelper.loadWeborDrawable(this, mThumb).centerCrop()
+        //get screen size
+        ScreenSize size=new ScreenSize(this);
+        int tWidth=size.getWidth()/3;
+        PicassoHelper.loadWeborDrawable(this, mThumb)
+//                .centerCrop()
                 .placeholder(R.drawable.waiting)
-                .resize(YoutubeUtils.HIGH_WIDTH,YoutubeUtils.HIGH_HEIGHT)
+                .resize(tWidth,0)
+//                .resize(YoutubeUtils.HIGH_WIDTH,YoutubeUtils.HIGH_HEIGHT)
                 .into(imThumb)
         ;
 
@@ -166,7 +168,7 @@ public class PlaylistActivity extends AppCompatActivity {
         cachePlaylist(playlist);
 
 
-        VideosAdapter adapter = new VideosAdapter(this, (ArrayList) playlist.getVideos(), this.getFgColor(),this.getBgColor(),this.highlightColor);
+        VideosAdapter adapter = new VideosAdapter(this, (ArrayList) playlist.getVideos(), new ScreenSize(this),this.getFgColor(),this.getBgColor(),this.highlightColor);
 //
 
         ListView listView= (ListView) findViewById(R.id.videos);
@@ -382,14 +384,14 @@ public class PlaylistActivity extends AppCompatActivity {
         //get name from interface
         TextView vwName = (TextView) parent.findViewById(R.id.vidName);
         TextView vwDesc = (TextView) parent.findViewById(R.id.vidDesc2);
-        vid.name = (String) vwName.getText();
-        vid.description = (String) vwDesc.getText();
+        vid.name = vwName.getText().toString();
+        vid.description = vwDesc.getText().toString();
         ImageView imgThumb = (ImageView) parent.findViewById(R.id.imgVidThumb);
-        vid.defaultThumbnail = (String) imgThumb.getTag(R.id.defaultThumb);
-        vid.mediumThumbnail = (String) imgThumb.getTag(R.id.mediumThumb);
-        vid.highThumbnail = (String) imgThumb.getTag(R.id.highThumb);
+        vid.defaultThumbnail = imgThumb.getTag(R.id.defaultThumb).toString();
+        vid.mediumThumbnail = imgThumb.getTag(R.id.mediumThumb).toString();
+        vid.highThumbnail = imgThumb.getTag(R.id.highThumb).toString();
         TextView vwDuration = (TextView) parent.findViewById(R.id.vidDuration);
-        vid.duration= (String) vwDuration.getTag();
+        vid.duration= vwDuration.getTag().toString();
         vid.save();
         view.setTag(true);
         UI.colorize((ImageView) view, highlightColor);

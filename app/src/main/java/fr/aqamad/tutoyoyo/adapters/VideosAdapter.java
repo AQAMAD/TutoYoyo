@@ -1,7 +1,6 @@
 package fr.aqamad.tutoyoyo.adapters;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
+import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.tutoyoyo.utils.UI;
-import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeUtils;
 import fr.aqamad.youtube.YoutubeVideo;
 
@@ -34,13 +31,15 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
     private int foreGroundColor;
     private int backGroundColor;
     private int highlightColor;
+    private ScreenSize screenSize;
 
-    public VideosAdapter(Context context, ArrayList<YoutubeVideo> videos, int foregroundColor,int backGroundColor,int highlightColor) {
+    public VideosAdapter(Context context, ArrayList<YoutubeVideo> videos, ScreenSize screenSize,int foregroundColor,int backGroundColor,int highlightColor) {
         super(context, 0, videos);
         mlist=videos;
         this.foreGroundColor=foregroundColor;
         this.backGroundColor=backGroundColor;
         this.highlightColor=highlightColor;
+        this.screenSize = screenSize;
     }
 
 
@@ -116,9 +115,13 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
             UI.colorize(btnWat,highlightColor);
         }
         btnWat.setTag(isLater);
+        //calculate sizes
+        int tWidth= (int) (screenSize.getWidth()/3);
+        Log.d("VA.GV","Calculated Width is : " + tWidth);
         //load image with picasso
         PicassoHelper.with(parent.getContext()).load(vid.getHighThumb().getUrl().toString())
                 .placeholder(R.drawable.waiting)
+                .resize(tWidth,0)
                 .into(imgThumb)
         ;
         imgThumb.setTag(R.id.defaultThumb, vid.getDefaultThumb().getUrl().toString());

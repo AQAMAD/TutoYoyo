@@ -73,12 +73,10 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/yoyoexpertPlayLists"
-            android:numColumns="auto_fit"
-            android:columnWidth="90dp"
+            android:numColumns="3"
             android:horizontalSpacing="10dp"
             android:verticalSpacing="10dp"
             android:gravity="center"
-            android:stretchMode="columnWidth"
             />
 
     </LinearLayout>

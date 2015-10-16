@@ -24,6 +24,7 @@ import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.tasks.GetChannelTask;
+import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeVideo;
@@ -115,7 +116,7 @@ public abstract class SourceFragment extends Fragment {
     public void fillView() {
         //build the adapter we need
         //which itemlayout will depend on the fragment
-        PlaylistsAdapter adapter = new PlaylistsAdapter(parentActivity, (ArrayList) mChannel.getPlaylists(), this.getForeGroundColor(),this.getBackGroundColor(),this.getItemRessourceId());
+        PlaylistsAdapter adapter = new PlaylistsAdapter(parentActivity, (ArrayList) mChannel.getPlaylists(),new ScreenSize(getActivity()), this.getForeGroundColor(),this.getBackGroundColor(),this.getItemRessourceId());
         AdapterView listView=GetPlaylistView();
         listView.setAdapter(adapter);
         //hook up event listener

@@ -50,7 +50,7 @@ public class YoyoExpertFragment extends SourceFragment {
         // Required empty public constructor
         setForeGroundColor(R.color.yoyoExpert);
         setBackGroundColor(android.R.color.black);
-        setItemRessourceId(R.layout.box_playlist_item);
+        setItemRessourceId(R.layout.playlist_item_box);
     }
 
     @Override

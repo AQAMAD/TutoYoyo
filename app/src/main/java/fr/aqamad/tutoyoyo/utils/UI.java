@@ -4,6 +4,8 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -92,5 +94,7 @@ public class UI {
             iv.setVisibility(View.GONE);
         }
     }
+
+
 
 }
