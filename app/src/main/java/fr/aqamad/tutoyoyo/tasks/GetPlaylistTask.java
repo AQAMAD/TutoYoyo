@@ -10,6 +10,7 @@ import android.util.Log;
 import java.net.MalformedURLException;
 
 import fr.aqamad.tutoyoyo.R;
+import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.utils.Assets;
@@ -52,56 +53,7 @@ public class GetPlaylistTask implements Runnable {
         try {
             // Get from database
             Log.d("GPT","GetPlayListTask run called for " + playlistID);
-            TutorialPlaylist channel= TutorialPlaylist.getByKey(playlistID);
-            YoutubePlaylist playlist;
-            //complex test here, if channel exists, is not local and no videos
-            //if channel exists
-            boolean playlistExists= (channel!=null) ;
-            boolean playlistMustLoad=!playlistExists;
-            if (playlistExists){
-                Log.d("GPT","found in db");
-                //test if local
-                if (playlistID.equals(localActivity.getString(R.string.localSocialKey))){
-                    Log.d("GPT","local playlist no refetch");
-                    playlistMustLoad=false;
-                }else if (playlistID.equals(localActivity.getString(R.string.localFavoritesKey))){
-                    Log.d("GPT","local playlist no refetch");
-                    playlistMustLoad=false;
-                }else if (playlistID.equals(localActivity.getString(R.string.localLaterKey))){
-                    Log.d("GPT","local playlist no refetch");
-                    playlistMustLoad=false;
-                } else if (channel.videos().size()==0){
-                    Log.d("GPT","remote playlist exists but empty, refetch");
-                    playlistMustLoad=true;
-                }
-            }
-            //now we know if playlist exists
-            if (playlistMustLoad){
-                Log.d("GPT","not found in db or needs fetching");
-                //try to fetch from assets
-                //will return null if not found
-                String jsonString= Assets.loadFileFromAsset(localActivity, playlistID + ".json");
-                if (jsonString==null) {
-                    Log.d("GPT","not found in assets");
-                    //fetch from youtube
-                    // Get a httpclient to talk to the internet
-                    jsonString = YoutubeUtils.getPlaylistFromApi(playlistID,apiKey);
-                }
-                playlist= YoutubeUtils.playlistFromJson(jsonString);
-                Log.d("GPT","enrich with duration");
-                jsonString = YoutubeUtils.getVideosFromApi(playlist.getVideoIds(), apiKey);
-                YoutubeUtils.addDurationsFromJson(playlist,jsonString);
-            } else{
-                Log.d("GPT", "found in db : " + channel.name);
-                playlist= new YoutubePlaylist(channel.key,channel.name,channel.description);
-                //iterate and add videos
-                for (int i = 0; i < channel.videos().size(); i++) {
-                    Log.d("GPT","exploding videos " + i);
-                    TutorialVideo video=channel.videos().get(i);
-                    YoutubeVideo tVideo=YoutubeVideo.fromModel(video);
-                    playlist.getVideos().add(tVideo);
-                }
-            }
+            YoutubePlaylist playlist= ModelConverter.loadPlaylist(localActivity,playlistID,apiKey);
 
             Log.d("GPT","Done, put bundle");
 //            YoutubeUtils.logPlaylist(playlist);

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.aqamad.tutoyoyo.PlaylistActivity"
     android:id="@+id/playContainer">
 
     <LinearLayout
@@ -22,8 +21,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView4"
-                android:onClick="expandDescription"
+                android:id="@+id/expanderButton"
                 android:src="@android:drawable/ic_menu_more"
                 android:rotation="270"
                 android:layout_gravity="top|right" />
@@ -97,7 +95,7 @@
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/videos"
+            android:id="@android:id/list"
             />
 
 

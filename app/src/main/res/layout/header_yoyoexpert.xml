@@ -1,0 +1,69 @@
+<RelativeLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:background="@android:color/black"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_yoyoexpert_big"
+        android:id="@+id/navigableLogo"
+        android:layout_alignParentEnd="true"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/navigableLogo"
+        android:layout_toStartOf="@+id/navigableLogo"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/navigableLogo">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="YOYOEXPERT.COM"
+            android:id="@+id/textView2"
+            android:textColor="@android:color/white"
+            android:layout_gravity="left"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:shadowColor="@color/black_overlay"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="24"
+
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="MAKE THE SIMPLE "
+                android:textColor="@android:color/white"
+                android:id="@+id/textView5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="AMAZING"
+                android:textColor="@android:color/holo_red_dark"
+                android:id="@+id/textView4" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

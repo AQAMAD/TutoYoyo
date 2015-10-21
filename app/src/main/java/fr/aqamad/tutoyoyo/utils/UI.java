@@ -2,8 +2,13 @@ package fr.aqamad.tutoyoyo.utils;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -13,6 +18,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+
+import fr.aqamad.tutoyoyo.R;
 
 /**
  * Created by Gregoire on 14/10/2015.
@@ -95,6 +102,33 @@ public class UI {
         }
     }
 
+    //dialogs are added here
+    public class RemoveFromPlaylistDialogFragment extends DialogFragment {
 
+        private String mPlaylistTitle;
+        private int mDialogTitle;
+        private int mDialogMessage;
+
+        public RemoveFromPlaylistDialogFragment(){
+
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(mDialogTitle);
+            builder.setMessage(mDialogMessage);
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // FIRE ZE MISSILES!
+                }
+            });
+            builder.setNegativeButton(android.R.string.no, null);
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
 
 }

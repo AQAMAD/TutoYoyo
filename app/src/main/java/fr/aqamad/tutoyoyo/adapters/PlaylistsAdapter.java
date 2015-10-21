@@ -47,6 +47,10 @@ public class PlaylistsAdapter extends ArrayAdapter<YoutubePlaylist> {
         }
         // Lookup view for data population
         TextView plName = (TextView) convertView.findViewById(R.id.plName);
+        //fill up details
+        TextView plDetails = (TextView) convertView.findViewById(R.id.plDetails);
+        plDetails.setText(pls.getVideos().size() + " tuts / " + pls.getTotalLength() );
+
         TextView plDesc = (TextView) convertView.findViewById(R.id.plDesc);
         TextView plID = (TextView) convertView.findViewById(R.id.plID);
         ImageView imgThumb = (ImageView) convertView.findViewById(R.id.imgThumb);

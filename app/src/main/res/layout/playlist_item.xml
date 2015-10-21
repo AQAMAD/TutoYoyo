@@ -33,7 +33,15 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textAppearance="?android:attr/textAppearanceListItem"
-                android:textColor="@android:color/holo_orange_dark" />
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/plDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x videos / 00:00 length"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/plDesc"
@@ -41,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="HomeTown"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/holo_orange_dark" />
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/plID"

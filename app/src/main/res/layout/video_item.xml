@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imgVidThumb"
-            android:onClick="openVideo"
             android:src="@drawable/waiting"
             android:background="@android:color/darker_gray"
             android:padding="1dp"/>
@@ -41,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceListItem"
                 android:textColor="@android:color/holo_orange_dark"
-                android:onClick="openVideo"
                 android:text="Name this is a long name a very long name" />
             <TextView
                 android:id="@+id/vidDuration"
@@ -65,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_menu_recent_history"
                     android:layout_gravity="right"
-                    android:onClick="addLater"
                     android:id="@+id/btnLater"
                     />
                 <ImageView
@@ -73,7 +70,6 @@
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_menu_upload"
                     android:layout_gravity="right"
-                    android:onClick="addShare"
                     android:id="@+id/btnShare"
                     />
 
@@ -82,11 +78,26 @@
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/btn_star"
                     android:layout_gravity="right"
-                    android:onClick="addFavorite"
                     android:id="@+id/btnFavorites"
                     />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_share"
+                    android:id="@+id/shareVideoButton"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/expandVideoButton"
+                    android:src="@android:drawable/ic_menu_more"
+                    android:rotation="270"
+                    />
+
             </LinearLayout>
+
             <TextView
                 android:id="@+id/vidDesc"
                 android:layout_width="match_parent"
@@ -102,28 +113,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="HomeTown" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_alignParentEnd="true">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/expandButton"
-                android:onClick="expandSection"
-                android:src="@android:drawable/ic_menu_more"
-                android:rotation="270"
-                />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_share"
-                    android:onClick="shareVideo"
-                    />
-
-            </LinearLayout>
 
 
         </RelativeLayout>

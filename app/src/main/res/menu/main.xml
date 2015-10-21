@@ -5,6 +5,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_report" android:title="@string/action_reportbugs"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_suggest" android:title="@string/action_suggest"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_credits" android:title="@string/action_thanks"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_about" android:title="@string/action_about"

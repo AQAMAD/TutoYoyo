@@ -19,6 +19,14 @@
         android:layout_height="wrap_content"
         android:text="HomeTown"
         android:visibility="gone" />
+    <TextView
+        android:id="@+id/plDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x videos / 00:00 length"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

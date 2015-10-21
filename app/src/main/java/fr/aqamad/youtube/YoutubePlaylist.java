@@ -135,6 +135,20 @@ public class YoutubePlaylist implements Serializable {
         return theClone;
     }
 
+    public void copyTo(YoutubePlaylist pl){
+        YoutubePlaylist theClone=new YoutubePlaylist(this.mID,this.mTitle,this.mDescription);
+        pl.setID(this.mID);
+        pl.setTitle(this.mTitle);
+        pl.setDescription(this.mDescription);
+        pl.setDefaultThumb(this.getDefaultThumb());
+        pl.setStandardThumb(this.getStandardThumb());
+        pl.setMediumThumb(this.getMediumThumb());
+        pl.setHighThumb(this.getHighThumb());
+        pl.setNumberToFetch(this.getNumberToFetch());
+        //theClone.setVideos(this.getVideos());
+    }
+
+
     public YoutubeVideo findByKey(String key){
         for (YoutubeVideo vid :
                 getVideos()) {
@@ -158,5 +172,23 @@ public class YoutubePlaylist implements Serializable {
             sb.append(vid.getID());
         }
         return sb.toString();
+    }
+
+    public String getTotalLength() {
+        int totalSeconds=0;
+        for (YoutubeVideo vid :
+                getVideos()) {
+            totalSeconds=totalSeconds + vid.getDurationInSeconds();
+        }
+        //divide by 60 to get minutes
+        int totalMinutes=totalSeconds/60;
+        totalSeconds=totalSeconds-totalMinutes*60;
+        //got minutes and seconds, return time
+        if (totalSeconds<10) {
+            return totalMinutes + ":0" + totalSeconds;
+        }else{
+            return totalMinutes + ":" + totalSeconds;
+        }
+
     }
 }

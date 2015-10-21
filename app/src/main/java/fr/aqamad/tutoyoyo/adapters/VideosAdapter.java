@@ -1,5 +1,7 @@
 package fr.aqamad.tutoyoyo.adapters;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
+import fr.aqamad.tutoyoyo.fragments.PlaylistFragment;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
@@ -32,14 +35,16 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
     private int backGroundColor;
     private int highlightColor;
     private ScreenSize screenSize;
+    private PlaylistFragment mFrg;
 
-    public VideosAdapter(Context context, ArrayList<YoutubeVideo> videos, ScreenSize screenSize,int foregroundColor,int backGroundColor,int highlightColor) {
-        super(context, 0, videos);
+    public VideosAdapter(PlaylistFragment frg, ArrayList<YoutubeVideo> videos, int foregroundColor,int backGroundColor,int highlightColor) {
+        super(frg.getActivity().getBaseContext(), 0, videos);
+        mFrg=frg;
         mlist=videos;
         this.foreGroundColor=foregroundColor;
         this.backGroundColor=backGroundColor;
         this.highlightColor=highlightColor;
-        this.screenSize = screenSize;
+        this.screenSize = new ScreenSize(frg.getActivity());
     }
 
 
@@ -130,6 +135,15 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
         if (vid.getStandardThumb()!=null){
             imgThumb.setTag(R.id.standardThumb,vid.getStandardThumb().getUrl().toString());
         }
+        //set up clickListeners
+        imgThumb.setOnClickListener(mFrg);
+        plName.setOnClickListener(mFrg);
+        btnSha.setOnClickListener(mFrg);
+        btnFav.setOnClickListener(mFrg);
+        btnWat.setOnClickListener(mFrg);
+        convertView.findViewById(R.id.expandVideoButton).setOnClickListener(mFrg);
+        convertView.findViewById(R.id.shareVideoButton).setOnClickListener(mFrg);
+
         // Return the completed view to render on screen
         return convertView;
     }

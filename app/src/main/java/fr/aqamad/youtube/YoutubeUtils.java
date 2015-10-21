@@ -401,4 +401,28 @@ public class YoutubeUtils {
             }
         }
     }
+
+    public static int durationInSeconds(String isoDuration){
+        if (isoDuration==null){
+            return 0;
+        }
+        String result= isoDuration.replaceAll("PT","");
+        int mPos=result.indexOf("M");
+        //if no M found then return seconds we have
+        if (mPos==-1){
+            return Integer.parseInt(result.replaceAll("S",""));
+        } else {
+            //header stripped, get minutes
+            int minutes = Integer.parseInt(result.substring(0,mPos));
+            int sPos=result.indexOf("S");
+            //if no S found, only minutes count
+            if (sPos==-1){
+                return minutes*60 ;
+            } else {
+                int seconds=Integer.parseInt(result.substring(mPos+1,sPos));
+                return minutes*60 + seconds;
+            }
+        }
+    }
+
 }

@@ -125,4 +125,7 @@ public class YoutubeVideo implements Serializable {
     }
 
 
+    public int getDurationInSeconds() {
+        return YoutubeUtils.durationInSeconds(getDuration());
+    }
 }

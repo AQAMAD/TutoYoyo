@@ -1,27 +1,32 @@
 package fr.aqamad.tutoyoyo;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Path;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.app.FragmentManager;
-import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,44 +36,53 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.aqamad.tutoyoyo.base.SourceFragment;
-import fr.aqamad.tutoyoyo.fragments.BlackhopFragment;
-import fr.aqamad.tutoyoyo.fragments.ClywFragment;
-import fr.aqamad.tutoyoyo.fragments.MyTutsFragment;
-import fr.aqamad.tutoyoyo.fragments.YoyoBlastFragment;
-import fr.aqamad.tutoyoyo.fragments.YoyoExpertFragment;
-import fr.aqamad.tutoyoyo.fragments.YoyoThrowerFragment;
+import fr.aqamad.tutoyoyo.fragments.SourceFragment;
+import fr.aqamad.tutoyoyo.fragments.InitialiserFragment;
+import fr.aqamad.tutoyoyo.fragments.PlaylistFragment;
+import fr.aqamad.tutoyoyo.fragments.SettingsFragment;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
+import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeUtils;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener
+        ,InitialiserFragment.TaskCallbacks
+        ,SourceFragment.OnPlaylistSelectedListener
+
+{
+
+    private static final String TAG_TASK_FRAGMENT = "initializer_task_fragment";
+
+    private InitialiserFragment mTaskFragment;
+
 
     private NavigationView navigationView;
+
     private SourceFragment currentFragment;
 
-    private MyTutsFragment mMyTuts;
-    private ClywFragment mClyw;
-    private YoyoExpertFragment mYYE;
-    private YoyoBlastFragment mYYB;
-    private YoyoThrowerFragment mMrYo;
-    private BlackhopFragment mBhop;
+    private SourceFragment mMyTuts;
+    private SourceFragment mClyw;
+    private SourceFragment mYYE;
+    private SourceFragment mYYB;
+    private SourceFragment mMrYo;
+    private SourceFragment mBhop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //check the model has been created and perform initialisation otherwise
-        checkDatabase();
         super.onCreate(savedInstanceState);
-        mMyTuts=MyTutsFragment.newInstance(getString(R.string.localChannelKey));
-        mClyw=ClywFragment.newInstance(getString(R.string.CLYW_CHANNEL));
-        mYYE=YoyoExpertFragment.newInstance(getString(R.string.YOYOEXPERT_CHANNEL));
-        mYYB=YoyoBlastFragment.newInstance(getString(R.string.YOYOBLAST_CHANNEL));
-        mMrYo=YoyoThrowerFragment.newInstance(getString(R.string.YOYOTHROWER_CHANNEL));
-        mBhop=BlackhopFragment.newInstance(getString(R.string.BLACKHOP_CHANNEL));
+        mMyTuts=SourceFragment.newInstance(getString(R.string.localChannelKey),R.layout.header_mytuts,false);
+        mYYB=SourceFragment.newInstance(getString(R.string.YOYOBLAST_CHANNEL),R.layout.header_yoyoblast,true,android.R.color.black,R.color.yoyoBlast,"http://www.yoyoblast.com");
+        mYYE=SourceFragment.newInstance(getString(R.string.YOYOEXPERT_CHANNEL),R.layout.header_yoyoexpert,true,android.R.color.black,R.color.yoyoExpert,"http://www.yoyoexpert.com");
+        mClyw=SourceFragment.newInstance(getString(R.string.CLYW_CHANNEL),R.layout.header_clyw,false,android.R.color.white,R.color.my,"http://www.clyw.ca");
+        mMrYo=SourceFragment.newInstance(getString(R.string.YOYOTHROWER_CHANNEL),R.layout.header_yoyothrower,true,android.R.color.black,android.R.color.holo_blue_light,"http://www.mryoyothrower.com");
+        mBhop=SourceFragment.newInstance(getString(R.string.BLACKHOP_CHANNEL),R.layout.header_blackhop,false,android.R.color.black,android.R.color.white,"https://www.youtube.com/user/hadoq");
 
         setContentView(R.layout.activity_main);
+
+        checkDatabase();
 
         if (savedInstanceState != null) {
             //Restore the fragment's instance
@@ -88,25 +102,8 @@ public class MainActivity extends AppCompatActivity
             Log.d("MA", "Mainactivity onCreate nobundle");
         }
 
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",getString(R.string.mailto_address),null));
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mailto_message));
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
-
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -117,6 +114,15 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    private void sendMail(Uri mailto, String string, String string2) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, mailto);
+        intent.putExtra(Intent.EXTRA_SUBJECT, string);
+        intent.putExtra(Intent.EXTRA_TEXT, string2);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -153,9 +159,32 @@ public class MainActivity extends AppCompatActivity
         //test for model creation
         List<TutorialSource> sources =TutorialSource.getAll();
         if (sources.size()==0){
-            TutorialSource.initializeDB(this.getApplication());
+            //start initialiser fragment
+            FragmentManager fm = getFragmentManager();
+            mTaskFragment = (InitialiserFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+
+            // If the Fragment is non-null, then it is currently being
+            // retained across a configuration change.
+            if (mTaskFragment == null) {
+                mTaskFragment = new InitialiserFragment();
+                fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
+            }
+        }else{
+            //hide progressbar
+            hideProgress();
+            //and welcome Text
+            TextView wt= (TextView) findViewById(R.id.welcomeText);
+            wt.setVisibility(View.GONE);
         }
     }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -167,6 +196,8 @@ public class MainActivity extends AppCompatActivity
             int backCount = fragmentManager.getBackStackEntryCount();
             if (backCount>1){
                 fragmentManager.popBackStack();
+                //need to reset the nav indicator
+                resetNavIndicator();
             }else if (backCount>0){
                 fragmentManager.popBackStack();
                 View frbck = findViewById(R.id.frameBackground);
@@ -176,6 +207,36 @@ public class MainActivity extends AppCompatActivity
             }
         }
         Log.d("MA", "Mainactivity onBackPressed");
+    }
+
+    private void resetNavIndicator() {
+        //get menus from navigation view
+        Log.d("MA.RNI", "ResetNavigationIndicator called");
+        if (mMyTuts.isVisible()){
+            //reset navigation drawer selected id
+            Log.d("MA.RNI","My tuts should be checked");
+            navigationView.getMenu().findItem(R.id.nav_my).setChecked(true);
+        }else if (mYYB.isVisible()){
+            //reset navigation drawer selected id
+            Log.d("MA.RNI","YYB should be checked");
+            navigationView.getMenu().findItem(R.id.nav_yyb).setChecked(true);
+        }else if (mYYE.isVisible()){
+            //reset navigation drawer selected id
+            Log.d("MA.RNI","YYE should be checked");
+            navigationView.getMenu().findItem(R.id.nav_yye).setChecked(true);
+        }else if (mClyw.isVisible()){
+            //reset navigation drawer selected id
+            Log.d("MA.RNI","CLYW should be checked");
+            navigationView.getMenu().findItem(R.id.nav_clyw).setChecked(true);
+        }else if (mMrYo.isVisible()){
+            //reset navigation drawer selected id
+            Log.d("MA.RNI","YYT should be checked");
+            navigationView.getMenu().findItem(R.id.nav_yyt).setChecked(true);
+        }else if (mBhop.isVisible()){
+            //reset navigation drawer selected id
+            Log.d("MA.RNI","BH should be checked");
+            navigationView.getMenu().findItem(R.id.nav_bhop).setChecked(true);
+        }
     }
 
     @Override
@@ -196,14 +257,24 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this,SettingsActivity.class);
-            startActivity(intent);
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame, new SettingsFragment());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            hideHome();
             return true;
         }else if (id==R.id.action_about){
             showAboutBox();
             return true;
         }else if (id==R.id.action_credits){
             showCreditsBox();
+            return true;
+        }else if (id==R.id.action_suggest){
+            sendMail(Uri.fromParts("mailto",
+                        getString(R.string.mailto_address), null),
+                        getString(R.string.app_name),
+                        getString(R.string.mailto_message));
             return true;
         }else if (id==R.id.action_report){
             reportBug();
@@ -240,7 +311,6 @@ public class MainActivity extends AppCompatActivity
                 backupDB = new File(sd, dbName);
 
                 if (currentDB.exists()) {
-
                     FileChannel src = new FileInputStream(currentDB)
                             .getChannel();
                     FileChannel dst = new FileOutputStream(backupDB)
@@ -356,16 +426,13 @@ public class MainActivity extends AppCompatActivity
                     videoUrls.add(YoutubeUtils.getVideoPlayUrl(vid.key));
                 }
                 //like sending through mail for instance
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.mailto_examplefriend), null));
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mailto_letmeshare) + " " + getString(R.string.app_name));
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.mailto_letmesharesubject) + " " +
+                sendMail(Uri.fromParts("mailto",
+                                getString(R.string.mailto_examplefriend), null),
+                                getString(R.string.mailto_letmeshare) + " " + getString(R.string.app_name),
+                                getString(R.string.mailto_letmesharesubject) + " " +
                                 getString(R.string.app_name) +
                                 "\n\n" +
-                                TextUtils.join("\n", videoUrls)
-                                );
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+                                TextUtils.join("\n", videoUrls));
             }
         }
 
@@ -395,22 +462,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (newFragment!=null){
-            if (newFragment!=currentFragment){
-
-                currentFragment=newFragment;
-
-                FragmentManager fragmentManager = getFragmentManager();
-
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                fragmentTransaction.replace(R.id.frame, currentFragment);
-
-                fragmentTransaction.addToBackStack(null);
-
-                fragmentTransaction.commit();
-
-                hideHome();
-            }
+            currentFragment=newFragment;
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame, currentFragment);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            hideHome();
         }
     }
 
@@ -423,5 +482,62 @@ public class MainActivity extends AppCompatActivity
 
     public void showCredits(View view) {
         showCreditsBox();
+    }
+
+    public void showProgress(){
+        View pi=findViewById(R.id.progressIndicator);
+        pi.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress(){
+        View pi=findViewById(R.id.progressIndicator);
+        pi.setVisibility(View.GONE);
+    }
+
+
+    /**
+     * Implement the initialiser task callbacks
+     */
+
+    @Override
+    public void onPreExecute() {
+        //Toast.makeText(this,"preExecute",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProgressUpdate(InitialiserFragment.ProgressInfo progressInfo) {
+        //find views and set items
+        ProgressBar pbP = (ProgressBar) findViewById(R.id.progressBarPro);
+        pbP.setMax(progressInfo.providersMax);
+        pbP.setProgress(progressInfo.providersProgress);
+        ProgressBar pbL = (ProgressBar) findViewById(R.id.progressBarPlay);
+        pbL.setMax(progressInfo.playlistsMax);
+        pbL.setProgress(progressInfo.playlistsProgress);
+        TextView pT = (TextView) findViewById(R.id.progressText);
+        pT.setText(progressInfo.currentlyDoing);
+        TextView pT2 = (TextView) findViewById(R.id.progressText2);
+        pT2.setText(progressInfo.playlistsProgress + "/" + progressInfo.playlistsMax);
+    }
+
+    @Override
+    public void onCancelled() {
+        Toast.makeText(this,"onCancelled",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPostExecute() {
+        hideProgress();
+    }
+
+    @Override
+    public void OnPlaylistSelected(YoutubePlaylist mPlaylist, String mChannelID, int mBgColor, int mFgColor) {
+        Log.d("SFFV", "In MainActivity OnPlaylistSelected called for ID : " + mPlaylist.getID());
+        //switch to fragment based UI
+        Fragment newFragment = PlaylistFragment.newInstance(mPlaylist, mChannelID, mBgColor, mFgColor);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.replace(R.id.frame, newFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
