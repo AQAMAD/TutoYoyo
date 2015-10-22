@@ -4,20 +4,25 @@
         android:title="Choose your Content providers">
 
         <CheckBoxPreference android:title="Yoyoblast"
-            android:key="@string/btn_pref_clear_cache_key"
+            android:key="@string/chk_pref_yoyoblast"
+            android:defaultValue="true"
             android:summary="Videos from Yoyoblast"/>
         <CheckBoxPreference android:title="Blackhop"
-            android:key="@string/btn_pref_clear_cache_key"
+            android:key="@string/chk_pref_blackhop"
+            android:defaultValue="true"
             android:summary="Videos from Blackhop"/>
         <CheckBoxPreference android:title="YoyoExpert"
-            android:key="@string/btn_pref_clear_cache_key"
-            android:summary="Videos from Yoyoblast"/>
+            android:key="@string/chk_pref_yoyoexpert"
+            android:defaultValue="true"
+            android:summary="Videos from YoyoExpert"/>
         <CheckBoxPreference android:title="CLYW"
-            android:key="@string/btn_pref_clear_cache_key"
-            android:summary="Videos from Yoyoblast"/>
+            android:key="@string/chk_pref_clyw"
+            android:defaultValue="true"
+            android:summary="Videos from CLYW"/>
         <CheckBoxPreference android:title="MrYoyoThrower"
-            android:key="@string/btn_pref_clear_cache_key"
-            android:summary="Videos from Yoyoblast"/>
+            android:key="@string/chk_pref_yoyothrower"
+            android:defaultValue="true"
+            android:summary="Videos from MrYoyothrower"/>
     </PreferenceCategory>
 
     <PreferenceCategory

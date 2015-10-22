@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/videoitem_vertical_margin"
     android:paddingBottom="@dimen/videoitem_vertical_margin"
     android:paddingLeft="@dimen/videoitem_horizontal_margin"
     android:paddingRight="@dimen/videoitem_horizontal_margin"
-    android:id="@+id/parentofExpandable"
-    >
+    android:id="@+id/parentofExpandable">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -22,9 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imgVidThumb"
-            android:src="@drawable/waiting"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp"/>
+            android:src="@drawable/waiting" />
 
 
         <RelativeLayout
@@ -58,43 +57,41 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_recent_history"
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/btnLater"
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_upload"
+                    app:iiv_icon="oct-file-zip" />
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/btnShare"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star"
+                    app:iiv_icon="oct-file-symlink-file" />
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/btnFavorites"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_share"
+                    app:iiv_icon="oct-file-text" />
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:iiv_color="@android:color/darker_gray"
+                    android:layout_gravity="right"
                     android:id="@+id/shareVideoButton"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    app:iiv_icon="faw-share" />
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:iiv_color="@android:color/darker_gray"
+                    android:layout_gravity="right"
                     android:id="@+id/expandVideoButton"
-                    android:src="@android:drawable/ic_menu_more"
-                    android:rotation="270"
-                    />
+                    app:iiv_icon="faw-toggle-right" />
 
             </LinearLayout>
 

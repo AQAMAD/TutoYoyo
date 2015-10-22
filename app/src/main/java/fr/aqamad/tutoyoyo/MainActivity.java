@@ -7,11 +7,13 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -36,10 +38,10 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.aqamad.tutoyoyo.fragments.SourceFragment;
 import fr.aqamad.tutoyoyo.fragments.InitialiserFragment;
 import fr.aqamad.tutoyoyo.fragments.PlaylistFragment;
 import fr.aqamad.tutoyoyo.fragments.SettingsFragment;
+import fr.aqamad.tutoyoyo.fragments.SourceFragment;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
@@ -73,7 +75,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         //check the model has been created and perform initialisation otherwise
         super.onCreate(savedInstanceState);
-        mMyTuts=SourceFragment.newInstance(getString(R.string.localChannelKey),R.layout.header_mytuts,false);
+        //default values for preferences
+        PreferenceManager.setDefaultValues(this, R.xml.fragment_settings, false);
+        //init fragments
+        mMyTuts=SourceFragment.newInstance(getString(R.string.localChannelKey),R.layout.header_mytuts,false,android.R.color.black,android.R.color.white,"");
         mYYB=SourceFragment.newInstance(getString(R.string.YOYOBLAST_CHANNEL),R.layout.header_yoyoblast,true,android.R.color.black,R.color.yoyoBlast,"http://www.yoyoblast.com");
         mYYE=SourceFragment.newInstance(getString(R.string.YOYOEXPERT_CHANNEL),R.layout.header_yoyoexpert,true,android.R.color.black,R.color.yoyoExpert,"http://www.yoyoexpert.com");
         mClyw=SourceFragment.newInstance(getString(R.string.CLYW_CHANNEL),R.layout.header_clyw,false,android.R.color.white,R.color.my,"http://www.clyw.ca");
@@ -91,10 +96,10 @@ public class MainActivity extends AppCompatActivity
             if (state!=null){
                 Log.d("MA", "Mainactivity onCreate bundle, state=" + state);
                 if (state.equals("")){
-                    View frbck = findViewById(R.id.frameBackground);
-                    frbck.setVisibility(View.VISIBLE);
+//                    View frbck = findViewById(R.id.frameBackground);
+//                    frbck.setVisibility(View.VISIBLE);
                 }else{
-                    hideHome();
+//                    hideHome();
                 }
             }
         } else {
@@ -113,7 +118,23 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //based on preferences
+        enableProviderMenus();
+    }
 
+    private void enableProviderMenus() {
+        //activate or deactivate items based on sharedpreferences
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean yybEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyoblast), true);
+        boolean yyeEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyoexpert), true);
+        boolean clywEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_clyw), true);
+        boolean yytEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyothrower), true);
+        boolean bhoEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_blackhop), true);
+        navigationView.getMenu().findItem(R.id.nav_yyb).setVisible(yybEnabled);
+        navigationView.getMenu().findItem(R.id.nav_yye).setVisible(yyeEnabled);
+        navigationView.getMenu().findItem(R.id.nav_clyw).setVisible(clywEnabled);
+        navigationView.getMenu().findItem(R.id.nav_yyt).setVisible(yytEnabled);
+        navigationView.getMenu().findItem(R.id.nav_bhop).setVisible(bhoEnabled);
     }
 
     private void sendMail(Uri mailto, String string, String string2) {
@@ -159,15 +180,18 @@ public class MainActivity extends AppCompatActivity
         //test for model creation
         List<TutorialSource> sources =TutorialSource.getAll();
         if (sources.size()==0){
-            //start initialiser fragment
-            FragmentManager fm = getFragmentManager();
-            mTaskFragment = (InitialiserFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
-
-            // If the Fragment is non-null, then it is currently being
-            // retained across a configuration change.
-            if (mTaskFragment == null) {
-                mTaskFragment = new InitialiserFragment();
-                fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
+            if (!isOnline()){
+                Snackbar.make(navigationView, "Network connectivity is required to build cache. Try restarting app when online.", Snackbar.LENGTH_LONG).show();
+            } else {
+                //start initialiser fragment
+                FragmentManager fm = getFragmentManager();
+                mTaskFragment = (InitialiserFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+                // If the Fragment is non-null, then it is currently being
+                // retained across a configuration change.
+                if (mTaskFragment == null) {
+                    mTaskFragment = new InitialiserFragment();
+                    fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
+                }
             }
         }else{
             //hide progressbar
@@ -192,16 +216,21 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            //we handled the drawer, now let's sync it
+            //sync menus state
+            enableProviderMenus();
+            //sync fragments
             FragmentManager fragmentManager = getFragmentManager();
             int backCount = fragmentManager.getBackStackEntryCount();
             if (backCount>1){
-                fragmentManager.popBackStack();
+                fragmentManager.popBackStackImmediate();
                 //need to reset the nav indicator
                 resetNavIndicator();
             }else if (backCount>0){
                 fragmentManager.popBackStack();
-                View frbck = findViewById(R.id.frameBackground);
-                frbck.setVisibility(View.VISIBLE);
+                fragmentManager.popBackStackImmediate();
+                //need to reset the nav indicator
+                resetNavIndicator();
             }else{
                 super.onBackPressed();
             }
@@ -214,28 +243,36 @@ public class MainActivity extends AppCompatActivity
         Log.d("MA.RNI", "ResetNavigationIndicator called");
         if (mMyTuts.isVisible()){
             //reset navigation drawer selected id
-            Log.d("MA.RNI","My tuts should be checked");
+            Log.d("MA.RNI", "My tuts should be checked");
             navigationView.getMenu().findItem(R.id.nav_my).setChecked(true);
-        }else if (mYYB.isVisible()){
+        } else if (mYYB.isVisible()){
             //reset navigation drawer selected id
             Log.d("MA.RNI","YYB should be checked");
             navigationView.getMenu().findItem(R.id.nav_yyb).setChecked(true);
-        }else if (mYYE.isVisible()){
+        } else if (mYYE.isVisible()){
             //reset navigation drawer selected id
             Log.d("MA.RNI","YYE should be checked");
             navigationView.getMenu().findItem(R.id.nav_yye).setChecked(true);
-        }else if (mClyw.isVisible()){
+        } else if (mClyw.isVisible()){
             //reset navigation drawer selected id
             Log.d("MA.RNI","CLYW should be checked");
             navigationView.getMenu().findItem(R.id.nav_clyw).setChecked(true);
-        }else if (mMrYo.isVisible()){
+        } else if (mMrYo.isVisible()){
             //reset navigation drawer selected id
             Log.d("MA.RNI","YYT should be checked");
             navigationView.getMenu().findItem(R.id.nav_yyt).setChecked(true);
-        }else if (mBhop.isVisible()){
+        } else if (mBhop.isVisible()){
             //reset navigation drawer selected id
             Log.d("MA.RNI","BH should be checked");
             navigationView.getMenu().findItem(R.id.nav_bhop).setChecked(true);
+        } else {
+            //reset all indicators
+            navigationView.getMenu().findItem(R.id.nav_my).setChecked(false);
+            navigationView.getMenu().findItem(R.id.nav_yyb).setChecked(false);
+            navigationView.getMenu().findItem(R.id.nav_yye).setChecked(false);
+            navigationView.getMenu().findItem(R.id.nav_clyw).setChecked(false);
+            navigationView.getMenu().findItem(R.id.nav_yyt).setChecked(false);
+            navigationView.getMenu().findItem(R.id.nav_bhop).setChecked(false);
         }
     }
 
@@ -262,7 +299,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.frame, new SettingsFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            hideHome();
+//            hideHome();
             return true;
         }else if (id==R.id.action_about){
             showAboutBox();
@@ -469,15 +506,15 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            hideHome();
+//            hideHome();
         }
     }
 
-    private void hideHome() {
-        View frbck = findViewById(R.id.frameBackground);
-        frbck.setVisibility(View.INVISIBLE);
-        Log.d("MA", "Mainactivity hideHome");
-    }
+//    private void hideHome() {
+//        View frbck = findViewById(R.id.frameBackground);
+//        frbck.setVisibility(View.INVISIBLE);
+//        Log.d("MA", "Mainactivity hideHome");
+//    }
 
 
     public void showCredits(View view) {
@@ -516,7 +553,7 @@ public class MainActivity extends AppCompatActivity
         TextView pT = (TextView) findViewById(R.id.progressText);
         pT.setText(progressInfo.currentlyDoing);
         TextView pT2 = (TextView) findViewById(R.id.progressText2);
-        pT2.setText(progressInfo.playlistsProgress + "/" + progressInfo.playlistsMax);
+        pT2.setText(progressInfo.playlistsProgress + "/" + progressInfo.playlistsMax + " (" + progressInfo.totalVideos + " vids)");
     }
 
     @Override

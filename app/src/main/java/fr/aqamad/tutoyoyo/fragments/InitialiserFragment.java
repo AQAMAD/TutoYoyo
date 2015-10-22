@@ -2,9 +2,10 @@ package fr.aqamad.tutoyoyo.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
@@ -85,6 +86,7 @@ public class InitialiserFragment extends Fragment {
         public int playlistsProgress;
         public int playlistsMax;
         public String currentlyDoing;
+        public int totalVideos;
     }
 
 
@@ -95,12 +97,24 @@ public class InitialiserFragment extends Fragment {
         public InitialiserTask() {
         }
 
+
+
         @Override
         protected void onPreExecute() {
             if (mCallbacks != null) {
                 mCallbacks.onPreExecute();
             }
         }
+
+
+        private int countBools(boolean... vars) {
+            int count = 0;
+            for (boolean var : vars) {
+                count += (var ? 1 : 0);
+            }
+            return count;
+        }
+
 
         /**
          * Note that we do NOT call the callback object's methods
@@ -110,110 +124,59 @@ public class InitialiserFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             TutorialSource.initializeDB(getActivity());
+            //depends on preferences
+            SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            boolean yybEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyoblast), true);
+            boolean yyeEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyoexpert), true);
+            boolean clywEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_clyw), true);
+            boolean yytEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyothrower), true);
+            boolean bhoEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_blackhop), true);
             ProgressInfo pi=new ProgressInfo();
-            pi.providersMax=5;
+            pi.providersMax=countBools(yybEnabled,yyeEnabled,clywEnabled,yytEnabled,bhoEnabled);
+            pi.providersProgress=0;
+            pi.totalVideos=0;
             //now the db is initialized, we do the first pre-caches
             //first up is yoyoblast, we load him
-            YoutubeChannel yyb=ModelConverter.loadChannel(getActivity(), getActivity().getString(R.string.YOYOBLAST_CHANNEL), null, getActivity().getString(R.string.youtubeapikey));
-            ModelConverter.prepareChannel(yyb,getActivity());
-            ModelConverter.cacheChannel(yyb);
-            pi.playlistsMax=yyb.getPlaylists().size();
-            pi.providersProgress=1;
-            pi.playlistsProgress=0;
-            pi.currentlyDoing="Loading Yoyoblast";
-            publishProgress(pi);
-            //next we move on to the playlists and precache them too
-            for (YoutubePlaylist pl :
-                    yyb.getPlaylists()) {
-                YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), pl.getID(), getActivity().getString(R.string.youtubeapikey));
-                //data from pl goes to pl2
-                pl.copyTo(pl2);
-                //got it, now cache it
-                ModelConverter.cachePlaylist(pl2, yyb.getID());
-                pi.playlistsProgress++;
-                publishProgress(pi);
+            if (yybEnabled) {
+                loadChannel(pi,getActivity().getString(R.string.YOYOBLAST_CHANNEL),null,"Yoyoblast");
             }
-            YoutubeChannel yye=ModelConverter.loadChannel(getActivity(), getActivity().getString(R.string.YOYOEXPERT_CHANNEL), null, getActivity().getString(R.string.youtubeapikey));
-            ModelConverter.prepareChannel(yye, getActivity());
-            ModelConverter.cacheChannel(yye);
-            pi.playlistsMax=yye.getPlaylists().size();
-            pi.providersProgress=2;
-            pi.playlistsProgress=0;
-            pi.currentlyDoing="Loading Yoyoexpert";
-            publishProgress(pi);
-            //next we move on to the playlists and precache them too
-            for (YoutubePlaylist pl :
-                    yye.getPlaylists()) {
-                YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), pl.getID(), getActivity().getString(R.string.youtubeapikey));
-                //data from pl goes to pl2
-                Log.d("IF.RT", "YYE playlist is " + pl.getTitle());
-                Log.d("IF.RT", "YYE loaded playlist is " + pl2.getTitle());
-                pl.copyTo(pl2);
-                //got it, now cache it
-                ModelConverter.cachePlaylist(pl2, yye.getID());
-                pi.playlistsProgress++;
-                publishProgress(pi);
+            if (yyeEnabled) {
+                loadChannel(pi,getActivity().getString(R.string.YOYOEXPERT_CHANNEL),null,"Yoyoexpert");
             }
-            YoutubeChannel clyw=ModelConverter.loadChannel(getActivity(), getActivity().getString(R.string.CLYW_CHANNEL), ModelConverter.CABIN_TUTORIALS_PLAYLIST, getActivity().getString(R.string.youtubeapikey));
-            ModelConverter.prepareChannel(clyw, getActivity());
-            ModelConverter.cacheChannel(clyw);
-            pi.playlistsMax=clyw.getPlaylists().size();
-            pi.providersProgress=3;
-            pi.playlistsProgress=0;
-            pi.currentlyDoing="Loading CaribouLodge";
-            publishProgress(pi);
-            //next we move on to the playlists and precache them too
-            for (YoutubePlaylist pl :
-                    clyw.getPlaylists()) {
-                YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), pl.getID(), getActivity().getString(R.string.youtubeapikey));
-                //data from pl goes to pl2
-                pl.copyTo(pl2);
-                //got it, now cache it
-                ModelConverter.cachePlaylist(pl2, clyw.getID());
-                pi.playlistsProgress++;
-                publishProgress(pi);
+            if (clywEnabled) {
+                loadChannel(pi,getActivity().getString(R.string.CLYW_CHANNEL),ModelConverter.CABIN_TUTORIALS_PLAYLIST,"CaribouLodge");
+            }
+            if (yytEnabled) {
+                loadChannel(pi,getActivity().getString(R.string.YOYOTHROWER_CHANNEL),null,"MrYoyoThrower");
+            }
+            if (bhoEnabled) {
+                loadChannel(pi,getActivity().getString(R.string.BLACKHOP_CHANNEL),null,"Blackhop");
             }
 
-            YoutubeChannel bhop=ModelConverter.loadChannel(getActivity(), getActivity().getString(R.string.BLACKHOP_CHANNEL), null, getActivity().getString(R.string.youtubeapikey));
-            ModelConverter.prepareChannel(bhop, getActivity());
-            ModelConverter.cacheChannel(bhop);
-            pi.playlistsMax=bhop.getPlaylists().size();
-            pi.providersProgress=3;
-            pi.playlistsProgress=0;
-            pi.currentlyDoing="Loading Blackhop";
-            publishProgress(pi);
-            //next we move on to the playlists and precache them too
-            for (YoutubePlaylist pl :
-                    bhop.getPlaylists()) {
-                YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), pl.getID(), getActivity().getString(R.string.youtubeapikey));
-                //data from pl goes to pl2
-                pl.copyTo(pl2);
-                //got it, now cache it
-                ModelConverter.cachePlaylist(pl2, bhop.getID());
-                pi.playlistsProgress++;
-                publishProgress(pi);
-            }
-
-            YoutubeChannel yyt=ModelConverter.loadChannel(getActivity(), getActivity().getString(R.string.BLACKHOP_CHANNEL), null, getActivity().getString(R.string.youtubeapikey));
-            ModelConverter.prepareChannel(yyt, getActivity());
-            ModelConverter.cacheChannel(yyt);
-            pi.playlistsMax=yyt.getPlaylists().size();
-            pi.providersProgress=3;
-            pi.playlistsProgress=0;
-            pi.currentlyDoing="Loading MrYoyoThrower";
-            publishProgress(pi);
-            //next we move on to the playlists and precache them too
-            for (YoutubePlaylist pl :
-                    yyt.getPlaylists()) {
-                YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), pl.getID(), getActivity().getString(R.string.youtubeapikey));
-                //data from pl goes to pl2
-                pl.copyTo(pl2);
-                //got it, now cache it
-                ModelConverter.cachePlaylist(pl2, yyt.getID());
-                pi.playlistsProgress++;
-                publishProgress(pi);
-            }
             return null;
+        }
+
+        private void loadChannel(ProgressInfo pi,String channelID,String expandPlaylist,String displayName) {
+            YoutubeChannel channel= ModelConverter.loadChannel(getActivity(), channelID, expandPlaylist, getActivity().getString(R.string.youtubeapikey));
+            ModelConverter.prepareChannel(channel,getActivity());
+            ModelConverter.cacheChannel(channel);
+            pi.playlistsMax=channel.getPlaylists().size();
+            pi.providersProgress++;
+            pi.playlistsProgress=0;
+            pi.currentlyDoing=getActivity().getString(R.string.loading) + " " + displayName;
+            publishProgress(pi);
+            //next we move on to the playlists and precache them too
+            for (YoutubePlaylist pl :
+                    channel.getPlaylists()) {
+                YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), pl.getID(), getActivity().getString(R.string.youtubeapikey));
+                //data from pl goes to pl2
+                pl.copyTo(pl2);
+                //got it, now cache it
+                ModelConverter.cachePlaylist(pl2, channel.getID());
+                pi.playlistsProgress++;
+                pi.totalVideos=pi.totalVideos+pl2.getVideos().size();
+                publishProgress(pi);
+            }
         }
 
         @Override

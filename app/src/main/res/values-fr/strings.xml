@@ -32,7 +32,7 @@
     <string name="dialog_msg_remove_later">Etes vous sûr de vouloir supprimer cette vidéo de votre liste \'A voir plus tard\' ?</string>
     <string name="dialog_msg_remove_share">Etes vous sûr de vouloir supprimer cette vidéo de votre liste \'A partager\' ?</string>
     <string name="dialog_msg_about">La mission de cette application est de référencer et de vous fournir un accès rapide à vos tutoriels favoris.\n\tCommencez par ouvrir le menu de gauche et visiter les sources de tutos référencées, quand une des vidéos vous plaît, cliquez sur un des boutons pour l\'ajouter à l\'une de vos listes personnelles.\n\tQuand vous aurez quelques vidéos dans vos listes, vous pourrez les partager avec vos amis.\n\tPour une consultation hors-connexion, nous recommandons l\'excellente appli YTD de dentex sur : \n\thttp://dentex.github.io/apps/youtubedownloader</string>
-    <string name="dialog_msg_credits">Les créateurs aimeraient remercier, sans ordre particulier : \n\n\t-André Boulay de yoyoeXpert\n\n\t-Steve Brown et Chris Mikulin de Caribou Lodge\n\n\t-Colinn de YoyoBlast\n\n\t-Jeremy Meugens de MrYoyoThrower \n\n\t-Emmanuel Gabriel de Blackhop \n\n pour leur permission d\'indexer leur contenu, et tout simplement parce qu\'ils sont géniaux .</string>
+    <string name="dialog_msg_credits">Les créateurs aimeraient remercier, sans ordre particulier : \n\n\t-André Boulay de yoyoeXpert\n\n\t-Steve Brown et Chris Mikulin de Caribou Lodge\n\n\t-Colinn de YoyoBlast\n\n\t-Jeremy McKay de MrYoyoThrower \n\n\t-Emmanuel Gabriel de Blackhop \n\n pour leur permission d\'indexer leur contenu, et tout simplement parce qu\'ils sont géniaux .</string>
     <string name="yoyothrower">MrYoyothrower (en)</string>
     <string name="blackhop">Blackhop.com</string>
     <string name="mailto_address">contact@aqamad.fr</string>
@@ -48,4 +48,5 @@
     <string name="ihelp_ishare">= Partager instantanément</string>
     <string name="ihelp_later">= Ajouter aux \'A voir plus tard\'</string>
     <string name="ihelp_social">= Ajouter aux \'Partage\'</string>
+    <string name="loading">Chargement</string>
 </resources>

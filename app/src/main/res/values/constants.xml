@@ -11,6 +11,17 @@
     <string name="YOYOTHROWER_CHANNEL">UC7iE1IfAFlLmEeHqU0a_MSQ</string>
     <string name="BLACKHOP_CHANNEL">UCEYcymLnFYaTC8lv1iOaf4A</string>
 
+    <string name="btn_pref_del_db_key">prefBtnDelDb</string>
+    <string name="btn_pref_clear_cache_key">prefBtnClearCache</string>
+    <string name="btn_pref_clear_viewed_key">prefBtnClearViewed</string>
+    <string name="btn_pref_clear_database_key">prefBtnClearDB</string>
+    <string name="chk_pref_yoyoblast">chkPrefYoyoBlast</string>
+    <string name="chk_pref_yoyoexpert">chkPrefYoyoExpert</string>
+    <string name="chk_pref_clyw">chkPrefClyw</string>
+    <string name="chk_pref_yoyothrower">chkPrefYoyoThrower</string>
+    <string name="chk_pref_blackhop">chkPrefBlackhop</string>
+
+
     <item type="id" name="standardThumb" />
     <item type="id" name="mediumThumb" />
     <item type="id" name="highThumb" />

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
+    android:paddingTop="@dimen/videoitem_vertical_margin"
+    android:paddingStart="@dimen/videoitem_horizontal_margin"
     >
 
     <LinearLayout
@@ -16,9 +17,9 @@
             android:id="@+id/imgThumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray"
-            android:padding="1dp"
-            android:src="@drawable/waiting" />
+            android:src="@drawable/waiting"
+            android:paddingEnd="@dimen/videoitem_horizontal_margin"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

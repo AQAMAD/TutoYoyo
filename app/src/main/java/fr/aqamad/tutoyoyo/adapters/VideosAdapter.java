@@ -1,8 +1,5 @@
 package fr.aqamad.tutoyoyo.adapters;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,7 +123,8 @@ public class VideosAdapter extends ArrayAdapter<YoutubeVideo> {
         //load image with picasso
         PicassoHelper.with(parent.getContext()).load(vid.getHighThumb().getUrl().toString())
                 .placeholder(R.drawable.waiting)
-                .resize(tWidth,0)
+                .resize(tWidth, 0)
+                .transform(PicassoHelper.getRoundedCornersTranform(getContext().getResources().getColor(foreGroundColor)))
                 .into(imgThumb)
         ;
         imgThumb.setTag(R.id.defaultThumb, vid.getDefaultThumb().getUrl().toString());

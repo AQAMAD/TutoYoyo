@@ -173,7 +173,8 @@ public class PlaylistFragment extends ListFragment implements View.OnClickListen
         ImageView imThumb= (ImageView) rootView.findViewById(R.id.imgPlaylistThumb);
         PicassoHelper.loadWeborDrawable(getActivity(), mThumb)
                 .placeholder(R.drawable.waiting)
-                .resize(tWidth,tHeight)
+                .resize(tWidth, tHeight)
+                .transform(PicassoHelper.getRoundedCornersTranform(getResources().getColor(mFgColor)))
                 .into(imThumb)
         ;
         //set up clickListeners
@@ -273,11 +274,11 @@ public class PlaylistFragment extends ListFragment implements View.OnClickListen
         int visibility=llex.getVisibility();
         if (visibility==View.VISIBLE){
             UI.getInstance().animHideCollapse(llex);
-            UI.animRotate(view, 270, 400);
+            UI.animRotate(view, 0, 400);
         }else{
             //animate visibility
             UI.animRevealExpand(llex);
-            UI.animRotate(view, 360, 400);
+            UI.animRotate(view, 90, 400);
         }
 
     }
@@ -293,11 +294,11 @@ public class PlaylistFragment extends ListFragment implements View.OnClickListen
         int visibility=vwID.getVisibility();
         if (visibility==View.VISIBLE){
             UI.getInstance().animHideCollapse(vwID);
-            UI.animRotate(view, 270, 400);
+            UI.animRotate(view, 0, 400);
         }else{
             //animate visibility
             UI.animRevealExpand(vwID);
-            UI.animRotate(view, 360, 400);
+            UI.animRotate(view, 90, 400);
         }
     }
 

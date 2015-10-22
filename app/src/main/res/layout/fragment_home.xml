@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    android:background="@android:color/black"
     tools:showIn="@layout/app_bar_main">
 
     <ScrollView
@@ -19,236 +19,237 @@
             android:orientation="vertical">
 
 
-                <RelativeLayout
-                    android:id="@+id/frameBackground"
+            <RelativeLayout
+                android:id="@+id/frameBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center_horizontal|top"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/drawer_header" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|top"
+                    android:shadowColor="#888888"
+                    android:shadowDx="40"
+                    android:shadowDy="40"
+                    android:text="@string/welcomeTitle"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+                <LinearLayout
+                    android:id="@+id/progressIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/black"
+                    android:layout_below="@+id/textView3"
+                    android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/imageView3"
+                    <ProgressBar
+                        android:id="@+id/progressBarPro"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_gravity="center_horizontal|top"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/drawer_header" />
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="1" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/progressText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageView3"
-                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal|top"
-                        android:shadowColor="#888888"
-                        android:shadowDx="40"
-                        android:shadowDy="40"
-                        android:text="@string/welcomeTitle"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/white" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/holo_red_dark" />
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:id="@+id/progressIndicator"
-                        android:layout_below="@+id/textView3"
-                        android:layout_centerHorizontal="true"
-                        >
-
-                        <ProgressBar
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:indeterminate="false"
-                            android:max="100"
-                            android:progress="1"
-                            android:id="@+id/progressBarPro"
-                            />
-                        <TextView
-                            android:id="@+id/progressText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|top"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/holo_red_dark" />
-                        <ProgressBar
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:indeterminate="false"
-                            android:max="100"
-                            android:progress="1"
-                            android:id="@+id/progressBarPlay"
-                            />
-                        <TextView
-                            android:id="@+id/progressText2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|top"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/holo_red_dark" />
-
-                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/progressBarPlay"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="1" />
 
                     <TextView
-                        android:id="@+id/welcomeText"
+                        android:id="@+id/progressText2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/progressIndicator"
-                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal|top"
-                        android:shadowColor="#888888"
-                        android:shadowDx="40"
-                        android:shadowDy="40"
-                        android:autoLink="web"
-                        android:text="@string/dialog_msg_about"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/white" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/holo_red_dark" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/welcomeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/progressIndicator"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|top"
+                    android:autoLink="web"
+                    android:shadowColor="#888888"
+                    android:shadowDx="40"
+                    android:shadowDy="40"
+                    android:text="@string/dialog_msg_about"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+                <LinearLayout
+                    android:id="@+id/instantHelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/welcomeText"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/instantHelp"
-                        android:layout_below="@+id/welcomeText"
-                        android:layout_centerHorizontal="true"
-                        >
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@android:drawable/ic_menu_recent_history"
-                            android:layout_gravity="right"
-                            android:id="@+id/btnLater"
-                            />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ihelp_later"
-                                android:textColor="@android:color/white"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@android:drawable/ic_menu_upload"
-                                android:layout_gravity="right"
-                                android:id="@+id/btnShare"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ihelp_social"
-                                android:textColor="@android:color/white"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@android:drawable/btn_star"
-                                android:layout_gravity="right"
-                                android:id="@+id/btnFavorites"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ihelp_favorites"
-                                android:textColor="@android:color/white"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@android:drawable/ic_menu_share"
-                                android:id="@+id/shareVideoButton"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ihelp_ishare"
-                                android:textColor="@android:color/white"/>
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <org.apmem.tools.layouts.FlowLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentBottom="true"
-                        android:layout_below="@+id/instantHelp"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageYYB"
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/btnLater"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:iiv_color="@android:color/darker_gray"
+                            app:iiv_icon="oct-file-zip" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:src="@drawable/logo_yoyoblast_big" />
+                            android:text="@string/ihelp_later"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/imageYYE"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/btnShare"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:iiv_color="@android:color/darker_gray"
+                            app:iiv_icon="oct-file-symlink-file" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:src="@drawable/logo_yoyoexpert_big" />
+                            android:text="@string/ihelp_social"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/imageCLYW"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/btnFavorites"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:iiv_color="@android:color/darker_gray"
+                            app:iiv_icon="oct-file-text" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:src="@drawable/logo_clyw_big" />
+                            android:text="@string/ihelp_favorites"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/imageYYT"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/shareVideoButton"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:iiv_color="@android:color/darker_gray"
+                            app:iiv_icon="faw-share" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:src="@drawable/logo_yoyothrower_big" />
+                            android:text="@string/ihelp_ishare"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/imageBHOP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:src="@drawable/logo_blackhop_big" />
-                    </org.apmem.tools.layouts.FlowLayout>
+                </LinearLayout>
 
-                </RelativeLayout>
 
+                </LinearLayout>
+
+                <org.apmem.tools.layouts.FlowLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/instantHelp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageYYB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:src="@drawable/logo_yoyoblast_big" />
+
+                    <ImageView
+                        android:id="@+id/imageYYE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@drawable/logo_yoyoexpert_big" />
+
+                    <ImageView
+                        android:id="@+id/imageCLYW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:src="@drawable/logo_clyw_big" />
+
+                    <ImageView
+                        android:id="@+id/imageYYT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:src="@drawable/logo_yoyothrower_big" />
+
+                    <ImageView
+                        android:id="@+id/imageBHOP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:src="@drawable/logo_blackhop_big" />
+                </org.apmem.tools.layouts.FlowLayout>
+
+            </RelativeLayout>
 
 
         </LinearLayout>

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -445,8 +447,7 @@ public class ModelConverter {
                 for (int i = 1; i <= pages ; i++) {
                     YoutubePlaylist tpl=playlist.clone();
                     //must create unique ID
-                    tpl.setID(tpl.getID()+"(" + i + ")");
-                    tpl.setTitle(tpl.getTitle() + " (" + i + ")");
+                    tpl.setID(tpl.getID() + "(" + i + ")");
                     tpl.setPageNumber(i);
                     if (i==pages){
                         tpl.setNumberToFetch(remainder);
@@ -454,7 +455,7 @@ public class ModelConverter {
                         tpl.setNumberToFetch(CLYW_PAGE_SIZE);
                     }
                     int start=((i-1)*CLYW_PAGE_SIZE);
-                    int end=(i*CLYW_PAGE_SIZE)-1;
+                    int end=(i*CLYW_PAGE_SIZE);
                     if (end>=count){
                         end=count;
                     }
@@ -463,6 +464,25 @@ public class ModelConverter {
                     for (int j = 0; j < lst.size(); j++) {
                         tpl.getVideos().add(lst.get(j));
                     }
+                    //handle date stuff
+                    //get first and last video of segment
+                    String startDate=lst.get(0).getPublishedAt();
+                    String endDate=lst.get(lst.size()-1).getPublishedAt();
+                    Log.d("CLYWF.PC", "sublist dates " + startDate + "/" + endDate);
+                    //parse dates
+                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'.000Z'");
+                    try {
+                        Date startD=sdf.parse(startDate);
+                        Date endD=sdf.parse(endDate);
+                        sdf=new SimpleDateFormat("MMM yyyy");
+                        startDate=sdf.format(startD);
+                        endDate=sdf.format(endD);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    //here's the new playlist title
+                    tpl.setTitle(tpl.getTitle() + " "  + i + " (" + startDate + " - " +  endDate + ")");
+                    tpl.setDescription(tpl.getDescription() + "\n Videos from " + startDate + " to " +  endDate + "");
                     //playlist thumbs should point to one of the vids, so choose at random
                     Random rand = new Random();
                     int  n = rand.nextInt(tpl.getVideos().size()-1);

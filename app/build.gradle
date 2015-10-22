@@ -1,5 +1,24 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'org.moallemi.advanced-build-version'
+
+advancedVersioning {
+    codeOptions {
+        versionCodeType org.moallemi.gradle.internal.VersionCodeType.DATE
+    }
+    nameOptions {
+        versionMajor 1
+        versionMinor 0
+        versionPatch 0
+        versionBuild versionCode
+    }
+    outputOptions {
+        renameOutput true
+        nameFormat '${projectName}-${buildType}-${versionName}'
+    }
+}
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
@@ -8,8 +27,8 @@ android {
         applicationId "fr.aqamad.tutoyoyo"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode advancedVersioning.versionCode
+        versionName advancedVersioning.versionName
     }
     buildTypes {
         release {
@@ -18,10 +37,11 @@ android {
         }
     }
 
-    android {
-        useLibrary 'org.apache.http.legacy'
-    }
+    useLibrary 'org.apache.http.legacy'
+
 }
+
+
 
 
 repositories {
@@ -34,13 +54,16 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:support-v4:23.1.0'
     compile 'com.squareup.okhttp:okhttp:2.+'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:support-v4:23.0.1'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'org.apmem.tools:layouts:1.10@aar'
-
+    compile 'com.mikepenz:iconics-core:1.7.9@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+    compile 'com.mikepenz:octicons-typeface:3.0.0.1@aar'
+    compile 'com.makeramen:roundedimageview:2.2.1'
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playContainer">
 
     <LinearLayout
@@ -18,20 +19,23 @@
             android:layout_height="wrap_content"
             android:gravity="left" >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/expanderButton"
-                android:src="@android:drawable/ic_menu_more"
-                android:rotation="270"
-                android:layout_gravity="top|right" />
-
             <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_gravity="top">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:iiv_color="@android:color/darker_gray"
+                    android:id="@+id/expanderButton"
+                    app:iiv_icon="faw-toggle-right"
+                    android:layout_gravity="bottom|right"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -54,6 +58,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="52dp"
                     android:visibility="gone" />
+
             </RelativeLayout>
 
             <ImageView
@@ -62,8 +67,6 @@
                 android:id="@+id/imgPlaylistThumb"
                 android:layout_gravity="top|right"
                 android:src="@drawable/waiting"
-                android:background="@android:color/darker_gray"
-                android:padding="1dp"
                 />
 
         </LinearLayout>
@@ -96,6 +99,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@android:id/list"
+            tools:listitem="@layout/playlist_item"
             />
 
 
