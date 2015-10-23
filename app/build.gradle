@@ -3,15 +3,19 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.moallemi.advanced-build-version'
 
 advancedVersioning {
+
     codeOptions {
         versionCodeType org.moallemi.gradle.internal.VersionCodeType.DATE
+        dependsOnTasks 'debug', 'release'
     }
+
     nameOptions {
         versionMajor 1
         versionMinor 0
         versionPatch 0
         versionBuild versionCode
     }
+
     outputOptions {
         renameOutput true
         nameFormat '${projectName}-${buildType}-${versionName}'
@@ -40,8 +44,6 @@ android {
     useLibrary 'org.apache.http.legacy'
 
 }
-
-
 
 
 repositories {

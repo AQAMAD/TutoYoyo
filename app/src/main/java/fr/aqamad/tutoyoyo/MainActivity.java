@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,8 @@ import fr.aqamad.tutoyoyo.fragments.SourceFragment;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
+import fr.aqamad.tutoyoyo.utils.PicassoHelper;
+import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.youtube.YoutubePlaylist;
 import fr.aqamad.youtube.YoutubeUtils;
 
@@ -95,12 +99,6 @@ public class MainActivity extends AppCompatActivity
             String state=savedInstanceState.getString("CurrentFragment");
             if (state!=null){
                 Log.d("MA", "Mainactivity onCreate bundle, state=" + state);
-                if (state.equals("")){
-//                    View frbck = findViewById(R.id.frameBackground);
-//                    frbck.setVisibility(View.VISIBLE);
-                }else{
-//                    hideHome();
-                }
             }
         } else {
             //create and prepare different fragments
@@ -199,6 +197,43 @@ public class MainActivity extends AppCompatActivity
             //and welcome Text
             TextView wt= (TextView) findViewById(R.id.welcomeText);
             wt.setVisibility(View.GONE);
+            //add stats information to welcome text
+            wt= (TextView) findViewById(R.id.textWelcomeTitle);
+            int nbVids =TutorialVideo.countAll();
+            //get random tut of the day
+            TutorialVideo randomTut=TutorialVideo.getRandom();
+            //we got the random tut, load it's thumbnail into main header for instance...
+            ImageView imgHeader= (ImageView) findViewById(R.id.imgHomeHeader);
+            //create text
+            wt.setText(String.format(getString(R.string.randomTutAndStats), randomTut.name, nbVids));
+            //determine size based on screen
+            ScreenSize size=new ScreenSize(this);
+            int tWidth=0;
+            int tHeight=0;
+            if (size.getHeight()<size.getWidth()){
+                //landscape, image should be no more than 1/2 screen height
+                tHeight=size.getHeight()/2;
+            }else{
+                //portrait
+                tWidth=size.getWidth()/2;
+            }
+            //use our picassohelper to load the thumbnail
+            PicassoHelper.loadWeborDrawable(this, randomTut.highThumbnail)
+                    .placeholder(R.drawable.waiting)
+                    .resize(tWidth, tHeight)
+                    .transform(PicassoHelper.getRoundedCornersTranform(Color.WHITE))
+                    .into(imgHeader)
+            ;
+            //set image click listener
+            imgHeader.setTag(randomTut.key);
+            imgHeader.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //we got the view, let's just toast something here
+                    String vidID= (String) v.getTag();
+                    YoutubeUtils.PlayYoutubeVideo(vidID, MainActivity.this);
+                }
+            });
         }
     }
 

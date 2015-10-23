@@ -27,34 +27,35 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_gravity="center_horizontal|top"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/drawer_header" />
-
-                <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/imgHomeHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageView3"
+                    android:layout_gravity="center_horizontal|top"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/drawer_header"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/textWelcomeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgHomeHeader"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal|top"
+                    android:gravity="center"
                     android:shadowColor="#888888"
                     android:shadowDx="40"
                     android:shadowDy="40"
                     android:text="@string/welcomeTitle"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white" />
 
                 <LinearLayout
                     android:id="@+id/progressIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/textView3"
+                    android:layout_below="@+id/textWelcomeTitle"
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
@@ -105,8 +106,9 @@
                     android:shadowColor="#888888"
                     android:shadowDx="40"
                     android:shadowDy="40"
+                    android:layout_marginTop="@dimen/videoitem_vertical_margin"
                     android:text="@string/dialog_msg_about"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
 
                 <LinearLayout
@@ -115,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/welcomeText"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/videoitem_vertical_margin"
                     android:orientation="vertical">
 
                 <LinearLayout
@@ -210,6 +213,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_below="@+id/instantHelp"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/videoitem_vertical_margin"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -218,35 +222,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:src="@drawable/logo_yoyoblast_big" />
+                        android:src="@drawable/logo_yoyoblast" />
 
                     <ImageView
                         android:id="@+id/imageYYE"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:src="@drawable/logo_yoyoexpert_big" />
+                        android:src="@drawable/logo_yoyoexpert" />
 
                     <ImageView
                         android:id="@+id/imageCLYW"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:src="@drawable/logo_clyw_big" />
+                        android:src="@drawable/logo_clyw" />
 
                     <ImageView
                         android:id="@+id/imageYYT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:src="@drawable/logo_yoyothrower_big" />
+                        android:src="@drawable/logo_yoyothrower" />
 
                     <ImageView
                         android:id="@+id/imageBHOP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:src="@drawable/logo_blackhop_big" />
+                        android:src="@drawable/logo_blackhop" />
                 </org.apmem.tools.layouts.FlowLayout>
 
             </RelativeLayout>

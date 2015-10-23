@@ -49,4 +49,5 @@
     <string name="ihelp_later">= Ajouter aux \'A voir plus tard\'</string>
     <string name="ihelp_social">= Ajouter aux \'Partage\'</string>
     <string name="loading">Chargement</string>
+    <string name="randomTutAndStats" formatted="false">Tutoriel aléatoire : %s\n%d tutoriels disponibles.</string>
 </resources>

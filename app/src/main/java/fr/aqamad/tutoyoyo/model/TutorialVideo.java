@@ -1,5 +1,8 @@
 package fr.aqamad.tutoyoyo.model;
 
+import android.database.Cursor;
+
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -48,5 +51,21 @@ public class TutorialVideo extends Model {
                 .where("Key = ?",keyId)
                 .orderBy("Name ASC")
                 .execute();
+    }
+
+    public static int countAll() {
+        Cursor c = ActiveAndroid.getDatabase().rawQuery("SELECT COUNT(*) as total FROM " + new TutorialVideo().getTableName(), null);
+        c.moveToFirst();
+        int total = c.getInt(c.getColumnIndex("total"));
+        c.close();
+        return total;
+    }
+
+    public static TutorialVideo getRandom() {
+        return new Select().from(TutorialVideo.class).orderBy("RANDOM()").executeSingle();
+    }
+
+    private String getTableName() {
+        return "Videos";
     }
 }
