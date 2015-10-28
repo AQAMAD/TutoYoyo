@@ -49,5 +49,15 @@
     <string name="ihelp_later">= Ajouter aux \'A voir plus tard\'</string>
     <string name="ihelp_social">= Ajouter aux \'Partage\'</string>
     <string name="loading">Chargement</string>
-    <string name="randomTutAndStats" formatted="false">Tutoriel aléatoire : %s\n%d tutoriels disponibles.</string>
+    <string name="randomTut">Tutoriel aléatoire : %s</string>
+    <string name="tutStats">%d tutoriels disponibles.</string>
+    <string name="search_results_title">Résultats de recherche : </string>
+    <string name="search_hint">Chercher dans les tutos</string>
+    <string name="msg_video_removed">La vidéo à été retirée</string>
+    <string name="other_friends">Autres amis (en)</string>
+    <string name="action_help">Aide</string>
+    <string name="action_search">Recherche</string>
+    <string name="spbyys">SPbYYS (en)</string>
+    <string name="ihelp_seen">= J\'ai vu cette vidéo</string>
+
 </resources>

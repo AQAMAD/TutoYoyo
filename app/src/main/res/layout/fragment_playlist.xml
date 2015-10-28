@@ -1,110 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/playContainer">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/playContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|top"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left" >
+            android:gravity="left"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_gravity="top">
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    app:iiv_color="@android:color/darker_gray"
-                    android:id="@+id/expanderButton"
-                    app:iiv_icon="faw-toggle-right"
-                    android:layout_gravity="bottom|right"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    />
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/plTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Title here"
-                    android:id="@+id/plTitle"
                     android:layout_gravity="center"
-                    android:gravity="center" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Description here"
                     android:gravity="center"
-                    android:id="@+id/plDesc"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="0dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="52dp"
-                    android:visibility="gone" />
+                    android:text="Title here"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/imgPlaylistThumb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imgPlaylistThumb"
+                android:layout_margin="4dp"
                 android:layout_gravity="top|right"
-                android:src="@drawable/waiting"
-                />
+                android:src="@drawable/waiting" />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/expandDescription"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_height="wrap_content"
-            android:id="@+id/expandDescription"
-            android:animateLayoutChanges="true" >
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/plLongDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/holo_orange_dark"
                 android:layout_weight="1"
                 android:autoLink="web"
-                android:text="Very long description including an url http://www.google.com and it keeps going on with another http://www.yahoo.fr bye bye" />
+                android:text="Very long description including an url http://www.google.com and it keeps going on with another http://www.yahoo.fr bye bye"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
         <ListView
+            android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@android:id/list"
-            tools:listitem="@layout/playlist_item"
-            />
+            tools:listitem="@layout/playlist_item" />
 
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

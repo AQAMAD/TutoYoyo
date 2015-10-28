@@ -3,10 +3,14 @@ package fr.aqamad.tutoyoyo.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import fr.aqamad.youtube.YoutubeUtils;
 
 /**
  * Created by Gregoire on 09/10/2015.
@@ -44,6 +48,11 @@ public class TutorialPlaylist extends Model {
         return getMany(TutorialVideo.class, "Channel");
     }
 
+    public static void clearVideos(String keyId){
+        TutorialPlaylist pl=getByKey(keyId);
+        new Delete().from(TutorialVideo.class).where("Channel = ?", pl.getId()).execute();
+    }
+
     public static TutorialPlaylist getByKey(String keyId) {
         return new Select()
                 .from(TutorialPlaylist.class)
@@ -52,4 +61,21 @@ public class TutorialPlaylist extends Model {
                 .executeSingle();
     }
 
+    public static List<TutorialPlaylist> getOlderThan(Date refreshDate) {
+        return new Select()
+                .from(TutorialPlaylist.class)
+                .where("FetchedAt is not null and FetchedAt < ?",refreshDate.getTime())
+                .orderBy("Name ASC")
+                .execute();
+    }
+
+    public List<String> getVideoUrls(){
+        //build array
+        ArrayList<String> videoUrls = new ArrayList<String>();
+        for (TutorialVideo vid :
+                videos()) {
+            videoUrls.add(YoutubeUtils.getVideoPlayUrl(vid.key));
+        }
+        return videoUrls;
+    }
 }

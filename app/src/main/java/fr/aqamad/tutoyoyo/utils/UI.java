@@ -3,23 +3,20 @@ package fr.aqamad.tutoyoyo.utils;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
-
-import fr.aqamad.tutoyoyo.R;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 /**
  * Created by Gregoire on 14/10/2015.
@@ -38,6 +35,15 @@ public class UI {
         return iv;
     }
 
+    public static ImageView colorizeAndTag(ImageView iv,boolean state){
+        if (state){
+            colorize(iv,android.R.color.holo_green_light)    ;
+        } else{
+            colorize(iv,null)    ;
+        }
+        iv.setTag(state);
+        return iv;
+    }
 
     public static View animRotate(View iv,int degrees,int duration){
         //get current rotation
@@ -102,33 +108,70 @@ public class UI {
         }
     }
 
-    //dialogs are added here
-    public class RemoveFromPlaylistDialogFragment extends DialogFragment {
+    /**
+     * Sets ListView height dynamically based on the height of the items.
+     *
+     * @param listView to be resized
+     * @return true if the listView is successfully resized, false otherwise
+     */
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
 
-        private String mPlaylistTitle;
-        private int mDialogTitle;
-        private int mDialogMessage;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
 
-        public RemoveFromPlaylistDialogFragment(){
+            int numberOfItems = listAdapter.getCount();
 
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
         }
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(mDialogTitle);
-            builder.setMessage(mDialogMessage);
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // FIRE ZE MISSILES!
-                }
-            });
-            builder.setNegativeButton(android.R.string.no, null);
-            // Create the AlertDialog object and return it
-            return builder.create();
-        }
+    }
+
+    public static void alertDialog(Activity act,int title, int message){
+        AlertDialog alertDialog = new AlertDialog.Builder(act).create();
+        alertDialog.setTitle(act.getString(title));
+        alertDialog.setMessage(act.getString(message));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public static void alertCustomDialog(Activity act,int title, int layoutresid,int dismissbuttonid){
+        final AlertDialog alertDialog = new AlertDialog.Builder(act).create();
+        alertDialog.setTitle(act.getString(title));
+        alertDialog.setContentView(layoutresid);
+        Button dialogButton = (Button) alertDialog.findViewById(dismissbuttonid);
+        // if button is clicked, close the custom dialog
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
 }

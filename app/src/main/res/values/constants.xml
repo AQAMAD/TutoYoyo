@@ -10,26 +10,37 @@
     <string name="YOYOBLAST_CHANNEL">UCJVkKRR1hf0aSZzrELEATRg</string>
     <string name="YOYOTHROWER_CHANNEL">UC7iE1IfAFlLmEeHqU0a_MSQ</string>
     <string name="BLACKHOP_CHANNEL">UCEYcymLnFYaTC8lv1iOaf4A</string>
+    <string name="SPBYYS_CHANNEL">UCeCrQ8HGD-bT6dwDIkXRPxw</string>
+    <string name="FRIENDS_CHANNEL">TutsFromFriends</string>
 
     <string name="btn_pref_del_db_key">prefBtnDelDb</string>
     <string name="btn_pref_clear_cache_key">prefBtnClearCache</string>
-    <string name="btn_pref_clear_viewed_key">prefBtnClearViewed</string>
-    <string name="btn_pref_clear_database_key">prefBtnClearDB</string>
+    <string name="sponsor_preference_category">sponsor_preference_category</string>
     <string name="chk_pref_yoyoblast">chkPrefYoyoBlast</string>
     <string name="chk_pref_yoyoexpert">chkPrefYoyoExpert</string>
     <string name="chk_pref_clyw">chkPrefClyw</string>
     <string name="chk_pref_yoyothrower">chkPrefYoyoThrower</string>
+    <string name="chk_pref_spbyys">chkPrefSPBYYS</string>
     <string name="chk_pref_blackhop">chkPrefBlackhop</string>
+    <string name="chk_pref_friends">chkPrefFriends</string>
+    <string name="lst_pref_refresh_playlist">lstPrefRefreshPlaylists</string>
+
+    <item name="standardThumb" type="id" />
+    <item name="mediumThumb" type="id" />
+    <item name="highThumb" type="id" />
+    <item name="defaultThumb" type="id" />
 
 
-    <item type="id" name="standardThumb" />
-    <item type="id" name="mediumThumb" />
-    <item type="id" name="highThumb" />
-    <item type="id" name="defaultThumb" />
-
-    <string-array name="sourceids">
-        <item>@id/nav_yyb</item>
-        <item>@id/nav_yyb</item>
+    <string-array name="refresh_entries">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
     </string-array>
+    <string-array name="refresh_values">
+        <item>1</item>
+        <item>7</item>
+        <item>30</item>
+    </string-array>
+
 
 </resources>

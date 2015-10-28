@@ -2,14 +2,19 @@ package fr.aqamad.tutoyoyo.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import fr.aqamad.tutoyoyo.R;
+import fr.aqamad.tutoyoyo.model.Sponsor;
+import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 
 
@@ -22,30 +27,24 @@ public class SettingsFragment extends PreferenceFragment {
     {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.fragment_settings);
-
-        Preference btnClearDb = (Preference)findPreference(getString(R.string.btn_pref_clear_database_key));
-        btnClearDb.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                //code for what you want it to do
-                TutorialSource.rebuildDB(preference.getContext());
-                Toast.makeText(preference.getContext(), "Database rebuilt", Toast.LENGTH_SHORT).show();
-                return true;
+        //add all preferences from fragment
+        Sponsors sponsors=new Sponsors(getActivity());
+        PreferenceCategory cat=(PreferenceCategory)findPreference(getString(R.string.sponsor_preference_category));
+        for (Sponsor spo :
+                sponsors.values()) {
+            if (spo.preferenceKey!=null){
+                CheckBoxPreference cb = new CheckBoxPreference(getActivity());
+                cb.setKey(spo.preferenceKey);
+                cb.setTitle(spo.name);
+                cb.setSummary("Use Tutorials from " + spo.name);
+                cb.setOrder(spo.order);        //not working...
+                cb.setDefaultValue(true);
+                Log.d("SF.OC", "Created Preference for " + spo.name + " using order " + spo.order);
+                cat.addPreference(cb);
             }
-        });
+        }
 
-        Preference btnClearViewed = (Preference)findPreference(getString(R.string.btn_pref_clear_viewed_key));
-        btnClearViewed.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                //code for what you want it to do
-                TutorialSource.clearViewed();
-                Toast.makeText(preference.getContext(), "Viewed statuses cleared", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-        Preference btnClearCache = (Preference)findPreference(getString(R.string.btn_pref_clear_cache_key));
+        Preference btnClearCache = findPreference(getString(R.string.btn_pref_clear_cache_key));
         btnClearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -56,7 +55,7 @@ public class SettingsFragment extends PreferenceFragment {
             }
         });
 
-        Preference btnDelDb = (Preference)findPreference(getString(R.string.btn_pref_del_db_key));
+        Preference btnDelDb = findPreference(getString(R.string.btn_pref_del_db_key));
         btnDelDb.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -82,6 +81,7 @@ public class SettingsFragment extends PreferenceFragment {
                 .getLaunchIntentForPackage( this.getActivity().getBaseContext().getPackageName() );
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         this.getActivity().startActivity(i);
+        System.exit(0);
     }
 
 

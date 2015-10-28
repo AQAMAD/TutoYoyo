@@ -14,6 +14,10 @@
             android:title="@string/yoyothrower" />
         <item android:id="@+id/nav_bhop" android:icon="@drawable/ic_menu_blackhop"
             android:title="@string/blackhop" />
+        <item android:id="@+id/nav_spyy" android:icon="@drawable/ic_menu_spbyys"
+            android:title="@string/spbyys" />
+        <item android:id="@+id/nav_friends" android:icon="@drawable/ic_menu_friends"
+            android:title="@string/other_friends" />
     </group>
 
     <item android:title="@string/Social">

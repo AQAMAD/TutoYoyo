@@ -1,8 +1,7 @@
 package fr.aqamad.tutoyoyo.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,6 +15,8 @@ import fr.aqamad.tutoyoyo.R;
  * Created by Gregoire on 19/10/2015.
  */
 public class HomeFragment extends Fragment {
+
+    protected SponsorsCallbacks mCallbacks;
 
     public HomeFragment(){
 
@@ -33,33 +34,28 @@ public class HomeFragment extends Fragment {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.youtube.com/user/hadoq"));
-                startActivity(intent);
+            if (mCallbacks != null) {
+                mCallbacks.onSponsorSelected(R.id.nav_bhop);
+            }
             }
         });
         v = (ImageView) rootView.findViewById(R.id.imageCLYW);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://www.clyw.ca/"));
-                startActivity(intent);
+            if (mCallbacks != null) {
+                mCallbacks.onSponsorSelected(R.id.nav_clyw);
+            }
+
             }
         });
         v = (ImageView) rootView.findViewById(R.id.imageYYB);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://www.yoyoblast.com/"));
-                startActivity(intent);
+            if (mCallbacks != null) {
+                mCallbacks.onSponsorSelected(R.id.nav_yyb);
+            }
             }
         });
 
@@ -67,25 +63,57 @@ public class HomeFragment extends Fragment {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://www.yoyoexpert.com/"));
-                startActivity(intent);
+            if (mCallbacks != null) {
+                mCallbacks.onSponsorSelected(R.id.nav_yye);
+            }
             }
         });
         v = (ImageView) rootView.findViewById(R.id.imageYYT);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://www.mryoyothrower.com/"));
-                startActivity(intent);
+            if (mCallbacks != null) {
+                mCallbacks.onSponsorSelected(R.id.nav_yyt);
+            }
+            }
+        });
+
+        v = (ImageView) rootView.findViewById(R.id.imageSPBY);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if (mCallbacks != null) {
+                mCallbacks.onSponsorSelected(R.id.nav_spyy);
+            }
             }
         });
 
         return rootView;
     }
+
+    /**
+     * Hold a reference to the parent Activity so we can report the
+     * task's current progress and results. The Android framework
+     * will pass us a reference to the newly created Activity after
+     * each configuration change.
+     */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (SponsorsCallbacks) activity;
+    }
+
+    /**
+     * Set the callback to null so we don't accidentally leak the
+     * Activity instance.
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+    public interface SponsorsCallbacks{
+        public void onSponsorSelected(int navigationId);
+    }
+
 }

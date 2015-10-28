@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/videoitem_vertical_margin"
-    android:paddingBottom="@dimen/videoitem_vertical_margin"
-    android:paddingLeft="@dimen/videoitem_horizontal_margin"
-    android:paddingRight="@dimen/videoitem_horizontal_margin"
-    android:id="@+id/parentofExpandable">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -60,13 +52,23 @@
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
+                    android:layout_margin="4dp"
                     app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
-                    android:id="@+id/btnLater"
-                    app:iiv_icon="oct-file-zip" />
+                    android:id="@+id/btnSeen"
+                    app:iiv_icon="faw-check" />
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
+                    android:layout_margin="4dp"
+                    app:iiv_color="@android:color/darker_gray"
+                    android:layout_gravity="right"
+                    android:id="@+id/btnLater"
+                    app:iiv_icon="faw-hourglass-half" />
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_margin="4dp"
                     app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/btnShare"
@@ -74,13 +76,15 @@
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
+                    android:layout_margin="4dp"
                     app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/btnFavorites"
-                    app:iiv_icon="oct-file-text" />
+                    app:iiv_icon="faw-heart" />
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
+                    android:layout_margin="4dp"
                     app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/shareVideoButton"
@@ -88,6 +92,7 @@
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="@dimen/icon_size"
                     android:layout_height="@dimen/icon_size"
+                    android:layout_margin="4dp"
                     app:iiv_color="@android:color/darker_gray"
                     android:layout_gravity="right"
                     android:id="@+id/expandVideoButton"
@@ -102,8 +107,8 @@
                 android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/holo_orange_dark"
+                android:autoLink="web"
                 android:text="HomeTown" />
-
             <TextView
                 android:id="@+id/vidID"
                 android:visibility="gone"
@@ -150,6 +155,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/holo_orange_dark"
                 android:layout_weight="1"
+                android:autoLink="web"
                 android:text="HomeTown" />
 
 
@@ -160,4 +166,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</merge>

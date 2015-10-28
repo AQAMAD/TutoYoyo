@@ -37,6 +37,7 @@
     <string name="dialog_msg_remove_share">Do you really want to remove this video from your \'Social\' list ?</string>
     <string name="dialog_msg_remove_favorite">Do you really want to remove this video from your \'Favorites\' list ?</string>
     <string name="msg_video_added">Video added</string>
+    <string name="msg_video_removed">Video removed</string>
     <string name="dialog_title_about">About</string>
     <string name="dialog_msg_about">This app was designed to help you progress in your yoyo play and provide quick and easy access to your favorite tutorials.\n\tYou may start by opening the left menu and browsing your favorite sources of tutorials, when you find one you like, simply press one of the add buttons to add it to one of your tuts lists.\n\tOnce a few tuts are in your lists, you can share them with your friends.\n\tFor offline viewing, we recommend the excellent YTD app from dentex at : \n\thttp://dentex.github.io/apps/youtubedownloader</string>
     <string name="dialog_title_credits">Credits</string>
@@ -56,5 +57,14 @@
     <string name="ihelp_favorites">= Add to \'Favorites\'</string>
     <string name="ihelp_ishare">= Instant share</string>
     <string name="loading">Loading</string>
-    <string name="randomTutAndStats" formatted="false">Random Tutorial : %s\n%d available tutorials.</string>
+    <string name="search_hint">Search Tutorials</string>
+    <string name="action_search">Search</string>
+    <string name="action_help">Help</string>
+    <string name="randomTut">Random tutorial : %s</string>
+    <string name="tutStats">%d available tutorials.</string>
+    <string name="search_results_title">Search results :</string>
+    <string name="spbyys">SPbYYS</string>
+    <string name="other_friends">Other Friends</string>
+    <string name="ihelp_seen">= I\'ve seen this video</string>
+    <string name="dialog_help_title">Help</string>
 </resources>

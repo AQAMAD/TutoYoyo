@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/videoitem_vertical_margin"
-    android:paddingStart="@dimen/videoitem_horizontal_margin"
-    android:orientation="vertical">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/plDesc"
@@ -62,4 +57,4 @@
     </RelativeLayout>
 
 
-</LinearLayout>
+</merge>

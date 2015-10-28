@@ -18,9 +18,9 @@ import com.squareup.picasso.Transformation;
  * Created by Gregoire on 12/10/2015.
  */
 public class PicassoHelper {
-    // Size in bytes (10 MB)
-    private static final long PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 10;
-    private static final int maxSize = 24000;
+    // Size in bytes (50 MB)
+    private static final long PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 50;
+    private static final int maxSize = 10000;
 
     private static Picasso mPicasso=null;
 

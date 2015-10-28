@@ -1,6 +1,5 @@
 package fr.aqamad.tutoyoyo.model;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -68,7 +67,7 @@ public class TutorialSource extends Model {
     }
 
     public static void initializeDB(Context app) {
-        Configuration dbConfiguration = new Configuration.Builder( app ).setDatabaseName("TutoYoyo.db").create();
+        Configuration dbConfiguration = new Configuration.Builder( app ).setDatabaseName("YoyoTuts.db").create();
         ActiveAndroid.initialize(dbConfiguration);
         //
         Log.d("initDB", "Initialise DB called");
@@ -77,62 +76,48 @@ public class TutorialSource extends Model {
     }
 
     private static void initializeData(Context app) {
-        //Create our tutorial sources
-        //First is the "My tuts" source
-        TutorialSource myTuts=new TutorialSource();
-        myTuts.name=app.getString(R.string.myTutsTitle);
-        myTuts.description=app.getString(R.string.myTutsDesc);
-        myTuts.key=app.getString(R.string.localChannelKey);
-        myTuts.lastRefreshed=new Date();
-        myTuts.save();
-        //create channels
-        TutorialPlaylist tmpChannel=new TutorialPlaylist();
-        tmpChannel.source=myTuts;
-        tmpChannel.name=app.getString(R.string.favorites);
-        tmpChannel.key=app.getString(R.string.localFavoritesKey);
-        tmpChannel.description=app.getString(R.string.favoritesDesc);
-        tmpChannel.mediumThumbnail=app.getString(R.string.favoritesThumb);
-        tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;
-        tmpChannel.highThumbnail=tmpChannel.mediumThumbnail;
-        tmpChannel.save();
-        //create channels
-        tmpChannel=new TutorialPlaylist();
-        tmpChannel.source=myTuts;
-        tmpChannel.name=app.getString(R.string.watchLater);
-        tmpChannel.key=app.getString(R.string.localLaterKey);
-        tmpChannel.description=app.getString(R.string.watchLaterDesc);
-        tmpChannel.mediumThumbnail=app.getString(R.string.watchLaterThumb);
-        tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;
-        tmpChannel.highThumbnail=tmpChannel.mediumThumbnail;
-        tmpChannel.save();
-        //create channels
-        tmpChannel=new TutorialPlaylist();
-        tmpChannel.source=myTuts;
-        tmpChannel.name=app.getString(R.string.shareable);
-        tmpChannel.key=app.getString(R.string.localSocialKey);
-        tmpChannel.description=app.getString(R.string.shareableDesc);
-        tmpChannel.mediumThumbnail=app.getString(R.string.shareableThumb);
-        tmpChannel.defaultThumbnail=tmpChannel.mediumThumbnail;
-        tmpChannel.highThumbnail=tmpChannel.mediumThumbnail;
-        tmpChannel.save();
-//        //now create the Yoyoblast cache channel
-//        myTuts=new TutorialSource();
-//        myTuts.name="Yoyoblast(fr)";
-//        myTuts.description="Yoyo store and Tutorials (Apprendre à faire du yoyo).";
-//        myTuts.lastRefreshed=null;
-//        myTuts.save();
-//        //now create the Yoyoexpert cache channel
-//        myTuts=new TutorialSource();
-//        myTuts.name="YoyoExpert";
-//        myTuts.description="Make the simple amazing !";
-//        myTuts.lastRefreshed=null;
-//        myTuts.save();
-//        //now create the clyw  cache channel
-//        myTuts=new TutorialSource();
-//        myTuts.name="Other sources";
-//        myTuts.description="Various sources from all over the world";
-//        myTuts.lastRefreshed=null;
-//        myTuts.save();
+        //test if already present :
+        List<TutorialSource> sources =TutorialSource.getAll();
+        if (sources.size()==0) {
+            //Create our tutorial sources
+            //First is the "My tuts" source
+            TutorialSource myTuts = new TutorialSource();
+            myTuts.name = app.getString(R.string.myTutsTitle);
+            myTuts.description = app.getString(R.string.myTutsDesc);
+            myTuts.key = app.getString(R.string.localChannelKey);
+            myTuts.lastRefreshed = new Date();
+            myTuts.save();
+            //create channels
+            TutorialPlaylist tmpChannel = new TutorialPlaylist();
+            tmpChannel.source = myTuts;
+            tmpChannel.name = app.getString(R.string.favorites);
+            tmpChannel.key = app.getString(R.string.localFavoritesKey);
+            tmpChannel.description = app.getString(R.string.favoritesDesc);
+            tmpChannel.mediumThumbnail = app.getString(R.string.favoritesThumb);
+            tmpChannel.defaultThumbnail = tmpChannel.mediumThumbnail;
+            tmpChannel.highThumbnail = tmpChannel.mediumThumbnail;
+            tmpChannel.save();
+            //create channels
+            tmpChannel = new TutorialPlaylist();
+            tmpChannel.source = myTuts;
+            tmpChannel.name = app.getString(R.string.watchLater);
+            tmpChannel.key = app.getString(R.string.localLaterKey);
+            tmpChannel.description = app.getString(R.string.watchLaterDesc);
+            tmpChannel.mediumThumbnail = app.getString(R.string.watchLaterThumb);
+            tmpChannel.defaultThumbnail = tmpChannel.mediumThumbnail;
+            tmpChannel.highThumbnail = tmpChannel.mediumThumbnail;
+            tmpChannel.save();
+            //create channels
+            tmpChannel = new TutorialPlaylist();
+            tmpChannel.source = myTuts;
+            tmpChannel.name = app.getString(R.string.shareable);
+            tmpChannel.key = app.getString(R.string.localSocialKey);
+            tmpChannel.description = app.getString(R.string.shareableDesc);
+            tmpChannel.mediumThumbnail = app.getString(R.string.shareableThumb);
+            tmpChannel.defaultThumbnail = tmpChannel.mediumThumbnail;
+            tmpChannel.highThumbnail = tmpChannel.mediumThumbnail;
+            tmpChannel.save();
+        }
     }
 
     public static TutorialSource getByName(String channelId) {

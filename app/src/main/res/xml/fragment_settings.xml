@@ -1,48 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
+        android:key="@string/sponsor_preference_category"
         android:title="Choose your Content providers">
 
-        <CheckBoxPreference android:title="Yoyoblast"
-            android:key="@string/chk_pref_yoyoblast"
-            android:defaultValue="true"
-            android:summary="Videos from Yoyoblast"/>
-        <CheckBoxPreference android:title="Blackhop"
-            android:key="@string/chk_pref_blackhop"
-            android:defaultValue="true"
-            android:summary="Videos from Blackhop"/>
-        <CheckBoxPreference android:title="YoyoExpert"
-            android:key="@string/chk_pref_yoyoexpert"
-            android:defaultValue="true"
-            android:summary="Videos from YoyoExpert"/>
-        <CheckBoxPreference android:title="CLYW"
-            android:key="@string/chk_pref_clyw"
-            android:defaultValue="true"
-            android:summary="Videos from CLYW"/>
-        <CheckBoxPreference android:title="MrYoyoThrower"
-            android:key="@string/chk_pref_yoyothrower"
-            android:defaultValue="true"
-            android:summary="Videos from MrYoyothrower"/>
+        <!--This is a placeholder for dynamic checkboxes-->
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="Database and Cache">
 
+        <ListPreference android:title="Refresh playlists"
+            android:key="@string/lst_pref_refresh_playlist"
+            android:entries="@array/refresh_entries"
+            android:entryValues="@array/refresh_values"
+            android:defaultValue="7"
+            android:summary="Playlists refresh every... "/>
+
         <Preference android:title="Clear Cache"
             android:key="@string/btn_pref_clear_cache_key"
-            android:summary="Clear out your cached content, you will lose nothing at all"/>
-
-        <Preference android:title="Clear Viewed vids"
-            android:key="@string/btn_pref_clear_viewed_key"
-            android:summary="Clear out your \'viewed\' status, you will lose nothing else"/>
-
-        <Preference android:title="Clear Database"
-            android:key="@string/btn_pref_clear_database_key"
-            android:summary="Clear out your database and cached content, you will lose your viewed statuses and personnal playlists"/>
+            android:summary="Clear out your cached content, you will lose nothing at all, content should be refreshed on access, counts and durations might be off until next restart."/>
 
         <Preference android:title="Destroy Database"
             android:key="@string/btn_pref_del_db_key"
-            android:summary="Destroy your database and cached content, you will lose your viewed statuses and personnal playlists, the app will restart"/>
-
+            android:summary="Destroy your database and cached content, you will lose your personnal playlists, the app will exit and try to restart"/>
     </PreferenceCategory>
 </PreferenceScreen>

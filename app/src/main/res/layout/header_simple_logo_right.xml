@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="right"
-    android:background="@android:color/black"
+    android:id="@+id/headerBackground"
+    android:background="@android:color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/drawer_header"
-        android:id="@+id/imageView4"
+        android:src="@drawable/waiting"
+        android:id="@+id/navigableLogo"
+        android:layout_margin="4dp"
         android:layout_alignParentEnd="true"
         />
 
@@ -19,35 +21,30 @@
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/imageView4"
-        android:layout_toStartOf="@+id/imageView4"
+        android:layout_toLeftOf="@+id/navigableLogo"
+        android:layout_toStartOf="@+id/navigableLogo"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_alignBottom="@+id/imageView4">
+        android:layout_alignBottom="@+id/navigableLogo">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/myTutosChannelTitle"
-            android:id="@+id/textView2"
-            android:textColor="@android:color/white"
+            android:text="Title"
+            android:id="@+id/headerTitle"
+            android:textColor="@android:color/black"
             android:layout_gravity="left"
             android:gravity="center"
             android:textStyle="bold"
-            android:shadowColor="@color/black_overlay"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="24"
-
             />
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/myTutosChannelDescription"
-            android:textColor="@android:color/white"
+            android:text="Description"
+            android:textColor="@android:color/black"
             android:gravity="center"
-            android:id="@+id/textView4"
+            android:id="@+id/headerDescription"
 
             />
 

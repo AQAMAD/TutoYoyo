@@ -26,36 +26,48 @@
                 android:background="@android:color/black"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/textWelcomeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:text="@string/welcomeTitle"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
+
                 <ImageView
                     android:id="@+id/imgHomeHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|top"
+                    android:layout_below="@+id/textWelcomeTitle"
                     android:adjustViewBounds="true"
                     android:src="@drawable/drawer_header"
-                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
 
+
                 <TextView
-                    android:id="@+id/textWelcomeTitle"
+                    android:id="@+id/textNbTuts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgHomeHeader"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal|top"
                     android:gravity="center"
-                    android:shadowColor="#888888"
-                    android:shadowDx="40"
-                    android:shadowDy="40"
                     android:text="@string/welcomeTitle"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:visibility="gone"
+                    />
 
                 <LinearLayout
                     android:id="@+id/progressIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/textWelcomeTitle"
+                    android:layout_below="@+id/textNbTuts"
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
@@ -103,115 +115,16 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal|top"
                     android:autoLink="web"
-                    android:shadowColor="#888888"
-                    android:shadowDx="40"
-                    android:shadowDy="40"
                     android:layout_marginTop="@dimen/videoitem_vertical_margin"
                     android:text="@string/dialog_msg_about"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
 
-                <LinearLayout
-                    android:id="@+id/instantHelp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/welcomeText"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/videoitem_vertical_margin"
-                    android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/btnLater"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            app:iiv_color="@android:color/darker_gray"
-                            app:iiv_icon="oct-file-zip" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ihelp_later"
-                            android:textColor="@android:color/white" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/btnShare"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            app:iiv_color="@android:color/darker_gray"
-                            app:iiv_icon="oct-file-symlink-file" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ihelp_social"
-                            android:textColor="@android:color/white" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/btnFavorites"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            app:iiv_color="@android:color/darker_gray"
-                            app:iiv_icon="oct-file-text" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ihelp_favorites"
-                            android:textColor="@android:color/white" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/shareVideoButton"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            app:iiv_color="@android:color/darker_gray"
-                            app:iiv_icon="faw-share" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ihelp_ishare"
-                            android:textColor="@android:color/white" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-                </LinearLayout>
-
                 <org.apmem.tools.layouts.FlowLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/instantHelp"
+                    android:layout_below="@+id/welcomeText"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/videoitem_vertical_margin"
                     android:gravity="center"
@@ -251,6 +164,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:src="@drawable/logo_blackhop" />
+
+                    <ImageView
+                        android:id="@+id/imageSPBY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:src="@drawable/logo_spbyys" />
+
                 </org.apmem.tools.layouts.FlowLayout>
 
             </RelativeLayout>

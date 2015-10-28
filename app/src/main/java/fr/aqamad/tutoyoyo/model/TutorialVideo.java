@@ -65,6 +65,19 @@ public class TutorialVideo extends Model {
         return new Select().from(TutorialVideo.class).orderBy("RANDOM()").executeSingle();
     }
 
+    public static List<TutorialVideo> search(String searchCriteria) {
+        //"Name","Description","Key","MediumThumbnail","HighThumbnail","DefaultThumbnail","Duration","PublishedAt","Caption"
+        return new Select()
+                .distinct()
+                .from(TutorialVideo.class)
+                .limit(30)
+                .where("Name Like ?", "%" + searchCriteria + "%")
+                .groupBy("Key")
+                .orderBy("Name ASC")
+                .execute();
+    }
+
+
     private String getTableName() {
         return "Videos";
     }

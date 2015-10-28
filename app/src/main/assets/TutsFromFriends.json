@@ -1,0 +1,47 @@
+{
+  "kind": "youtube#playlistListResponse",
+  "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/S5UEU7gl17fm1NLdiV_YRwTxQl0\"",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 50
+  },
+  "items": [
+    {
+      "kind": "youtube#playlist",
+      "etag": "\"oyKLwABI4napfYXnGO8jtXfIsfc/DLZ1T7LmNDNZgUBHSnt5agfgqNc\"",
+      "id": "PLwv014jzj9h9o2HR3nAzhxig3ekmVAUbj",
+      "snippet": {
+        "publishedAt": "2009-02-24T19:58:12.000Z",
+        "channelId": "TutsFromFriends",
+        "title": "Jonathan Daniel Saelens",
+        "description": "Tutorials from friend Jonathan Daniel Saelens, find him on facebook : https://www.facebook.com/jonathan.d.saelens",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/QO0jIxJ00Rk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/QO0jIxJ00Rk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/QO0jIxJ00Rk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Tutorials From Friends",
+        "localized": {
+          "title": "Jonathan Daniel Saelens",
+          "description": "Tutorials from friend Jonathan Daniel Saelens, find him on facebook : https://www.facebook.com/jonathan.d.saelens"
+        }
+      },
+      "contentDetails": {
+        "itemCount": 3
+      }
+    }
+
+  ]
+}

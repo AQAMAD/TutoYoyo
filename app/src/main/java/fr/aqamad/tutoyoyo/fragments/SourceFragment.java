@@ -3,6 +3,7 @@ package fr.aqamad.tutoyoyo.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,11 +19,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
+import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
-import fr.aqamad.tutoyoyo.adapters.PlaylistsAdapter;
+import fr.aqamad.tutoyoyo.adapters.PlaylistListViewAdapter;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
+import fr.aqamad.tutoyoyo.model.Sponsor;
 import fr.aqamad.tutoyoyo.tasks.GetChannelTask;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.youtube.YoutubeChannel;
@@ -32,58 +36,25 @@ public class SourceFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String ARG_CHANNELID = "fr.aqamad.tutoyoyo.channel.id";
-    public static final String ARG_HEADERLAYOUT = "fr.aqamad.tutoyoyo.channel.headerlayout";
-    public static final String ARG_BGCOLOR = "fr.aqamad.tutoyoyo.channel.background";
-    public static final String ARG_FGCOLOR = "fr.aqamad.tutoyoyo.channel.foreground";
-    public static final String ARG_VIEWASGRID = "fr.aqamad.tutoyoyo.channel.viewasgrid";
+    public static final String ARG_SPONSOR = "fr.aqamad.tutoyoyo.sponsor.object";
     public static final String ARG_CHANNELOBJECT = "fr.aqamad.tutoyoyo.channel.object";
-    public static final String ARG_LOGONAVURL = "fr.aqamad.tutoyoyo.channel.logonavigationurl";
+    private final int DEFAULT_BG=android.R.color.white;
+    private final int DEFAULT_FG=android.R.color.black;
+    private final int DEFAULT_LAYOUT=R.layout.header_simple_logo_left;
+    private final int DEFAULT_ITEM_LAYOUT=R.layout.playlist_item;
     private String mChannelID;
+    private Sponsor mSponsor;
 
-    private int foreGroundColor = R.color.my;
-    private int backGroundColor = android.R.color.white;
-
-    protected int headerLayoutId = R.layout.header_mytuts;
-
-    protected boolean viewAsGrid = false;
-
-    protected String logoNavigationUrl = "";
-
-    public int getItemRessourceId() {
-        return itemRessourceId;
-    }
-
-    public void setItemRessourceId(int itemRessourceId) {
-        this.itemRessourceId = itemRessourceId;
-    }
-
-    private int itemRessourceId = R.layout.playlist_item;
 
     private YoutubeChannel mChannel;
 
     private OnPlaylistSelectedListener mListener;
 
-    public int getForeGroundColor() {
-        return foreGroundColor;
-    }
-
-    public void setForeGroundColor(int i) {
-        foreGroundColor = i;
-    }
-
-    public int getBackGroundColor() {
-        return backGroundColor;
-    }
-
-    public void setBackGroundColor(int i) {
-        backGroundColor = i;
-    }
-
-    public YoutubeChannel getChannel() {
+    private YoutubeChannel getChannel() {
         return mChannel;
     }
 
-    public void setChannel(YoutubeChannel c) {
+    private void setChannel(YoutubeChannel c) {
         mChannel = c;
     }
 
@@ -94,59 +65,26 @@ public class SourceFragment extends Fragment {
         Log.d("SF", "SourceFragment constructor");
     }
 
-    public static SourceFragment newInstance(String channelID,int layoutHeader, boolean showasGrid ) {
+    public static SourceFragment newInstance(Sponsor s) {
         SourceFragment fragment = new SourceFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_CHANNELID, channelID);
-        args.putInt(ARG_HEADERLAYOUT, layoutHeader);
-        args.putInt(ARG_BGCOLOR, android.R.color.white);
-        args.putInt(ARG_FGCOLOR, R.color.my);
-        args.putString(ARG_LOGONAVURL, "");
-        args.putBoolean(ARG_VIEWASGRID, showasGrid);
+        args.putString(ARG_CHANNELID, s.channelKey);
+        args.putParcelable(ARG_SPONSOR, Parcels.wrap(s));
         fragment.setArguments(args);
         Log.d("MTF", "Source newInstance");
         return fragment;
     }
-
-    public static SourceFragment newInstance(String channelID,
-                                             int layoutHeader,
-                                             boolean showasGrid,
-                                             int backGroundColor,
-                                             int  foreGroundColor,
-                                             String logoNavigationUrl) {
-        SourceFragment fragment = new SourceFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_CHANNELID, channelID);
-        args.putInt(ARG_HEADERLAYOUT, layoutHeader);
-        args.putInt(ARG_BGCOLOR, backGroundColor);
-        args.putInt(ARG_FGCOLOR, foreGroundColor);
-        args.putString(ARG_LOGONAVURL, logoNavigationUrl);
-        args.putBoolean(ARG_VIEWASGRID, showasGrid);
-        fragment.setArguments(args);
-        Log.d("MTF", "Source newInstance w/c");
-        return fragment;
-    }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mChannelID = getArguments().getString(ARG_CHANNELID);
-            headerLayoutId = getArguments().getInt(ARG_HEADERLAYOUT);
-            backGroundColor = getArguments().getInt(ARG_BGCOLOR);
-            foreGroundColor = getArguments().getInt(ARG_FGCOLOR);
-            logoNavigationUrl = getArguments().getString(ARG_LOGONAVURL);
-            viewAsGrid = getArguments().getBoolean(ARG_VIEWASGRID);
+            mSponsor = Parcels.unwrap(getArguments().getParcelable(ARG_SPONSOR));
         }
         if (savedInstanceState != null) {
             mChannelID = savedInstanceState.getString(ARG_CHANNELID);
-            headerLayoutId = savedInstanceState.getInt(ARG_HEADERLAYOUT);
-            backGroundColor = savedInstanceState.getInt(ARG_BGCOLOR);
-            foreGroundColor = savedInstanceState.getInt(ARG_FGCOLOR);
-            viewAsGrid = savedInstanceState.getBoolean(ARG_VIEWASGRID);
-            logoNavigationUrl = savedInstanceState.getString(ARG_LOGONAVURL);
+            mSponsor = Parcels.unwrap(getArguments().getParcelable(ARG_SPONSOR));
             mChannel = (YoutubeChannel) savedInstanceState.getSerializable(ARG_CHANNELOBJECT);
             Log.d("SF", "SourceFragment onCreate with saved state");
         } else {
@@ -162,36 +100,53 @@ public class SourceFragment extends Fragment {
         //get header frame and dynamically load it
         FrameLayout frame= (FrameLayout) rootView.findViewById(R.id.frameHeader);
         //inflate header
-        View header=inflater.inflate(headerLayoutId, null);
+        View header=inflater.inflate(mSponsor.layoutResId, null);
         frame.addView(header);
+        //find the logo
+        ImageView imgLogo = (ImageView) header.findViewById(R.id.navigableLogo);
+        //we have the header view, let's customize it
+        //is it a custom or generic header
+        if (mSponsor.layoutResId==R.layout.header_simple_logo_left || mSponsor.layoutResId==R.layout.header_simple_logo_right ){
+            //it's a simple, let's go
+            ViewGroup backgroundView= (ViewGroup) header.findViewById(R.id.headerBackground);
+            TextView txtTitle = (TextView) header.findViewById(R.id.headerTitle);
+            TextView txtDescription = (TextView) header.findViewById(R.id.headerDescription);
+            //set up colors
+            backgroundView.setBackgroundColor(getResources().getColor(mSponsor.backGroundColor));
+            txtTitle.setTextColor(getResources().getColor(mSponsor.foreGroundColor));
+            txtDescription.setTextColor(getResources().getColor(mSponsor.foreGroundColor));
+            //set texts
+            txtTitle.setText(mSponsor.name);
+            txtDescription.setText(mSponsor.description);
+            //set image
+            Drawable myDrawable = getResources().getDrawable(mSponsor.logoResId);
+            imgLogo.setImageDrawable(myDrawable);
+        }
         //set grid style and id
         GridView grd= (GridView) rootView.findViewById(R.id.playlistsGridView);
         ListView lst= (ListView) rootView.findViewById(R.id.playListsListView);
         //set base colors
-        grd.setBackgroundColor(getResources().getColor(backGroundColor));
-        lst.setBackgroundColor(getResources().getColor(backGroundColor));
-        if (viewAsGrid){
+        grd.setBackgroundColor(getResources().getColor(mSponsor.backGroundColor));
+        lst.setBackgroundColor(getResources().getColor(mSponsor.backGroundColor));
+        if (mSponsor.displayasBoxes){
             grd.setVisibility(View.VISIBLE);
-            itemRessourceId=R.layout.playlist_item_box;
             lst.setVisibility(View.GONE);
         } else{
             grd.setVisibility(View.GONE);
             lst.setVisibility(View.VISIBLE);
-            itemRessourceId=R.layout.playlist_item;
         }
         //set logo interactivity
-        if (!logoNavigationUrl.equals("")){
-        ImageView i = (ImageView) rootView.findViewById(R.id.navigableLogo);
-        i.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(logoNavigationUrl));
-                startActivity(intent);
-            }
-        });
+        if (mSponsor.websiteURL!=null && !mSponsor.websiteURL.equals("")){
+            imgLogo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setData(Uri.parse(mSponsor.websiteURL));
+                    startActivity(intent);
+                }
+            });
         }
         //done
         return rootView;
@@ -200,11 +155,11 @@ public class SourceFragment extends Fragment {
     @Override
     public void onStart() {
         Log.d("SF", "SourceFragment onStart");
-        if (mChannel == null) {
+//        if (mChannel == null) {
             fetchChannel(responseHandler, parentActivity);
-        } else {
-            fillView();
-        }
+//        } else {
+//            fillView();
+//        }
         super.onStart();
     }
 
@@ -212,7 +167,7 @@ public class SourceFragment extends Fragment {
         //build the adapter we need
         Log.d("SF", "SourceFragment fillView : " + mChannelID);
         //which itemlayout will depend on the fragment
-        PlaylistsAdapter adapter = new PlaylistsAdapter(parentActivity, (ArrayList) mChannel.getPlaylists(), new ScreenSize(getActivity()), this.getForeGroundColor(), this.getBackGroundColor(), this.getItemRessourceId());
+        PlaylistListViewAdapter adapter = new PlaylistListViewAdapter(this.getActivity(), (List) mChannel.getPlaylists(), new ScreenSize(getActivity()), mSponsor.foreGroundColor, mSponsor.backGroundColor, mSponsor.displayasBoxes);
         AdapterView listView = GetPlaylistView();
         listView.setAdapter(adapter);
         //hook up event listener
@@ -239,14 +194,11 @@ public class SourceFragment extends Fragment {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
         outState.putString(ARG_CHANNELID, mChannelID);
-        outState.putInt(ARG_HEADERLAYOUT, headerLayoutId);
-        outState.putInt(ARG_BGCOLOR, backGroundColor);
-        outState.putInt(ARG_FGCOLOR, foreGroundColor);
-        outState.putString(ARG_LOGONAVURL, logoNavigationUrl);
-        outState.putBoolean(ARG_VIEWASGRID, viewAsGrid);
+        outState.putParcelable(ARG_SPONSOR, Parcels.wrap(mSponsor));
         outState.putSerializable(ARG_CHANNELOBJECT, mChannel);
         Log.d("SF", "SourceFragment onSaveInstanceState : " + mChannelID);
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -268,7 +220,7 @@ public class SourceFragment extends Fragment {
         if (mListener != null) {
             TextView vwID = (TextView) view.findViewById(R.id.plID);
             String plID = vwID.getText().toString();
-            mListener.OnPlaylistSelected(getChannel().findByKey(plID), mChannel.getID(), getBackGroundColor(), getForeGroundColor());
+            mListener.OnPlaylistSelected(getChannel().findByKey(plID), mChannel.getID(), mSponsor.backGroundColor, mSponsor.foreGroundColor);
         }
     }
 
@@ -333,7 +285,7 @@ public class SourceFragment extends Fragment {
     }
 
     public AdapterView GetPlaylistView(){
-        if (viewAsGrid){
+        if (mSponsor.displayasBoxes){
             return (AdapterView) this.getActivity().findViewById(R.id.playlistsGridView);
         }else {
             return (AdapterView) this.getActivity().findViewById(R.id.playListsListView);

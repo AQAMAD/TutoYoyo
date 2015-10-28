@@ -131,8 +131,9 @@ public class InitialiserFragment extends Fragment {
             boolean clywEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_clyw), true);
             boolean yytEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyothrower), true);
             boolean bhoEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_blackhop), true);
+            boolean spbEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_spbyys), true);
             ProgressInfo pi=new ProgressInfo();
-            pi.providersMax=countBools(yybEnabled,yyeEnabled,clywEnabled,yytEnabled,bhoEnabled);
+            pi.providersMax=countBools(yybEnabled,yyeEnabled,clywEnabled,yytEnabled,bhoEnabled,spbEnabled);
             pi.providersProgress=0;
             pi.totalVideos=0;
             //now the db is initialized, we do the first pre-caches
@@ -152,7 +153,9 @@ public class InitialiserFragment extends Fragment {
             if (bhoEnabled) {
                 loadChannel(pi,getActivity().getString(R.string.BLACKHOP_CHANNEL),null,"Blackhop");
             }
-
+            if (spbEnabled) {
+                loadChannel(pi, getActivity().getString(R.string.SPBYYS_CHANNEL), null, "SPBYYS");
+            }
             return null;
         }
 

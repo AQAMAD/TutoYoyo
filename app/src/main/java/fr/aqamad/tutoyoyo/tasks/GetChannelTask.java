@@ -7,19 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import java.net.MalformedURLException;
-
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
-import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
-import fr.aqamad.tutoyoyo.model.TutorialSource;
-import fr.aqamad.tutoyoyo.model.TutorialVideo;
-import fr.aqamad.tutoyoyo.utils.Assets;
 import fr.aqamad.youtube.YoutubeChannel;
-import fr.aqamad.youtube.YoutubePlaylist;
-import fr.aqamad.youtube.YoutubeThumbnail;
-import fr.aqamad.youtube.YoutubeUtils;
-import fr.aqamad.youtube.YoutubeVideo;
 
 
 /**
@@ -67,11 +57,10 @@ public class GetChannelTask implements Runnable {
             Log.d("GCT","GetChannelTask run called");
             YoutubeChannel channel= ModelConverter.loadChannel(mAct,channelId,expandPlaylist,apiKey);
             Log.d("GCT","Done getting channel, into bundle");
-            YoutubeUtils.logChannel(channel);
+            //YoutubeUtils.logChannel(channel);
             // Pack the Library into the bundle to send back to the Activity
             Bundle data = new Bundle();
             data.putSerializable(CHANNEL, channel);
-
             // Send the Bundle of data (our Library) back to the handler (our Activity)
             Message msg = Message.obtain();
             msg.setData(data);

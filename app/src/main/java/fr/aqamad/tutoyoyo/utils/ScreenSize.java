@@ -1,8 +1,7 @@
 package fr.aqamad.tutoyoyo.utils;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.DisplayMetrics;
-import android.view.Display;
 
 /**
  * Created by Gregoire on 16/10/2015.
@@ -14,12 +13,17 @@ public class ScreenSize {
     private int pWidth;
     private int pHeight;
 
-    public ScreenSize(Activity act){
-        Display display=act.getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics=new DisplayMetrics();
-        display.getMetrics(outMetrics);
+    public float getDensity() {
+        return density;
+    }
 
-        float density=act.getResources().getDisplayMetrics().density;
+    private float density;
+
+    public ScreenSize(Context ctx){
+        //Display display=act.getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics=ctx.getResources().getDisplayMetrics();
+        //display.getMetrics(outMetrics);
+        density=ctx.getResources().getDisplayMetrics().density;
         pHeight=outMetrics.heightPixels;
         pWidth=outMetrics.widthPixels;
         dpHeight=pHeight/density;

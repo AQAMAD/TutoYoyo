@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/videoitem_vertical_margin"
-    android:paddingStart="@dimen/videoitem_horizontal_margin"
-    >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,4 +58,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</merge>

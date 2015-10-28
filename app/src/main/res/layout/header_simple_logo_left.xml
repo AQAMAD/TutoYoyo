@@ -3,15 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="right"
-    android:background="@android:color/black"
+    android:background="@android:color/white"
+    android:id="@+id/headerBackground"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/navigableLogo"
+        android:layout_margin="4dp"
         android:layout_alignParentStart="true"
-        android:src="@drawable/logo_blackhop" />
+        android:src="@drawable/waiting" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,9 +30,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Blackhop.com / Yoyo-france.net"
-            android:id="@+id/textView2"
-            android:textColor="@android:color/white"
+            android:text="Title"
+            android:id="@+id/headerTitle"
+            android:textColor="@android:color/black"
             android:layout_gravity="left"
             android:gravity="center" />
 
@@ -38,11 +40,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Yoyo Lifestyle"
-            android:textColor="@android:color/white"
+            android:text="Description"
+            android:textColor="@android:color/black"
             android:gravity="center"
-            android:id="@+id/textView4" />
+            android:id="@+id/headerDescription" />
     </LinearLayout>
 
 </RelativeLayout>
-

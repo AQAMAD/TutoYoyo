@@ -1,6 +1,6 @@
 package fr.aqamad.youtube;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -12,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.util.Arrays;
 
 /**
@@ -336,9 +335,9 @@ public class YoutubeUtils {
         return new Intent(Intent.ACTION_VIEW, Uri.parse(getVideoPlayUrl(videoId)));
     }
 
-    public static void PlayYoutubeVideo(String videoId,Activity currentActivity){
+    public static void PlayYoutubeVideo(String videoId,Context ctx){
         Intent intent = getYoutubeVideoIntent(videoId);
-        currentActivity.startActivity(intent);
+        ctx.startActivity(intent);
     }
 
     public static void logChannel(YoutubeChannel channel){
@@ -425,4 +424,17 @@ public class YoutubeUtils {
         }
     }
 
+    public static void ShareYoutubeVideo(String videoId, Context ctx) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, YoutubeUtils.getVideoPlayUrl(videoId));
+        intent.setType("text/plain");
+        ctx.startActivity(intent);
+    }
+
+    public static void ShareYoutubePlaylist(String videoId, Context ctx) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, YoutubeUtils.getVideoPlayUrl(videoId));
+        intent.setType("text/plain");
+        ctx.startActivity(intent);
+    }
 }
