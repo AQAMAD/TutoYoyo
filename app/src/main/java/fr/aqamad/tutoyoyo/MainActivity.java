@@ -7,9 +7,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,15 +23,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,15 +40,10 @@ import fr.aqamad.tutoyoyo.fragments.UpdaterFragment;
 import fr.aqamad.tutoyoyo.model.Sponsor;
 import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
-import fr.aqamad.tutoyoyo.model.TutorialSource;
-import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.utils.Debug;
 import fr.aqamad.tutoyoyo.utils.IntentHelper;
-import fr.aqamad.tutoyoyo.utils.PicassoHelper;
-import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.tutoyoyo.utils.UI;
 import fr.aqamad.youtube.YoutubePlaylist;
-import fr.aqamad.youtube.YoutubeUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -68,8 +54,9 @@ public class MainActivity extends AppCompatActivity
 
 {
 
-    private static final String TAG_INIT_TASK_FRAGMENT = "initializer_task_fragment";
-    private static final String TAG_UPDT_TASK_FRAGMENT = "initializer_task_fragment";
+    private static final String TAG_INIT_TASK_FRAGMENT = "fr.aqamad.tutoyoyo.initializer_task_fragment";
+    private static final String TAG_UPDT_TASK_FRAGMENT = "fr.aqamad.tutoyoyo.updater_task_fragment";
+    public static final String MAINT_ACT_TAG = "MainAct";
 
     private Fragment mTaskFragment;
 
@@ -78,6 +65,9 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
 
     private SourceFragment currentFragment;
+    private HomeFragment homeFragment;
+    private SettingsFragment settingsFragment;
+    private SearchFragment searchFragment;
 
     private Map<Integer,SourceFragment> fragments=new HashMap<>();
 
@@ -85,42 +75,73 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //gonna need this
+        FragmentManager fragmentManager = getFragmentManager();
         //check the model has been created and perform initialisation otherwise
         super.onCreate(savedInstanceState);
-
-
         //default values for preferences
         PreferenceManager.setDefaultValues(this, R.xml.fragment_settings, false);
         //init fragments
+        setContentView(R.layout.activity_main);
+        //sponsorfragments
         sponsors=new Sponsors(this);
         fragments=sponsors.getFragments();
-
-        setContentView(R.layout.activity_main);
-
+        //homeFragment is directly added to the ui
+        //was it kept in the manager ?
+        homeFragment= (HomeFragment) fragmentManager.findFragmentByTag(HomeFragment.FRAGMENT_KEY);
+        if (homeFragment==null){
+            homeFragment=new HomeFragment();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.frame, homeFragment, HomeFragment.FRAGMENT_KEY);
+            fragmentTransaction.commit();
+        }
+        //restore task fragments
+        Fragment tTaskFragment = fragmentManager.findFragmentByTag(TAG_INIT_TASK_FRAGMENT);
+        if (tTaskFragment!=null){
+            mTaskFragment=tTaskFragment;
+        }else{
+            tTaskFragment = fragmentManager.findFragmentByTag(TAG_UPDT_TASK_FRAGMENT);
+            if (tTaskFragment!=null){
+                mTaskFragment=tTaskFragment;
+            }
+        }
+        //act on the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //act on the drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        //drawer has been created
+        //add dynamic entries
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        checkDatabase();
-
+        //here
+        final Menu menu = navigationView.getMenu();
+//        final MenuItem item=menu.findItem(R.id.providersmenu);
+//        final SubMenu subMenu = item.getSubMenu();
+        for (Sponsor sp:
+             sponsors.values()) {
+//            MenuItem m=subMenu.add(Sponsors.R_ID.group.getKey(),sp.navigationId,sp.order,sp.name);
+            MenuItem m=menu.add(Sponsors.R_ID.group.getKey(),sp.navigationId,sp.order,sp.name);
+            m.setIcon(sp.menuitemIconResId);
+        }
+        //position group options
+//        subMenu.setGroupCheckable(Sponsors.R_ID.group.getKey(),true,true);
+        menu.setGroupCheckable(Sponsors.R_ID.group.getKey(),true,true);
+        //refresh list
         if (savedInstanceState != null) {
             //Restore the fragment's instance
-            Log.d("MA", "Mainactivity onCreate bundle");
+            Log.d(MAINT_ACT_TAG, "Mainactivity onCreate bundle");
             String state=savedInstanceState.getString("CurrentFragment");
             if (state!=null){
-                Log.d("MA", "Mainactivity onCreate bundle, state=" + state);
+                Log.d(MAINT_ACT_TAG, "Mainactivity onCreate bundle, state=" + state);
             }
         } else {
             //create and prepare different fragments
-            Log.d("MA", "Mainactivity onCreate nobundle");
+            Log.d(MAINT_ACT_TAG, "Mainactivity onCreate nobundle");
         }
 
         //based on preferences
@@ -144,30 +165,25 @@ public class MainActivity extends AppCompatActivity
             SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
                     YoyoTutsSuggestionProvider.AUTHORITY, YoyoTutsSuggestionProvider.MODE);
             suggestions.saveRecentQuery(query, null);
-            Log.d("MA.HI","Query for results : " + query);
+            Log.d(MAINT_ACT_TAG + ".HI","Query for results : " + query);
             doTutorialSearch(query);
         }
     }
 
     private void doTutorialSearch(String query) {
         //do sql to provide results
-        SearchFragment sf=SearchFragment.newInstance(query);
-
+        searchFragment=SearchFragment.newInstance(query);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame, sf);
+        fragmentTransaction.replace(R.id.frame, searchFragment, SearchFragment.FRAGMENT_KEY);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
-
     }
-
-
-
 
     private void enableProviderMenus() {
         //activate or deactivate items based on sharedpreferences
+        Log.d(MAINT_ACT_TAG, "enableProviderMenus");
         SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         for (Integer key :
                 sponsors.keySet()) {
@@ -175,182 +191,91 @@ public class MainActivity extends AppCompatActivity
             boolean isEnabled = appPreferences.getBoolean(sponsor.preferenceKey, true);
             navigationView.getMenu().findItem(sponsor.navigationId).setVisible(isEnabled);
         }
+        navigationView.invalidate();
+        navigationView.requestLayout();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("MA", "onSaveInstanceState");
+        Log.d(MAINT_ACT_TAG, "onSaveInstanceState");
         if (currentFragment!=null){
             outState.putString("CurrentFragment", currentFragment.getChannelId());
         }
-        Log.d("MA", "Mainactivity onSaveInstanceState");
+        Log.d(MAINT_ACT_TAG, "Mainactivity onSaveInstanceState");
     }
 
-    private void checkDatabase() {
-        //at the moment, delete everything before setting up a new DB
-        //test for model creation
-        List<TutorialSource> sources =TutorialSource.getAll();
-        //get preference value for refreshing
-        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String refreshPeriod = appPreferences.getString(getString(R.string.lst_pref_refresh_playlist), "7");
-        Log.d("MA.CD","RefreshPeriod : " + refreshPeriod);
-        Date refreshDate=new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(refreshDate);
-        switch (refreshPeriod){
-            case "1":
-                c.add(Calendar.DATE, -1);
-                break;
-            case "7":
-                c.add(Calendar.DATE, -7);
-                break;
-            case "30":
-                c.add(Calendar.DATE, -30);
-                break;
-        }
-        //for testing purpose only, position constant in Debug class
-        c.add(Calendar.DATE, Debug.debugRefresh);
-        refreshDate = c.getTime();
-        Log.d("MA.CD","RefreshPlaylists fetched before : " + refreshDate);
-        Log.d("MA.CD", "RefreshPlaylists fetched before : " + refreshDate.getTime());
-        //and get refresh dates for the playlists
-        List<TutorialPlaylist> lists =TutorialPlaylist.getOlderThan(refreshDate);
-        if (sources.size()<=1){
-            if (!isOnline()){
-                Snackbar.make(navigationView, "Network connectivity is required to build cache. Try restarting app when online.", Snackbar.LENGTH_LONG).show();
-            } else {
-                //start initialiser fragment
-                FragmentManager fm = getFragmentManager();
-                mTaskFragment = fm.findFragmentByTag(TAG_INIT_TASK_FRAGMENT);
-                // If the Fragment is non-null, then it is currently being
-                // retained across a configuration change.
-                if (mTaskFragment == null) {
-                    mTaskFragment = new InitialiserFragment();
-                    fm.beginTransaction().add(mTaskFragment, TAG_INIT_TASK_FRAGMENT).commit();
-                }
-            }
-        }else if(lists.size()>0){
-            Log.d("MA.CD","Playlists deemed needing refresh : " + lists.size());
-            if (!isOnline()){
-                Snackbar.make(navigationView, "Network connectivity is required to build cache. Try restarting app when online.", Snackbar.LENGTH_LONG).show();
-            } else {
-                //start initialiser fragment
-                FragmentManager fm = getFragmentManager();
-                mTaskFragment = (UpdaterFragment) fm.findFragmentByTag(TAG_UPDT_TASK_FRAGMENT);
-                // If the Fragment is non-null, then it is currently being
-                // retained across a configuration change.
-                if (mTaskFragment == null) {
-                    mTaskFragment = new UpdaterFragment();
-                    fm.beginTransaction().add(mTaskFragment, TAG_UPDT_TASK_FRAGMENT).commit();
-                }
-            }
-        }else {
-            //finally, initialize what's happening
-            initScreen();
+    private void startUpdaterFragment() {
+        //start initialiser fragment
+        Log.d(MAINT_ACT_TAG, "Mainactivity StartUpdaterFragment");
+        FragmentManager fm = getFragmentManager();
+        mTaskFragment = fm.findFragmentByTag(TAG_UPDT_TASK_FRAGMENT);
+        // If the Fragment is non-null, then it is currently being
+        // retained across a configuration change.
+        if (mTaskFragment == null) {
+            mTaskFragment = new UpdaterFragment();
+            fm.beginTransaction().add(mTaskFragment, TAG_UPDT_TASK_FRAGMENT).commit();
         }
     }
 
-    private void initScreen() {
-        //hide progressbar
-        hideProgress();
-        //and welcome Text
-        TextView wt= (TextView) findViewById(R.id.welcomeText);
-        wt.setVisibility(View.GONE);
-        //add stats information to welcome text
-        wt= (TextView) findViewById(R.id.textWelcomeTitle);
-        TextView nbt= (TextView) findViewById(R.id.textNbTuts);
-        int nbVids = TutorialVideo.countAll();
-        //get random tut of the day
-        TutorialVideo randomTut=TutorialVideo.getRandom();
-        //we got the random tut, load it's thumbnail into main header for instance...
-        ImageView imgHeader= (ImageView) findViewById(R.id.imgHomeHeader);
-        //create text
-//            wt.setText(String.format(getString(R.string.randomTutAndStats), randomTut.name, nbVids));
-        wt.setText(String.format(getString(R.string.randomTut), randomTut.name));
-        nbt.setText(String.format(getString(R.string.tutStats), nbVids));
-        //determine size based on screen
-        ScreenSize size=new ScreenSize(this);
-        int tWidth=0;
-        int tHeight=0;
-        if (size.getHeight()<size.getWidth()){
-            //landscape, image should be no more than 1/2 screen height
-            tHeight=size.getHeight()/2;
-        }else{
-            //portrait
-            tWidth=size.getWidth()/2;
+    private void startInitializerFragment() {
+        //start initialiser fragment
+        Log.d(MAINT_ACT_TAG, "Mainactivity StartInitializerFragment");
+        FragmentManager fm = getFragmentManager();
+        mTaskFragment = fm.findFragmentByTag(TAG_INIT_TASK_FRAGMENT);
+        // If the Fragment is non-null, then it is currently being
+        // retained across a configuration change.
+        if (mTaskFragment == null) {
+            mTaskFragment = new InitialiserFragment();
+            fm.beginTransaction().add(mTaskFragment, TAG_INIT_TASK_FRAGMENT).commit();
         }
-        //use our picassohelper to load the thumbnail
-        PicassoHelper.loadWeborDrawable(this, randomTut.highThumbnail)
-                .placeholder(R.drawable.waiting)
-                .resize(tWidth, tHeight)
-                .transform(PicassoHelper.getRoundedCornersTranform(Color.WHITE))
-                .into(imgHeader)
-        ;
-        //set image click listener
-        imgHeader.setTag(randomTut.key);
-        imgHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //we got the view, let's just toast something here
-                String vidID= (String) v.getTag();
-                YoutubeUtils.PlayYoutubeVideo(vidID, MainActivity.this);
-            }
-        });
     }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
 
     @Override
     public void onBackPressed() {
+        Log.d(MAINT_ACT_TAG, "Mainactivity onBackPressed");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
+            Log.d(MAINT_ACT_TAG, "onBackPressed closing drawer");
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //we handled the drawer, now let's sync it
             //sync menus state
             enableProviderMenus();
+            Log.d(MAINT_ACT_TAG, "onBackPressed syncing menus");
             //sync fragments
             FragmentManager fragmentManager = getFragmentManager();
             int backCount = fragmentManager.getBackStackEntryCount();
             if (backCount>1){
+                Log.d(MAINT_ACT_TAG, "onBackPressed many backstack entries (" + backCount + ")");
                 fragmentManager.popBackStackImmediate();
                 //need to reset the nav indicator
                 resetNavIndicator();
-//                //hide the search interface
-//                MenuItem searchItem=menu.findItem(R.id.action_search);
-//                searchItem.setVisible(false);
             }else if (backCount>0){
                 //fragmentManager.popBackStack();
+                Log.d(MAINT_ACT_TAG, "onBackPressed only one backstack entry (" + backCount + ")");
                 fragmentManager.popBackStackImmediate();
                 //need to reset the nav indicator
                 resetNavIndicator();
-//                //show search interface
-//                MenuItem searchItem=menu.findItem(R.id.action_search);
-//                searchItem.setVisible(true);
             }else{
+                Log.d(MAINT_ACT_TAG, "onBackPressed no backstack entry (" + backCount + ")");
+                //reset to home activity
                 super.onBackPressed();
             }
         }
-        Log.d("MA", "Mainactivity onBackPressed");
     }
 
     private void resetNavIndicator() {
         //get menus from navigation view
-        Log.d("MA.RNI", "ResetNavigationIndicator called");
+        Log.d(MAINT_ACT_TAG + ".RNI", "ResetNavigationIndicator called");
         boolean found=false;
         for (Map.Entry<Integer, SourceFragment> e : fragments.entrySet()) {
             Integer key = e.getKey();
             SourceFragment frg = e.getValue();
             if (frg.isVisible()){
                 //get the key
-                navigationView.getMenu().findItem(key).setChecked(true);
+                Log.d(MAINT_ACT_TAG + ".RNI", "VisibleFrag : " + frg.getChannelId() + " using key : " + key);
+                navigationView.getMenu().findItem(key).setChecked(true); //works if not in a sbumenu
                 found=true;
             }
         }
@@ -359,11 +284,8 @@ public class MainActivity extends AppCompatActivity
                     fragments.keySet()) {
                 navigationView.getMenu().findItem(key).setChecked(false);
             }
-            //restore search interface
-            MenuItem searchItem=menu.findItem(R.id.action_search);
-            searchItem.setVisible(true);
         }
-    }
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -382,13 +304,13 @@ public class MainActivity extends AppCompatActivity
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                Log.d("MA.S", "onShowSearch");
+                Log.d(MAINT_ACT_TAG + ".S", "onShowSearch");
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                Log.d("MA.S", "onCancelSearch");
+                Log.d(MAINT_ACT_TAG + ".S", "onCancelSearch");
                 onBackPressed();
                 return true;
             }
@@ -402,14 +324,17 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        Log.d("MA", "Mainactivity onOptionItemsSelected");
-
+        Log.d(MAINT_ACT_TAG, "Mainactivity onOptionItemsSelected");
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Log.d(MAINT_ACT_TAG, "Mainactivity settings selected");
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame, new SettingsFragment());
+            if (settingsFragment==null){
+                Log.d(MAINT_ACT_TAG, "Fragment was null");
+                settingsFragment=new SettingsFragment();
+            }
+            fragmentTransaction.replace(R.id.frame, settingsFragment, SettingsFragment.FRAGMENT_KEY);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             return true;
@@ -441,7 +366,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showCreditsBox() {
-        UI.alertDialog(this, R.string.dialog_title_credits, R.string.dialog_msg_credits);
+        //full text comes from sponsors
+        String creditsConcat="";
+        String from=getString(R.string.word_from);
+        for (Sponsor sp :
+                sponsors.getOrdered()) {
+            if (sp.contactNames!=null){
+                creditsConcat=creditsConcat + "\t-" + sp.contactNames + " " + from + " " + sp.name +"\n\n";
+            }
+        }
+        String fullContactMessage=getString(R.string.dialog_msg_credits,creditsConcat);
+        UI.alertDialog(this, R.string.dialog_title_credits, fullContactMessage);
     }
 
     private void showHelpBox() {
@@ -457,7 +392,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Log.d("MA", "Mainactivity onNavigationItemSelected start");
+        Log.d(MAINT_ACT_TAG, "Mainactivity onNavigationItemSelected start");
 
         int id = item.getItemId();
 
@@ -503,7 +438,7 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        Log.d("MA", "Mainactivity onNavigationItemSelected end");
+        Log.d(MAINT_ACT_TAG, "Mainactivity onNavigationItemSelected end");
 
         return true;
     }
@@ -529,24 +464,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void showCredits(View view) {
-        showCreditsBox();
-    }
-    public void showHelp(View view) {
-        showCreditsBox();
-    }
-
-    public void showProgress(){
-        View pi=findViewById(R.id.progressIndicator);
-        pi.setVisibility(View.VISIBLE);
-    }
-
-    public void hideProgress(){
-        View pi=findViewById(R.id.progressIndicator);
-        pi.setVisibility(View.GONE);
-    }
-
-
     /**
      * Implement the initialiser task callbacks
      */
@@ -559,31 +476,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onProgressUpdate(UpdaterFragment.ProgressInfo info) {
         //find views and set items
-        ProgressBar pbP = (ProgressBar) findViewById(R.id.progressBarPro);
-        pbP.setVisibility(View.GONE);
-        ProgressBar pbL = (ProgressBar) findViewById(R.id.progressBarPlay);
-        pbL.setMax(info.playlistsMax);
-        pbL.setProgress(info.playlistsProgress);
-        TextView pT = (TextView) findViewById(R.id.progressText);
-        pT.setText(info.currentlyDoing);
-        TextView pT2 = (TextView) findViewById(R.id.progressText2);
-        pT2.setText(info.playlistsProgress + "/" + info.playlistsMax + " (" + info.totalVideos + " vids)");
+        //find views and set items
+        if (homeFragment!=null){
+            homeFragment.displayProgressInfo(info);
+        }
     }
 
     @Override
     public void onProgressUpdate(InitialiserFragment.ProgressInfo progressInfo) {
         //find views and set items
-        ProgressBar pbP = (ProgressBar) findViewById(R.id.progressBarPro);
-        pbP.setVisibility(View.VISIBLE);
-        pbP.setMax(progressInfo.providersMax);
-        pbP.setProgress(progressInfo.providersProgress);
-        ProgressBar pbL = (ProgressBar) findViewById(R.id.progressBarPlay);
-        pbL.setMax(progressInfo.playlistsMax);
-        pbL.setProgress(progressInfo.playlistsProgress);
-        TextView pT = (TextView) findViewById(R.id.progressText);
-        pT.setText(progressInfo.currentlyDoing);
-        TextView pT2 = (TextView) findViewById(R.id.progressText2);
-        pT2.setText(progressInfo.playlistsProgress + "/" + progressInfo.playlistsMax + " (" + progressInfo.totalVideos + " vids)");
+        if (homeFragment!=null){
+            homeFragment.displayProgressInfo(progressInfo);
+        }
     }
 
     @Override
@@ -593,12 +497,21 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPostExecute() {
-        initScreen();
+        //clear task from Activity and fragment manager
+        if (mTaskFragment!=null){
+            Log.d(MAINT_ACT_TAG, "Mainactivity taskFinished, fragment removed");
+            getFragmentManager().beginTransaction().remove(mTaskFragment).commit();
+            mTaskFragment=null;
+        }
+        //hook up homeFragment interface
+        if (homeFragment!=null){
+            homeFragment.displayHome();
+        }
     }
 
     @Override
     public void OnPlaylistSelected(YoutubePlaylist mPlaylist, String mChannelID, int mBgColor, int mFgColor) {
-        Log.d("SFFV", "In MainActivity OnPlaylistSelected called for ID : " + mPlaylist.getID());
+        Log.d(MAINT_ACT_TAG, "In MainActivity OnPlaylistSelected called for ID : " + mPlaylist.getID());
         //switch to fragment based UI
         Fragment newFragment = PlaylistFragment.newInstance(mPlaylist, mChannelID, mBgColor, mFgColor);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -611,5 +524,20 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSponsorSelected(int navigationId) {
         handleNavigation(navigationId);
+    }
+
+    @Override
+    public void onInitializeDB() {
+        startInitializerFragment();
+    }
+
+    @Override
+    public void onUpdateDB() {
+        startUpdaterFragment();
+    }
+
+    @Override
+    public boolean isStillWorking() {
+        return (mTaskFragment!=null);
     }
 }

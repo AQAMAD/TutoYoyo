@@ -22,9 +22,12 @@ import fr.aqamad.tutoyoyo.model.TutorialSource;
  * Created by Gregoire on 15/10/2015.
  */
 public class SettingsFragment extends PreferenceFragment {
+    public static final String FRAGMENT_KEY = "fr.aqamad.totoyoyo.settingsfragment";
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.d("SF", "SettingsFragment onCreate called");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.fragment_settings);
         //add all preferences from fragment
@@ -71,6 +74,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("SF", "SettingsFragment onCreateView called");
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(getResources().getColor(android.R.color.white));
         return view;

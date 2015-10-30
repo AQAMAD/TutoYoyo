@@ -41,7 +41,8 @@
     <string name="dialog_title_about">About</string>
     <string name="dialog_msg_about">This app was designed to help you progress in your yoyo play and provide quick and easy access to your favorite tutorials.\n\tYou may start by opening the left menu and browsing your favorite sources of tutorials, when you find one you like, simply press one of the add buttons to add it to one of your tuts lists.\n\tOnce a few tuts are in your lists, you can share them with your friends.\n\tFor offline viewing, we recommend the excellent YTD app from dentex at : \n\thttp://dentex.github.io/apps/youtubedownloader</string>
     <string name="dialog_title_credits">Credits</string>
-    <string name="dialog_msg_credits">The creators would like to thanks in no particular order : \n\n\t-Andre Boulay from yoyoeXpert\n\n\t-Steve Brown and Chris Mikulin from Caribou Lodge\n\n\t-Colinn from YoyoBlast\n\n\t-Jeremy McKay from MrYoyoThrower \n\n\t-Emmanuel Gabriel from Blackhop \n\n for their permission to index their content and overall awesomeness.</string>
+    <string name="dialog_msg_credits">The creators would like to thanks in no particular order : \n\n %s for their permission to index their content and overall awesomeness.</string>
+    <string name="word_from">from</string>
     <string name="activity_label_settings">Settings</string>
 
     <string name="mailto_address">contact@aqamad.fr</string>
@@ -60,7 +61,7 @@
     <string name="search_hint">Search Tutorials</string>
     <string name="action_search">Search</string>
     <string name="action_help">Help</string>
-    <string name="randomTut">Random tutorial : %s</string>
+    <string name="randomTut">Random tutorial :</string>
     <string name="tutStats">%d available tutorials.</string>
     <string name="search_results_title">Search results :</string>
     <string name="spbyys">SPbYYS</string>

@@ -26,25 +26,26 @@ import fr.aqamad.youtube.YoutubeVideo;
  * Created by Gregoire on 19/10/2015.
  */
 public class SearchFragment extends Fragment {
-    public static final String QUERY = "fr.aqamad.youtube.playlist.query";
+    public static final String ARG_QUERY = "fr.aqamad.youtube.playlist.query";
+    public static final String FRAGMENT_KEY = "fr.aqamad.tutoyoyo.searchfragment";
 
     private String mQuery;
 
     public SearchFragment(){
-
     }
 
 
     public static SearchFragment newInstance(String query) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
-        args.putString(QUERY, query);
+        args.putString(ARG_QUERY, query);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("SF", "SearchFragment onCreate called");
         super.onCreate(savedInstanceState);
         restoreFromBundle(savedInstanceState);
         Bundle b=getArguments();
@@ -53,8 +54,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void restoreFromBundle(Bundle b) {
-        if (b != null && b.containsKey(QUERY) ) {
-            mQuery=b.getString(QUERY);
+        if (b != null && b.containsKey(ARG_QUERY) ) {
+            mQuery=b.getString(ARG_QUERY);
         }
     }
 
@@ -63,7 +64,7 @@ public class SearchFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
-        outState.putString(QUERY, mQuery);
+        outState.putString(ARG_QUERY, mQuery);
     }
 
 
@@ -72,6 +73,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.d("SF", "SearchFragment onCreateView called");
 
         View rootView=inflater.inflate(R.layout.fragment_search, container, false);
 
@@ -83,7 +86,9 @@ public class SearchFragment extends Fragment {
     public void onStart() {
         //init basic UI
         Log.d("PF.OVC", "SearchFragment onStart, query : " + mQuery);
-        fetchVideos(responseHandler, mQuery);
+        if (mQuery!=null) {
+            fetchVideos(responseHandler, mQuery);
+        }
         super.onStart();
     }
 

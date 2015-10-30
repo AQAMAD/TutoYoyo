@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:context=".MainActivity">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -48,12 +47,26 @@
                     android:src="@drawable/drawer_header"
                     android:layout_centerHorizontal="true" />
 
+                <org.apmem.tools.layouts.FlowLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgHomeHeader"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/videoitem_vertical_margin"
+                    android:gravity="center"
+                    android:id="@+id/flRandomView"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    >
+
+
+                </org.apmem.tools.layouts.FlowLayout>
 
                 <TextView
                     android:id="@+id/textNbTuts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgHomeHeader"
+                    android:layout_below="@+id/flRandomView"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal|top"
                     android:gravity="center"
@@ -128,49 +141,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/videoitem_vertical_margin"
                     android:gravity="center"
+                    android:id="@+id/flSponsors"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/imageYYB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:src="@drawable/logo_yoyoblast" />
-
-                    <ImageView
-                        android:id="@+id/imageYYE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:src="@drawable/logo_yoyoexpert" />
-
-                    <ImageView
-                        android:id="@+id/imageCLYW"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:src="@drawable/logo_clyw" />
-
-                    <ImageView
-                        android:id="@+id/imageYYT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:src="@drawable/logo_yoyothrower" />
-
-                    <ImageView
-                        android:id="@+id/imageBHOP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:src="@drawable/logo_blackhop" />
-
-                    <ImageView
-                        android:id="@+id/imageSPBY"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:src="@drawable/logo_spbyys" />
 
                 </org.apmem.tools.layouts.FlowLayout>
 

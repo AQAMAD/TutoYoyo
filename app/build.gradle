@@ -30,7 +30,7 @@ android {
 
     defaultConfig {
         applicationId "fr.aqamad.tutoyoyo"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode advancedVersioning.versionCode
         versionName advancedVersioning.versionName

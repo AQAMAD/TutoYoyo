@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -159,10 +160,34 @@ public class UI {
         alertDialog.show();
     }
 
-    public static void alertCustomDialog(Activity act,int title, int layoutresid,int dismissbuttonid){
-        final AlertDialog alertDialog = new AlertDialog.Builder(act).create();
+    public static void alertDialog(Activity act,int title, String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(act).create();
         alertDialog.setTitle(act.getString(title));
-        alertDialog.setContentView(layoutresid);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+
+    public static void alertCustomDialog(Activity act,int title, int layoutresid,int dismissbuttonid){
+
+        AlertDialog.Builder builder;
+        final AlertDialog alertDialog;
+
+        LayoutInflater inflater = (LayoutInflater)act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(layoutresid,null);
+
+        builder = new AlertDialog.Builder(act);
+        builder.setView(layout);
+        builder.setTitle(act.getString(title));
+        alertDialog = builder.create();
+        alertDialog.show();
+
         Button dialogButton = (Button) alertDialog.findViewById(dismissbuttonid);
         // if button is clicked, close the custom dialog
         dialogButton.setOnClickListener(new View.OnClickListener() {

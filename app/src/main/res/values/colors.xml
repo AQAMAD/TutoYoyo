@@ -2,10 +2,6 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="yoyoBlast">@android:color/holo_orange_dark</color>
-    <color name="yoyoExpert">@android:color/white</color>
-    <color name="my">@android:color/black</color>
-
+    <color name="colorAccent">#3333F5</color>
     <color name="black_overlay">#66000000</color>
 </resources>

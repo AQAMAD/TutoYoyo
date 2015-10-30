@@ -41,11 +41,11 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
     private ImageView btnFav;
     private ImageView btnSha;
     private ImageView btnWat;
-    private ImageView btnSeen;
+    protected ImageView btnSeen;
     private ImageView btnExpandVideo;
     private ImageView btnShareVideo;
 
-    private YoutubeVideo boundVideo;
+    protected YoutubeVideo boundVideo;
 
     private ScreenSize screenSize;
 

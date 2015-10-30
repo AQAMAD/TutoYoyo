@@ -8,6 +8,7 @@ import org.parceler.Parcel;
 @Parcel
 public class Sponsor {
     public String name;
+    public String contactNames;
     public String description;
     public int navigationId;
     public String preferenceKey;
@@ -32,6 +33,11 @@ public class Sponsor {
         this.name=name;
         return this;
     };
+
+    public Sponsor setContactNames(String contactNames) {
+        this.contactNames = contactNames;
+        return this;
+    }
 
     public Sponsor setNavigationId(int id){
         this.navigationId=id;

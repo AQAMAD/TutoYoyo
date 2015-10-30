@@ -13,13 +13,5 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <fragment
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/homeFragmentID"
-            android:name="fr.aqamad.tutoyoyo.fragments.HomeFragment"
-            tools:layout="@layout/fragment_home"
-            />
-
     </FrameLayout>
 </RelativeLayout>

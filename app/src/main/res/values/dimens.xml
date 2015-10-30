@@ -10,5 +10,7 @@
     <dimen name="videoitem_horizontal_margin">5dp</dimen>
     <dimen name="videoitem_vertical_margin">5dp</dimen>
     <dimen name="icon_size">20dp</dimen>
+    <!--default item title size-->
+
 
 </resources>

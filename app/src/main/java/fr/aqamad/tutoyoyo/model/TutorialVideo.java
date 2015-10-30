@@ -62,8 +62,25 @@ public class TutorialVideo extends Model {
     }
 
     public static TutorialVideo getRandom() {
-        return new Select().from(TutorialVideo.class).orderBy("RANDOM()").executeSingle();
+        return new Select().from(TutorialVideo.class).where("Key not in (select Key from SeenVideos)").orderBy("RANDOM()").executeSingle();
     }
+
+    public static TutorialVideo getNextUnviewedInChannel(String channelKey) {
+        return new Select()
+                .from(TutorialVideo.class)
+                .where("Key not in (select Key from SeenVideos) and Channel=(select id from Channels where Key=?)", channelKey)
+                .orderBy("id")
+                .executeSingle();
+    }
+
+    public static TutorialVideo getRandomInChannel(String channelKey) {
+        return new Select()
+                .from(TutorialVideo.class)
+                .where("Channel=(select id from Channels where Key=?)",channelKey)
+                .orderBy("RANDOM()")
+                .executeSingle();
+    }
+
 
     public static List<TutorialVideo> search(String searchCriteria) {
         //"Name","Description","Key","MediumThumbnail","HighThumbnail","DefaultThumbnail","Duration","PublishedAt","Caption"

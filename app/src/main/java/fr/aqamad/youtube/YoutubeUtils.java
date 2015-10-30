@@ -239,7 +239,6 @@ public class YoutubeUtils {
 
         HttpRequest req=HttpRequest.get(rurl, true)
                 .followRedirects(true);
-
         // Convert this response into a readable string
         String jsonString = req.body();
         //test if results complete, if not fetch more
