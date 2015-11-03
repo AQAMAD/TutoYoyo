@@ -60,5 +60,17 @@
     <string name="spbyys">SPbYYS (en)</string>
     <string name="ihelp_seen">= J\'ai vu cette vidéo</string>
     <string name="word_from">de</string>
+    <string name="dialog_help_title">Aide</string>
+    <string name="monkeyfinger">MonkeyfingeR Design (en)</string>
+    <string name="nextWatchLater">Prochain tutoriel à voir :</string>
+    <string name="nextWatchLaterHelp">Ajoute des vidéos dans ta liste \'A voir plus tard\' et ils apparaitront ici dans l\'ordre de sélection (si tu ne les a pas déja vus)</string>
+    <string name="randomFavorite">Tutoriel Favori aléatoire :</string>
+    <string name="randomFavoriteHelp">Ajoute des vidéos dans ta liste de \'Favoris\' et ils apparaîtront ici aléatoirement.</string>
+    <string name="prefUseTutorialsFrom">Utiliser les tutos de </string>
+    <string name="settingsClearCache">Vider le cache</string>
+    <string name="settingsDbAndCache">Données et cache</string>
+    <string name="settingsRefreshFrequency">Fréquence de rafraichissement</string>
+    <string name="settingsRefreshFrequencyHelp">Les playlists se rafraichissent ...</string>
+    <string name="settingsClearCacheHelp">Vide le contenu du cache, vous ne perdez aucune de vos données, le contenu va se rafaichir progressivement, les comptages et durées peuvent ètre faux jusqu\'au prochain démarrage.</string>
 
 </resources>

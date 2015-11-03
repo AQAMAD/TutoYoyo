@@ -14,6 +14,10 @@ public class Sponsor {
     public String preferenceKey;
     public String channelKey;
     public String[] expandablePlaylists;
+    public String[] includePlaylists;
+    public String[] excludePlaylists;
+    public String[] cleanPlaylists;
+    public String[] cleanVideos;
     public int layoutResId;
     public int foreGroundColor;
     public int backGroundColor;
@@ -32,7 +36,22 @@ public class Sponsor {
     public Sponsor setName(String name){
         this.name=name;
         return this;
-    };
+    }
+
+    public Sponsor setIncludePlaylists(String[] includePlaylists) {
+        this.includePlaylists = includePlaylists;
+        return this;
+    }
+
+    public Sponsor setCleanPlaylists(String[] cleanPlaylists) {
+        this.cleanPlaylists = cleanPlaylists;
+        return this;
+    }
+
+    public Sponsor setCleanVideos(String[] cleanVideos) {
+        this.cleanVideos = cleanVideos;
+        return this;
+    }
 
     public Sponsor setContactNames(String contactNames) {
         this.contactNames = contactNames;

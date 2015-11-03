@@ -1,5 +1,6 @@
 package fr.aqamad.tutoyoyo.model;
 
+import android.content.res.Resources;
 import android.database.Cursor;
 
 import com.activeandroid.ActiveAndroid;
@@ -9,6 +10,8 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
 import java.util.List;
+
+import fr.aqamad.tutoyoyo.R;
 
 /**
  * Created by Gregoire on 09/10/2015.
@@ -55,6 +58,14 @@ public class TutorialVideo extends Model {
 
     public static int countAll() {
         Cursor c = ActiveAndroid.getDatabase().rawQuery("SELECT COUNT(*) as total FROM " + new TutorialVideo().getTableName(), null);
+        c.moveToFirst();
+        int total = c.getInt(c.getColumnIndex("total"));
+        c.close();
+        return total;
+    }
+
+    public static int countCache(Resources res) {
+        Cursor c = ActiveAndroid.getDatabase().rawQuery("SELECT COUNT(*) as total FROM " + new TutorialVideo().getTableName() + " where Channel in (select Id from Channels where Source in (select Id from Sources where Key <> '" + res.getString(R.string.localChannelKey) + "'))",null);
         c.moveToFirst();
         int total = c.getInt(c.getColumnIndex("total"));
         c.close();

@@ -2,6 +2,7 @@ package fr.aqamad.tutoyoyo.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 
 import fr.aqamad.tutoyoyo.R;
 
@@ -12,6 +13,7 @@ public class PlaylistBoxItemView extends BasePlaylistListItemView {
 
     public PlaylistBoxItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setGravity(Gravity.TOP);
     }
 
     public PlaylistBoxItemView(Context context) {
@@ -22,4 +24,6 @@ public class PlaylistBoxItemView extends BasePlaylistListItemView {
     protected int getLayoutResId() {
         return R.layout.playlist_item_box;
     }
+
+
 }

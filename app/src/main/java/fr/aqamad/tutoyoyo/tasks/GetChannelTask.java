@@ -28,7 +28,7 @@ public class GetChannelTask implements Runnable {
     private final String channelId;
     private final Activity mAct;
     private final String apiKey;
-    private final String expandPlaylist;
+    private final String[] expandPlaylists;
 
     /**
      * Don't forget to call run(); to start this task
@@ -40,22 +40,22 @@ public class GetChannelTask implements Runnable {
         this.channelId = channelId;
         this.mAct=act;
         this.apiKey=act.getString(R.string.youtubeapikey);
-        expandPlaylist="";
+        expandPlaylists =null;
     }
 
-    public GetChannelTask(Handler replyTo, String channelId, String expandPlaylist,Activity act) {
+    public GetChannelTask(Handler replyTo, String channelId, String[] expandPlaylists,Activity act) {
         this.replyTo = replyTo;
         this.channelId = channelId;
         this.mAct=act;
         this.apiKey=act.getString(R.string.youtubeapikey);
-        this.expandPlaylist=expandPlaylist;
+        this.expandPlaylists =expandPlaylists;
     }
 
     @Override
     public void run() {
         try {
             Log.d("GCT","GetChannelTask run called");
-            YoutubeChannel channel= ModelConverter.loadChannel(mAct,channelId,expandPlaylist,apiKey);
+            YoutubeChannel channel= ModelConverter.loadChannel(mAct,channelId, expandPlaylists,apiKey);
             Log.d("GCT","Done getting channel, into bundle");
             //YoutubeUtils.logChannel(channel);
             // Pack the Library into the bundle to send back to the Activity

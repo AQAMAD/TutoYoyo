@@ -8,18 +8,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Database and Cache">
+        android:title="@string/settingsDbAndCache">
 
-        <ListPreference android:title="Refresh playlists"
+        <ListPreference android:title="@string/settingsRefreshFrequency"
             android:key="@string/lst_pref_refresh_playlist"
             android:entries="@array/refresh_entries"
             android:entryValues="@array/refresh_values"
             android:defaultValue="7"
-            android:summary="Playlists refresh every... "/>
+            android:summary="@string/settingsRefreshFrequencyHelp"/>
 
-        <Preference android:title="Clear Cache"
+        <Preference android:title="@string/settingsClearCache"
             android:key="@string/btn_pref_clear_cache_key"
-            android:summary="Clear out your cached content, you will lose nothing at all, content should be refreshed on access, counts and durations might be off until next restart."/>
+            android:summary="@string/settingsClearCacheHelp"/>
 
         <Preference android:title="Destroy Database"
             android:key="@string/btn_pref_del_db_key"

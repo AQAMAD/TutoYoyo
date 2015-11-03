@@ -7,8 +7,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
+
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
+import fr.aqamad.tutoyoyo.model.Sponsor;
+import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.youtube.YoutubeChannel;
 import fr.aqamad.youtube.YoutubePlaylist;
@@ -126,41 +130,36 @@ public class InitialiserFragment extends Fragment {
             TutorialSource.initializeDB(getActivity());
             //depends on preferences
             SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            boolean yybEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyoblast), true);
-            boolean yyeEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyoexpert), true);
-            boolean clywEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_clyw), true);
-            boolean yytEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_yoyothrower), true);
-            boolean bhoEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_blackhop), true);
-            boolean spbEnabled = appPreferences.getBoolean(getString(R.string.chk_pref_spbyys), true);
+            //drive all this via the sponsors collection
+            Sponsors sponsors=new Sponsors(InitialiserFragment.this.getResources());
+            //remove local sponsor
+            sponsors.remove(Sponsors.R_ID.my);
+            //iterate and get numbers of sponsors
+            ArrayList<Sponsor> enabledSponsors=new ArrayList<>();
+            for (Sponsor sp :
+                    sponsors.getOrdered()) {
+                if (appPreferences.getBoolean(sp.preferenceKey, true)){
+                    enabledSponsors.add(sp);
+                }
+            }
             ProgressInfo pi=new ProgressInfo();
-            pi.providersMax=countBools(yybEnabled,yyeEnabled,clywEnabled,yytEnabled,bhoEnabled,spbEnabled);
+            pi.providersMax=enabledSponsors.size();
             pi.providersProgress=0;
             pi.totalVideos=0;
+
             //now the db is initialized, we do the first pre-caches
             //first up is yoyoblast, we load him
-            if (yybEnabled) {
-                loadChannel(pi,getActivity().getString(R.string.YOYOBLAST_CHANNEL),null,"Yoyoblast");
+            for (Sponsor sp :
+                    enabledSponsors) {
+                //look up
+                loadChannel(pi, sp.channelKey, sp.expandablePlaylists, sp.name);
             }
-            if (yyeEnabled) {
-                loadChannel(pi,getActivity().getString(R.string.YOYOEXPERT_CHANNEL),null,"Yoyoexpert");
-            }
-            if (clywEnabled) {
-                loadChannel(pi,getActivity().getString(R.string.CLYW_CHANNEL),ModelConverter.CABIN_TUTORIALS_PLAYLIST,"CaribouLodge");
-            }
-            if (yytEnabled) {
-                loadChannel(pi,getActivity().getString(R.string.YOYOTHROWER_CHANNEL),null,"MrYoyoThrower");
-            }
-            if (bhoEnabled) {
-                loadChannel(pi,getActivity().getString(R.string.BLACKHOP_CHANNEL),null,"Blackhop");
-            }
-            if (spbEnabled) {
-                loadChannel(pi, getActivity().getString(R.string.SPBYYS_CHANNEL), null, "SPBYYS");
-            }
+
             return null;
         }
 
-        private void loadChannel(ProgressInfo pi,String channelID,String expandPlaylist,String displayName) {
-            YoutubeChannel channel= ModelConverter.loadChannel(getActivity(), channelID, expandPlaylist, getActivity().getString(R.string.youtubeapikey));
+        private void loadChannel(ProgressInfo pi,String channelID,String[] expandPlaylists,String displayName) {
+            YoutubeChannel channel= ModelConverter.loadChannel(getActivity(), channelID, expandPlaylists, getActivity().getString(R.string.youtubeapikey));
             ModelConverter.prepareChannel(channel,getActivity());
             ModelConverter.cacheChannel(channel);
             pi.playlistsMax=channel.getPlaylists().size();

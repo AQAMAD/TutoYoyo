@@ -27,6 +27,7 @@ import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.adapters.PlaylistListViewAdapter;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.Sponsor;
+import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.tasks.GetChannelTask;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.youtube.YoutubeChannel;
@@ -166,8 +167,12 @@ public class SourceFragment extends Fragment {
     public void fillView() {
         //build the adapter we need
         Log.d("SF", "SourceFragment fillView : " + mChannelID);
+        //how many
         //which itemlayout will depend on the fragment
         PlaylistListViewAdapter adapter = new PlaylistListViewAdapter(this.getActivity(), (List) mChannel.getPlaylists(), new ScreenSize(getActivity()), mSponsor.foreGroundColor, mSponsor.backGroundColor, mSponsor.displayasBoxes);
+
+        Log.d("SF", "SourceFragment fillView playlists to display : " + mChannel.getPlaylists().size());
+
         AdapterView listView = GetPlaylistView();
         listView.setAdapter(adapter);
         //hook up event listener
@@ -256,11 +261,14 @@ public class SourceFragment extends Fragment {
     private void populateListWithVideos(Message msg) {
         // Retreive the videos are task found from the data bundle sent back
         YoutubeChannel channel = (YoutubeChannel) msg.getData().get(GetChannelTask.CHANNEL);
+        Log.d("SF", "SourceFragment populateListWithVideos playlists to display : " + channel.getPlaylists().size());
         // Because we have created a custom ListView we don't have to worry about setting the adapter in the activity
         // we can just call our custom method with the list of items we want to display
         //postProcessing
         this.setChannel(channel);
         this.prepareChannel();
+        //after prepare
+        Log.d("SF", "SourceFragment populateListWithVideos afterprepare playlists to display : " + channel.getPlaylists().size());
         //caching
         ModelConverter.cacheChannel(channel);
         fillView();
@@ -269,9 +277,12 @@ public class SourceFragment extends Fragment {
 
     public void fetchChannel(Handler handler, Activity act) {
         //here we need to determine if playlist expand is needed (for clyw and similar)
-        String expandPlaylist=ModelConverter.getExpandPlayList(getChannelId(),act);
-        if (expandPlaylist!=null){
-            new Thread(new GetChannelTask(handler,  getChannelId() , expandPlaylist,act )).start();
+        //based on the sponsors api
+        Sponsors sponsors=new Sponsors(getResources());
+        Sponsor sp=sponsors.getByChannelKey(getChannelId());
+        String[] expandPlaylists=sp.expandablePlaylists;
+        if (expandPlaylists!=null){
+            new Thread(new GetChannelTask(handler,  getChannelId() , expandPlaylists,act )).start();
         }else{
             new Thread(new GetChannelTask(handler, getChannelId(), act)).start();
         }

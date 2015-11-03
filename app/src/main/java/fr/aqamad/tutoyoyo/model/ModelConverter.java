@@ -28,13 +28,7 @@ import fr.aqamad.youtube.YoutubeVideo;
  */
 public class ModelConverter {
 
-    private static final String BHOP_MEDIUM_PLAYLIST = "PL8C046415EB38C4F4";
-    private static final String BHOP_BEGINNER_PLAYLIST = "PL31896775C716B8B3";
-    private static final String YYT_TRICK_VIDEOS_PLAYLIST = "PLwMQ2twUtKwLoyRtFpECxUSQ6hoRT2j7a";
-    public static final String CABIN_TUTORIALS_PLAYLIST="PLVLLF_sWPwMxR8TQv_FpKZC_W6knxdiln";
-    public static final String SPBYY_TUTORIALS_PLAYLIST="PL4nKaZchMa6sEdmNmcowwdXXrBVCUYqdm";
-    public static final String TYYT_TUTORIALS_PLAYLIST="PL4nKaZchMa6tT8Y9xqY3TN6YJ2Njbjflq";
-    private static final int CLYW_PAGE_SIZE=25;
+    private static final int PAGE_SIZE =25;
 
 
     public static List<YoutubeVideo> fromModel(List<TutorialVideo> models){
@@ -185,7 +179,7 @@ public class ModelConverter {
      * Here is how you load a channel
      */
 
-    public static YoutubeChannel loadChannel(Activity mAct, String channelId, String expandPlaylist, String apiKey){
+    public static YoutubeChannel loadChannel(Activity mAct, String channelId, String[] expandPlaylists, String apiKey){
 
         //will return null if not found
         TutorialSource source=TutorialSource.getByKey(channelId);
@@ -223,42 +217,45 @@ public class ModelConverter {
         }
         //part 2, do we have a playlist to expand ?
         //locate the playlist to fill
-        if (expandPlaylist!=null && !expandPlaylist.equals("")){
-            Log.d("GCT","asked for expandplaylist");
-            YoutubePlaylist playlist=channel.getPlaylistFromYoutubeID(expandPlaylist);
-            if (playlist!=null){
-                Log.d("GCT","playlist not found in channel");
-                TutorialPlaylist tchannel= TutorialPlaylist.getByKey(expandPlaylist);
-                YoutubePlaylist temporary=playlist.clone();
-                if (tchannel!=null){
-                    Log.d("GCT","found in database");
-                    //iterate and add videos
-                    for (int i = 0; i < tchannel.videos().size(); i++) {
-                        TutorialVideo video=tchannel.videos().get(i);
-                        YoutubeVideo tVideo=YoutubeVideo.fromModel(video);
-                        temporary.getVideos().add(tVideo);
-                    }
-                } else {
-                    //fill from assets or from youtube
-                    String jsonString= Assets.loadFileFromAsset(mAct, expandPlaylist + ".json");
-                    if (jsonString==null) {
-                        Log.d("GCT","not found in assets");
-                        //fetch from youtube
-                        // Get a httpclient to talk to the internet
-                        jsonString = YoutubeUtils.getPlaylistFromApi(expandPlaylist, apiKey);
-                    }
-                    temporary=YoutubeUtils.playlistFromJson(jsonString);
-                    Log.d("GCT","enrich with duration");
-                    jsonString = YoutubeUtils.getVideosFromApi(temporary.getVideoIds(), apiKey);
-                    YoutubeUtils.addDurationsFromJson(temporary,jsonString);
+        if (expandPlaylists!=null){
+            Log.d("GCT","asked for expandplaylists");
+            for (String playlistKey :
+                    expandPlaylists) {
+                YoutubePlaylist playlist=channel.getPlaylistFromYoutubeID(playlistKey);
+                if (playlist!=null){
+                    Log.d("GCT","playlist not found in channel");
+                    TutorialPlaylist tchannel= TutorialPlaylist.getByKey(playlistKey);
+                    YoutubePlaylist temporary=playlist.clone();
+                    if (tchannel!=null){
+                        Log.d("GCT","found in database");
+                        //iterate and add videos
+                        for (int i = 0; i < tchannel.videos().size(); i++) {
+                            TutorialVideo video=tchannel.videos().get(i);
+                            YoutubeVideo tVideo=YoutubeVideo.fromModel(video);
+                            temporary.getVideos().add(tVideo);
+                        }
+                    } else {
+                        //fill from assets or from youtube
+                        String jsonString= Assets.loadFileFromAsset(mAct, playlistKey + ".json");
+                        if (jsonString==null) {
+                            Log.d("GCT","not found in assets");
+                            //fetch from youtube
+                            // Get a httpclient to talk to the internet
+                            jsonString = YoutubeUtils.getPlaylistFromApi(playlistKey, apiKey);
+                        }
+                        temporary=YoutubeUtils.playlistFromJson(jsonString);
+                        Log.d("GCT","enrich with duration");
+                        jsonString = YoutubeUtils.getVideosFromApi(temporary.getVideoIds(), apiKey);
+                        YoutubeUtils.addDurationsFromJson(temporary,jsonString);
 
+                    }
+                    //fill this playlist from either one of the sources
+                    //copy videos from temp to playlist
+                    playlist.getVideos().addAll(temporary.getVideos());
                 }
-                //fill this playlist from either one of the sources
-                //copy videos from temp to playlist
-                playlist.getVideos().addAll(temporary.getVideos());
+                //end
             }
         }
-
         return channel;
     }
 
@@ -318,37 +315,16 @@ public class ModelConverter {
         return playlist;
     }
 
-    public static void cleanPlaylist(YoutubePlaylist playlist) {
+    public static void cleanVideos(YoutubePlaylist playlist, String[] cleanVideos) {
         Iterator<YoutubeVideo> iter= playlist.getVideos().iterator();
         while(iter.hasNext()){
             YoutubeVideo vid=iter.next();
             String title=vid.getTitle();
             //get the ressources for cleaning
-            title=(title.replace(" - YoyoBlast", ""))
-                    .replace("CLYW Cabin Tutorials - ", "")
-                    .replace("CLYW Cabin Tutorial - ", "")
-                    .replace("Cabin Tutorial - ","")
-                    .replace("Learn to Yo-yo ", "")
-                    .replace("yoyo-france.net - tuto yoyo - debutant - ", "")
-                    .replace("yoyo-france.net - tuto yoyo - intermédiaire - ", "")
-                    .replace("yoyo-france.net - tuto yoyo - ", "")
-                    .replace("blackhop.com - tuto yoyo intermediaire - ", "")
-                    .replace("blackhop.com - tuto intermediaire - ", "")
-                    .replace("Yoyo Trick Tutorial - ", "")
-                    .replace("Yoyo Trick Tutorial-", "")
-                    .replace("Yoyo trick tutorial-", "")
-                    .replace("yoyo tutorial", "")
-                    .replace("Yoyo Tutorial - ", "")
-                    .replace("Yoyo Trick Tutorial ", "")
-                    .replace("SPbYYS Tutorials: ", "")
-                    .replace("YoYoMad1001 x C3yoyodesign x Throw-YoYo Contest - ", "")
-                    .replace("Rethinkyoyo Contest 2012  - ", "")
-                    .replace("Rethinkyoyo Contest 2012  -- ", "")
-                    .replace("TYYT - ", "")
-                    .replace("1a Tutorial - ", "")
-                    .replace("1a Tutorial ", "")
-                    .replace("1a tutorial ", "")
-                    .replace("4a Tutorial - ", "4a - ");
+            for (String str :
+                    cleanVideos) {
+                title=(title.replace(str, ""));
+            }
             //prettify first letter
             title = title.substring(0, 1).toUpperCase() + title.substring(1);
             vid.setTitle(title);
@@ -358,27 +334,19 @@ public class ModelConverter {
     public static void prepareChannel(YoutubeChannel channel,Context ctx) {
         //todo : par défaut, on trie les playlists
         Log.d("GPT","Preparing channel " + channel.getID());
+        //we need to know the Sponsors
+        Sponsors sponsors=new Sponsors(ctx.getResources());
+        Sponsor thesp=sponsors.getByChannelKey(channel.getID());
         //condition sur l'ID et les constantes que l'on connait
-        if (channel.getID().equals(ctx.getString(R.string.YOYOEXPERT_CHANNEL))){
-            //non-standard
-            Log.d("GPT","Specific YoyoExpert");
-            prepareYYEChannel(channel);
-        } else if (channel.getID().equals(ctx.getString(R.string.CLYW_CHANNEL))){
+        if (thesp!=null && thesp.includePlaylists!=null && thesp.expandablePlaylists!=null){
             //standard
-            Log.d("GPT","Specific CLYW");
-            prepareClywChannel(channel);
-        } else if (channel.getID().equals(ctx.getString(R.string.YOYOTHROWER_CHANNEL))){
+            Log.d("GPT","Specific inluded and expanded");
+            prepareChannelWithIncludeList(channel, thesp.includePlaylists);
+            prepareChannelWithExpandList(channel, thesp.expandablePlaylists);
+        } else if (thesp!=null && thesp.includePlaylists!=null){
             //standard
-            Log.d("GPT","Specific YYT");
-            prepareYYTChannel(channel);
-        } else if (channel.getID().equals(ctx.getString(R.string.BLACKHOP_CHANNEL))){
-            //standard
-            Log.d("GPT","Specific BHOP");
-            prepareBlackhopChannel(channel);
-        } else if (channel.getID().equals(ctx.getString(R.string.SPBYYS_CHANNEL))){
-            //standard
-            Log.d("GPT","Specific SpbYYs");
-            prepareSpbyysChannel(channel);
+            Log.d("GPT", "Specific for included playlists list specified");
+            prepareChannelWithIncludeList(channel, thesp.includePlaylists);
         } else {
             //default
             //Sorting by title
@@ -390,104 +358,65 @@ public class ModelConverter {
                 }
             });
         }
+        //channels are redispatched, clean up their names if necessary
+        if (thesp!=null && thesp.cleanPlaylists!=null){
+            prepareCleanNames(channel,thesp.cleanPlaylists);
+        }
     }
 
-    private static void prepareSpbyysChannel(YoutubeChannel channel) {
+    private static void prepareCleanNames(YoutubeChannel channel, String[] cleanPlaylists) {
         Iterator<YoutubePlaylist> iter= channel.getPlaylists().iterator();
         while(iter.hasNext()){
             YoutubePlaylist pl=iter.next();
+            Log.d("PCN","Before name = " + pl.getTitle());
             //clean the names
-            //spbyy n'a que 2 playlists qui nous intéresse
-            if(pl.getID().equals(SPBYY_TUTORIALS_PLAYLIST)){
-                //we keep
-            }else if (pl.getID().equals(TYYT_TUTORIALS_PLAYLIST)) {
-                //we keep too
-            } else{
-                iter.remove();
+            for (String str :
+                    cleanPlaylists) {
+                pl.setTitle(pl.getTitle().replace(str, ""));
             }
+            Log.d("PCN", "After new name = " + pl.getTitle());
         }
-
-        //Sorting by custom order
-        //playlist order
-        String[] plsOrder={"SPbYYS Tutorials","Terra Yo-Yo Tutorials"};
-        final List<String> plsList= Arrays.asList(plsOrder);
-
-
-        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
-            @Override
-            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
-                int pl1Index=plsList.indexOf(pl1.getTitle());
-                int pl2Index=plsList.indexOf(pl2.getTitle());
-                return pl1Index-pl2Index;
-            }
-        });
-
     }
 
-    public static void prepareYYEChannel(YoutubeChannel channel) {
-
+    public static void prepareChannelWithIncludeList(YoutubeChannel channel, String[] includeList) {
+        //exclude the "Trick videos" playlist
         Iterator<YoutubePlaylist> iter= channel.getPlaylists().iterator();
+        final List<String> plslist = Arrays.asList(includeList);
         while(iter.hasNext()){
             YoutubePlaylist pl=iter.next();
-            Log.d("PYYE","YoyoExpert name = " + pl.getTitle());
-            //clean the names
-            pl.setTitle(pl.getTitle().replace("Expert Village Yo Yo Tricks: ",""));
-            pl.setTitle(pl.getTitle().replace("Expert Village Yo Yo tricks: ",""));
-            pl.setTitle(pl.getTitle().replace("Expert village Yo Yo Tricks: ",""));
-            pl.setTitle(pl.getTitle().replace("Expert Village: ",""));
-            Log.d("PYYE", "YoyoExpert new name = " + pl.getTitle());
-            //pikotaku a une playlist en trop, on ne conserve que celles que l'on connait
-            if(pl.getID().equals("LLjt9-TsmzQl1P9Vpt8sHYCA")){
-                iter.remove();
-            }
-            if(pl.getID().equals("FLjt9-TsmzQl1P9Vpt8sHYCA")){
-                iter.remove();
-            }
-
-        }
-
-        //Sorting by custom order
-        //playlist order
-        String[] plsOrder={"YoyoExpert 2015 Tutorials","Yo-Yo Techniques for the Beginner","Basic","Yo Yo Maintenance",
-                "Intermediate","Advanced (Part 1)","Advanced (Part 2)",
-                "Expert (Part 1)","Expert (Part 2)","Master",
-                "Looping","Offstring","Counterweight",
-                "Double hand looping (2A)"};
-        final List<String> plsList= Arrays.asList(plsOrder);
-
-
-        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
-            @Override
-            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
-                int pl1Index=plsList.indexOf(pl1.getTitle());
-                int pl2Index=plsList.indexOf(pl2.getTitle());
-                return pl1Index-pl2Index;
-            }
-        });
-
-
-    }
-
-    public static void prepareClywChannel(YoutubeChannel channel) {
-        //reparse the cabin tutorials channel to a more manageable size
-        YoutubePlaylist playlist=channel.getPlaylistFromYoutubeID(CABIN_TUTORIALS_PLAYLIST);
-        //test first if we have the famous playlist, if not then we will display nothing due to following <code></code>
-        if (playlist==null){
-            //not found, either error or already parsed
-            //so nothing to do and exit there
-        }else{
-            playlist=null;
-            Iterator<YoutubePlaylist> iter= channel.getPlaylists().iterator();
-            while(iter.hasNext()){
-                YoutubePlaylist pl=iter.next();
-                //clean the names
-                //CLYW n'a qu'une playlist qui nous intéresse
-                if(!pl.getID().equals(CABIN_TUTORIALS_PLAYLIST)){
-                    iter.remove();
-                }else{
-                    playlist=pl;
+            //to handle expanded playlists, check if playlist key contains included playlist radix
+            //rather than full equality, given youtube key structure, this is no risk
+            boolean contains=false;
+            for (String key :
+                    includeList) {
+                if (pl.getID().startsWith(key)){
+                    contains=true;
                 }
             }
+            if(!contains ){
+                iter.remove();
+            }
+        }
+        //Sorting by custom order
+        //playlist order
+        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
+            @Override
+            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
+                int pl1Index = plslist.indexOf(pl1.getID());
+                int pl2Index = plslist.indexOf(pl2.getID());
+                return pl1Index - pl2Index;
+            }
+        });
+    }
+
+
+    public static void prepareChannelWithExpandList(YoutubeChannel channel, String[] expandList) {
+        //reparse the cabin tutorials channel to a more manageable size
+        for (String expandPlaylist :
+                expandList) {
+            //we get the playlist
+            YoutubePlaylist playlist=channel.getPlaylistFromYoutubeID(expandPlaylist);
+            //test first if we have the famous playlist, if not then we will display nothing due to following <code></code>
             //do we have a playlist, if yes, then split it
             if (playlist!=null){
                 //remove it from the channel before continuing
@@ -496,8 +425,8 @@ public class ModelConverter {
                 //more precise from playlist.getVids
                 //int count=playlist.getNumberToFetch();
                 int count=playlist.getVideos().size();
-                int pages=count / CLYW_PAGE_SIZE;
-                int remainder=count-(pages*CLYW_PAGE_SIZE);
+                int pages=count / PAGE_SIZE;
+                int remainder=count-(pages* PAGE_SIZE);
                 if (remainder!=0){
                     pages++;
                 }
@@ -510,10 +439,10 @@ public class ModelConverter {
                     if (i==pages){
                         tpl.setNumberToFetch(remainder);
                     }else{
-                        tpl.setNumberToFetch(CLYW_PAGE_SIZE);
+                        tpl.setNumberToFetch(PAGE_SIZE);
                     }
-                    int start=((i-1)*CLYW_PAGE_SIZE);
-                    int end=(i*CLYW_PAGE_SIZE);
+                    int start=((i-1)* PAGE_SIZE);
+                    int end=(i* PAGE_SIZE);
                     if (end>=count){
                         end=count;
                     }
@@ -552,85 +481,8 @@ public class ModelConverter {
                     channel.getPlaylists().add(tpl);
                 }
             }
-
-            //Sorting by title
-            Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
-                @Override
-                public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
-                    return pl1.getTitle().compareTo(pl2.getTitle());
-                }
-            });
-
-        }
-
-    }
-
-
-
-    public static void prepareBlackhopChannel(YoutubeChannel channel) {
-        //exclude the "Trick videos" playlist
-        Iterator<YoutubePlaylist> iter= channel.getPlaylists().iterator();
-        while(iter.hasNext()){
-            YoutubePlaylist pl=iter.next();
-            if(!(pl.getID().equals(BHOP_BEGINNER_PLAYLIST) || pl.getID().equals(BHOP_MEDIUM_PLAYLIST)) ){
-                iter.remove();
-            }
-        }
-
-        //Sorting by custom order
-        //playlist order
-        String[] plsOrder={"Tutos yoyo débutant","Tutos yoyo intermédiaire"};
-        final List<String> plsList= Arrays.asList(plsOrder);
-
-
-        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
-            @Override
-            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
-                int pl1Index = plsList.indexOf(pl1.getTitle());
-                int pl2Index = plsList.indexOf(pl2.getTitle());
-                return pl1Index - pl2Index;
-            }
-        });
-
-    }
-
-    public static void prepareYYTChannel(YoutubeChannel channel ) {
-        //exclude the "Trick videos" playlist
-        Iterator<YoutubePlaylist> iter= channel.getPlaylists().iterator();
-        while(iter.hasNext()){
-            YoutubePlaylist pl=iter.next();
-            if(pl.getID().equals(YYT_TRICK_VIDEOS_PLAYLIST)){
-                iter.remove();
-            }
-        }
-
-        //Sorting by custom order
-        //playlist order
-        String[] plsOrder={"Beginner Tricks","Sport Ladder","Quick and Easy tricks",
-                "Mounts","Binds, Snap starts and string tension","Snap Start Tutorial Series",
-                "Difficulty 1","Difficulty 2","Difficulty 3",
-                "Difficulty 4","Difficulty 5","4a/Offstring",
-                "Repeaters","How to Build a Combo","Pun Tutorials"};
-        final List<String> plsList= Arrays.asList(plsOrder);
-
-
-        Collections.sort(channel.getPlaylists(), new Comparator<YoutubePlaylist>() {
-            @Override
-            public int compare(YoutubePlaylist pl1, YoutubePlaylist pl2) {
-                int pl1Index = plsList.indexOf(pl1.getTitle());
-                int pl2Index = plsList.indexOf(pl2.getTitle());
-                return pl1Index - pl2Index;
-            }
-        });
-
-    }
-
-
-    public static String getExpandPlayList(String channelId, Context ctx) {
-        if (channelId.equals(ctx.getString(R.string.CLYW_CHANNEL))){
-            return CABIN_TUTORIALS_PLAYLIST;
-        }else{
-            return null;
         }
     }
+
+
 }

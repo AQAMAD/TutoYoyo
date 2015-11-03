@@ -47,6 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:lines="2"
             android:text="Name"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/holo_orange_dark"

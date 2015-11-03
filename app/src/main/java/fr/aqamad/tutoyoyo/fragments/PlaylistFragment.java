@@ -18,6 +18,8 @@ import android.widget.TextView;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.adapters.VideosListViewAdapter;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
+import fr.aqamad.tutoyoyo.model.Sponsor;
+import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.tasks.GetPlaylistTask;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
@@ -207,19 +209,19 @@ public class PlaylistFragment extends Fragment {
         playlist.setMediumThumb(mPlaylist.getMediumThumb());
         playlist.setDefaultThumb(mPlaylist.getDefaultThumb());
         playlist.setPublishedAt(mPlaylist.getPublishedAt());
-
+        //get the sponsor
+        Sponsors sponsors=new Sponsors(getActivity().getResources());
+        Sponsor sp=sponsors.getByChannelKey(mChannelID);
         //go through name cleaning
-        ModelConverter.cleanPlaylist(playlist);
-
+        if (sp.cleanVideos!=null){
+            ModelConverter.cleanVideos(playlist, sp.cleanVideos);
+        }
         ModelConverter.cachePlaylist(playlist, mChannelID);
         //playlist is cached, assign  to mPlaylist
         mPlaylist=playlist;
-
-
         VideosListViewAdapter adapter = new VideosListViewAdapter(getActivity(), playlist.getVideos(), this.getFgColor(),this.getBgColor(),this.highlightColor);
         AbsListView view= (AbsListView) getActivity().findViewById(android.R.id.list);
         view.setAdapter(adapter);
-
 
     }
 

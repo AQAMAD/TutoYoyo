@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         //init fragments
         setContentView(R.layout.activity_main);
         //sponsorfragments
-        sponsors=new Sponsors(this);
+        sponsors=new Sponsors(this.getResources());
         fragments=sponsors.getFragments();
         //homeFragment is directly added to the ui
         //was it kept in the manager ?

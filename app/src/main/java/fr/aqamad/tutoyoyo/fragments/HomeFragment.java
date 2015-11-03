@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
     private void createSponsorsView(View rootView) {
         //let's add some images to the flowLayout
         FlowLayout flSponsors = (FlowLayout) rootView.findViewById(R.id.flSponsors);
-        Sponsors sps = new Sponsors(getActivity());
+        Sponsors sps = new Sponsors(getResources());
         //exclude the local sponsors from this list
         sps.remove(Sponsors.R_ID.my.getKey());
 //        sps.remove(Sponsors.R_ID.frn.getKey());
@@ -279,7 +279,7 @@ public class HomeFragment extends Fragment {
         fl.setVisibility(View.VISIBLE);
         TextView tv=new TextView(getActivity());
         tv.setTextColor(getResources().getColor(android.R.color.white));
-        tv.setText("Random tutorial in Favorites :");
+        tv.setText(R.string.randomFavorite);
         tv.setLayoutParams(new FlowLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setPadding(10, 0, 0, 0);
         fl.addView(tv);
@@ -289,7 +289,7 @@ public class HomeFragment extends Fragment {
         if (nextTut==null){
             tv=new TextView(getActivity());
             tv.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            tv.setText("Add videos to 'Favorites' and they will randomly appear here.");
+            tv.setText(R.string.randomFavoriteHelp);
             tv.setLayoutParams(new FlowLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             tv.setPadding(10,0,0,0);
             fl.addView(tv);
@@ -318,7 +318,7 @@ public class HomeFragment extends Fragment {
         fl.setVisibility(View.VISIBLE);
         TextView tv=new TextView(getActivity());
         tv.setTextColor(getResources().getColor(android.R.color.white));
-        tv.setText("Next tutorial in Watch Later :");
+        tv.setText(R.string.nextWatchLater);
         tv.setLayoutParams(new FlowLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setPadding(10, 0, 0, 0);
         fl.addView(tv);
@@ -328,7 +328,7 @@ public class HomeFragment extends Fragment {
         if (nextTut==null){
             tv=new TextView(getActivity());
             tv.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            tv.setText("Add videos to 'Watch Later' and they will appear here in the order you selected them (if you haven't seen them already).");
+            tv.setText(R.string.nextWatchLaterHelp);
             tv.setLayoutParams(new FlowLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             tv.setPadding(10,0,0,0);
             fl.addView(tv);
@@ -368,7 +368,7 @@ public class HomeFragment extends Fragment {
 
     private void displayTotalVids() {
         TextView nbt= (TextView) findViewById(R.id.textNbTuts);
-        int nbVids = TutorialVideo.countAll();
+        int nbVids = TutorialVideo.countCache(getResources());
         nbt.setVisibility(View.VISIBLE);
         nbt.setText(String.format(getString(R.string.tutStats), nbVids));
     }

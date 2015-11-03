@@ -14,6 +14,8 @@ import java.util.List;
 
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
+import fr.aqamad.tutoyoyo.model.Sponsor;
+import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.utils.Debug;
@@ -146,6 +148,8 @@ public class UpdaterFragment extends Fragment {
             Log.d("MA.CD","RefreshPlaylists fetched before : " + refreshDate.getTime());
             //and get refresh dates for the playlists
             List<TutorialPlaylist> lists =TutorialPlaylist.getOlderThan(refreshDate);
+            //get sponsors
+            Sponsors sponsors=new Sponsors(getResources());
             //we'eve got the playlists
             ProgressInfo pi=new ProgressInfo();
             pi.playlistsMax=lists.size();
@@ -158,7 +162,9 @@ public class UpdaterFragment extends Fragment {
                 //find out in key if playlist can be refetched like that
                 //test the source
                 TutorialSource source=pl.source;
-                if (!source.key.equals(getString(R.string.CLYW_CHANNEL))){
+                //equate it witrh a sponsor
+                Sponsor sp=sponsors.getByChannelKey(source.key);
+                if (sp.expandablePlaylists==null){
                     //let's be badass
                     publishProgress(pi);
                     //first we delete all videos
@@ -175,7 +181,10 @@ public class UpdaterFragment extends Fragment {
                     pl2.setMediumThumb(new YoutubeThumbnail(pl.mediumThumbnail,YoutubeUtils.MEDIUM_WIDTH, YoutubeUtils.MEDIUM_HEIGHT));
                     pl2.setDefaultThumb(new YoutubeThumbnail(pl.defaultThumbnail,YoutubeUtils.DEFAULT_WIDTH, YoutubeUtils.DEFAULT_HEIGHT));
                     //go through name cleaning
-                    ModelConverter.cleanPlaylist(pl2);
+                    if (sp.cleanVideos!=null){
+                        ModelConverter.cleanVideos(pl2, sp.cleanVideos);
+                    }
+                    //store in cache
                     ModelConverter.cachePlaylist(pl2, pl.source.key);
                     pl.fetchedAt=new Date();
                     pl.save();
@@ -186,7 +195,7 @@ public class UpdaterFragment extends Fragment {
                 } else {
                     //for CLYW
                     //the whole channel must reload and expand
-                    YoutubeChannel channel= ModelConverter.loadChannel(getActivity(), source.key, ModelConverter.CABIN_TUTORIALS_PLAYLIST, getActivity().getString(R.string.youtubeapikey));
+                    YoutubeChannel channel= ModelConverter.loadChannel(getActivity(), source.key, sp.expandablePlaylists, getActivity().getString(R.string.youtubeapikey));
                     ModelConverter.prepareChannel(channel, getActivity());
                     ModelConverter.cacheChannel(channel);
                     //next we move on to the playlists and precache them too

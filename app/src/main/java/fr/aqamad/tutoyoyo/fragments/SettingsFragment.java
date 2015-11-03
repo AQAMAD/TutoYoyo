@@ -31,7 +31,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.fragment_settings);
         //add all preferences from fragment
-        Sponsors sponsors=new Sponsors(getActivity());
+        Sponsors sponsors=new Sponsors(getResources());
         PreferenceCategory cat=(PreferenceCategory)findPreference(getString(R.string.sponsor_preference_category));
         for (Sponsor spo :
                 sponsors.values()) {
@@ -39,7 +39,7 @@ public class SettingsFragment extends PreferenceFragment {
                 CheckBoxPreference cb = new CheckBoxPreference(getActivity());
                 cb.setKey(spo.preferenceKey);
                 cb.setTitle(spo.name);
-                cb.setSummary("Use Tutorials from " + spo.name);
+                cb.setSummary(cb.getContext().getString(R.string.prefUseTutorialsFrom) + " " + spo.name);
                 cb.setOrder(spo.order);        //not working...
                 cb.setDefaultValue(true);
                 Log.d("SF.OC", "Created Preference for " + spo.name + " using order " + spo.order);

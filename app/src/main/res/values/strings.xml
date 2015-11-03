@@ -19,13 +19,13 @@
     <string name="welcomeTitle">Welcome to YoyoTuts</string>
     <string name="favorites">Favorites</string>
     <string name="favoritesDesc">Place your favorites tuts here</string>
-    <string name="favoritesThumb">channel_my</string>
+    <string name="favoritesThumb" translatable="false">channel_my</string>
     <string name="watchLater">Watch Later</string>
     <string name="watchLaterDesc">Place here tutorials to watch later</string>
-    <string name="watchLaterThumb">channel_later</string>
+    <string name="watchLaterThumb" translatable="false">channel_later</string>
     <string name="shareable">Shareable</string>
     <string name="shareableDesc">Place here tutorials to share with your friends</string>
-    <string name="shareableThumb">channel_social</string>
+    <string name="shareableThumb" translatable="false">channel_social</string>
     <string name="myTutsTitle">My Tutorials</string>
     <string name="myTutsDesc">Add tutorials to these playlists so you can remember them and sync them.</string>
     <string name="myTutosChannelTitle">My tutos</string>
@@ -50,8 +50,8 @@
     <string name="mailto_bugmessage">Hello, I experienced something strange in the application, my database file is attached, now let me explain ....</string>
     <string name="action_reportbugs">Report bug</string>
     <string name="mailto_examplefriend">yourfriend@hisdomain.com</string>
-    <string name="mailto_letmeshare">"Let me share some tutorials with you from "</string>
-    <string name="mailto_letmesharesubject">"Hi !\n Here are some tutorials that i thought would interest you, if you like them you can get more with this app :  "</string>
+    <string name="mailto_letmeshare">Let me share some tutorials with you from </string>
+    <string name="mailto_letmesharesubject">Hi !\n Here are some tutorials that i thought would interest you, if you like them you can get more with this app :  </string>
     <string name="action_suggest">Suggestions</string>
     <string name="ihelp_later">= Add to \'Watch Later\'</string>
     <string name="ihelp_social">= Add to \'Social\'</string>
@@ -65,7 +65,20 @@
     <string name="tutStats">%d available tutorials.</string>
     <string name="search_results_title">Search results :</string>
     <string name="spbyys">SPbYYS</string>
+    <string name="monkeyfinger">MonkeyfingeR Design</string>
     <string name="other_friends">Other Friends</string>
     <string name="ihelp_seen">= I\'ve seen this video</string>
     <string name="dialog_help_title">Help</string>
+    <string name="randomFavorite">Random tutorial in Favorites :</string>
+    <string name="randomFavoriteHelp">Add videos to \'Favorites\' and they will randomly appear here.</string>
+    <string name="nextWatchLater">Next tutorial in Watch Later :</string>
+    <string name="nextWatchLaterHelp">Add videos to \'Watch Later\' and they will appear here in the order you selected them (if you haven\'t seen them already).</string>
+    <string name="prefUseTutorialsFrom">Use Tutorials from </string>
+    <string name="settingsDbAndCache">Database and Cache</string>
+    <string name="settingsRefreshFrequency">Refresh playlists</string>
+    <string name="settingsRefreshFrequencyHelp">Playlists refresh ...</string>
+    <string name="settingsClearCache">Clear Cache</string>
+    <string name="settingsClearCacheHelp">Clear out your cached content, you will lose nothing at all, content should be refreshed on access, counts and durations might be off until next restart.</string>
+    <string name="yoyotricks">YoYoTricks.com</string>
+    <string name="YOYOTRICKS_CHANNEL">UC6qYGx_P4jH6hwCW2wjAygQ</string>
 </resources>
