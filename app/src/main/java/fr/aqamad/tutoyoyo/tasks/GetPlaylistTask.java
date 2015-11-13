@@ -7,17 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import java.net.MalformedURLException;
-
+import fr.aqamad.commons.youtube.YoutubePlaylist;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
-import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
-import fr.aqamad.tutoyoyo.model.TutorialVideo;
-import fr.aqamad.tutoyoyo.utils.Assets;
-import fr.aqamad.youtube.YoutubePlaylist;
-import fr.aqamad.youtube.YoutubeThumbnail;
-import fr.aqamad.youtube.YoutubeUtils;
-import fr.aqamad.youtube.YoutubeVideo;
 
 
 /**

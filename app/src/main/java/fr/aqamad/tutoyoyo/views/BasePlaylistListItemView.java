@@ -7,10 +7,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import fr.aqamad.commons.youtube.YoutubePlaylist;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
-import fr.aqamad.youtube.YoutubePlaylist;
 
 /**
  * Created by Gregoire on 28/10/2015.
@@ -26,19 +26,6 @@ public abstract class BasePlaylistListItemView extends LinearLayout  {
     private int foreGroundColor=android.R.color.darker_gray;
     private YoutubePlaylist boundPlaylist;
     private ScreenSize screenSize;
-
-
-    /**
-     * getters and setters
-     */
-    public int getForeGroundColor() {
-        return foreGroundColor;
-    }
-
-    public void setForeGroundColor(int foreGroundColor) {
-        this.foreGroundColor = foreGroundColor;
-    }
-
 
 
     public BasePlaylistListItemView(Context context) {
@@ -65,6 +52,17 @@ public abstract class BasePlaylistListItemView extends LinearLayout  {
         plDetails=(TextView) findViewById(R.id.plDetails);
     }
 
+    /**
+     * getters and setters
+     */
+    public int getForeGroundColor() {
+        return foreGroundColor;
+    }
+
+    public void setForeGroundColor(int foreGroundColor) {
+        this.foreGroundColor = foreGroundColor;
+    }
+
     protected abstract int getLayoutResId();
 
     public void bind(YoutubePlaylist pls) {
@@ -84,7 +82,7 @@ public abstract class BasePlaylistListItemView extends LinearLayout  {
         plDetails.setTextColor(getContext().getResources().getColor(foreGroundColor));
         plDesc.setTextColor(getContext().getResources().getColor(foreGroundColor));
         //calculate sizes
-        int tWidth= (int) (screenSize.getWidth()/3);
+        int tWidth = screenSize.getWidth() / 3;
         //Log.d("PA.GV", "Calculated Width is : " + tWidth);
         String thumb=pls.getHighThumb().getUrl();
         //try rounded transformation

@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">YoyoTuts</string>
+
+    <string name="navigation_drawer_open">Abra el cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar cajón de navegación</string>
+
+    <string name="action_settings">Ajustes</string>
+    <string name="mytutos">Mis tuts</string>
+
+    <string name="Social">Social</string>
+    <string name="Share">Compartir</string>
+    <string name="Send">Enviar</string>
+
+    <string name="welcomeTitle">Bienvenido a YoyoTuts</string>
+    <string name="favorites">Favoritos</string>
+    <string name="favoritesDesc">Coloque sus favoritas tuts aquí</string>
+    <string name="watchLater">Ver despues</string>
+    <string name="watchLaterDesc">Coloque aquí tutoriales para verlos más tarde</string>
+    <string name="shareable">Compartible</string>
+    <string name="shareableDesc">Coloque aquí tutoriales para compartir con tus amigos</string>
+    <string name="myTutsTitle">Mis Tutoriales</string>
+    <string name="myTutsDesc">Añadir tutoriales a estas listas de reproducción para que pueda recordarlos y sincronizarlos.</string>
+    <string name="myTutosChannelTitle">Mis tutos</string>
+    <string name="myTutosChannelDescription">Aquí están sus tuts listas.</string>
+    <string name="action_about">Acerca de…</string>
+    <string name="action_thanks">Créditos</string>
+    <string name="dialog_title_remove">Borrar</string>
+    <string name="dialog_msg_remove_later">¿Realmente desea eliminar este vídeo de su lista \'Ver más tarde\'?</string>
+    <string name="dialog_msg_remove_share">¿Realmente desea eliminar este vídeo de la lista de \'Social\' ?</string>
+    <string name="dialog_msg_remove_favorite">¿Realmente desea eliminar este vídeo de la lista de \'Favoritos\'?</string>
+    <string name="msg_video_added">Vídeo añadido</string>
+    <string name="msg_video_removed">Vídeo eliminado</string>
+    <string name="dialog_title_about">Acerca de</string>
+    <string name="dialog_msg_about">Esta aplicación fue diseñada para ayudar a que avance en su yoyo juego y proporciona un acceso rápido y fácil a sus tutoriales favoritos.\n\tUsted puede comenzar abriendo el menú de la izquierda y navegar por sus fuentes favoritas de tutoriales, cuando encuentres uno que te guste, simplemente pulsa uno de los botones Agregar para agregar a una de sus listas tuts.\n\tUna vez unos tuts están en sus listas, puede compartirlos con tus amigos. Para verlas sin conexión, se recomienda la aplicación excelente YTD de dentón en: \n\thttp://dentex.github.io/apps/youtubedownloader</string>
+    <string name="dialog_title_credits">Créditos</string>
+    <string name="dialog_msg_credits">Los creadores quisieran gracias en ningún orden en particular: \n\n %s  por su permiso para indexar su contenido y pavor general. </string>
+    <string name="word_from">de</string>
+    <string name="activity_label_settings">Ajustes</string>
+
+    <string name="mailto_address">contact@aqamad.fr</string>
+    <string name="mailto_message">Hola, me gustaría sugerir algo para esta gran aplicación!</string>
+    <string name="mailto_bugmessage">Hola, he experimentado algo extraño en la aplicación, mi archivo de base de datos se adjunta, ahora déjame explicarte ....</string>
+    <string name="action_reportbugs">Reportar un error</string>
+    <string name="mailto_examplefriend">tuamigo@sudominio.es</string>
+    <string name="mailto_letmeshare">Permítanme compartir algunos tutoriales con usted desde</string>
+    <string name="mailto_letmesharesubject">! Hola \n Aquí hay algunos tutoriales que pensé que le interese, si te gustan puedes conseguir más con esta aplicación:</string>
+    <string name="ihelp_later">= Agregar a \'Ver más tarde\'</string>
+    <string name="ihelp_social">= Agregar a \'Social\'</string>
+    <string name="ihelp_favorites">= Agregar a \'Favoritos\'</string>
+    <string name="ihelp_ishare">= Instant share</string>
+    <string name="loading">Cargando</string>
+    <string name="search_hint">Buscar Tutoriales</string>
+    <string name="action_search">Buscar</string>
+    <string name="action_help">Ayuda</string>
+    <string name="randomTut"> Tutorial aleatoria:</string>
+    <string name="tutStats">%d tutoriales disponibles.</string>
+    <string name="search_results_title">Resultados de la búsqueda :</string>
+    <string name="other_friends">Otros amigos</string>
+    <string name="ihelp_seen">= I\'ve seen this video</string>
+    <string name="dialog_help_title">Ayuda</string>
+    <string name="randomFavorite">Tutorial azar Favoritos:</string>
+    <string name="randomFavoriteHelp">Añadir vídeos de \'Favoritos\' y ellos aleatoriamente aparecerán aquí.</string>
+    <string name="nextWatchLater">Siguiente tutorial en Ver más tarde:</string>
+    <string name="nextWatchLaterHelp">Añadir vídeos de \'Ver más tarde\' y aparecerán aquí en el orden en que se ha seleccionado (si no los has visto ya).</string>
+    <string name="prefUseTutorialsFrom">Utilice Tutoriales de</string>
+    <string name="settingsDbAndCache">Base de datos y caché</string>
+    <string name="settingsRefreshFrequency">Frecuencia de refresco de listas</string>
+    <string name="settingsRefreshFrequencyHelp"> Listas refrescar ...</string>
+    <string name="settingsClearCache">Caché limpio</string>
+    <string name="settingsClearCacheHelp">Limpiar el contenido almacenado en caché, perderá nada en absoluto, el contenido debe ser renovado en el acceso, condes y duraciones pueden estar fuera hasta el próximo reinicio.</string>
+    <string name="action_cat_help_and_credits">Ayuda y créditos</string>
+    <string name="action_cat_settings_and_contact">Ajustes e informes de errores</string>
+    <string name="action_suggest">Sugerencias</string>
+    <string name="dialog_message_addall_favorites">Añadir todo a la lista de favoritos ?</string>
+    <string name="dialog_message_addall_later">Añadir todos a Ver más tarde ?</string>
+    <string name="dialog_message_addall_share">Añadir todos a compartir la lista ?</string>
+    <string name="dialog_message_mark_seen">Marcar todos los videos como no se ve ?</string>
+    <string name="dialog_message_mark_unseen">Marcar todos los videos de como se ve ?</string>
+    <string name="dialog_message_removeall_favorites">Quite todo de la lista de favoritos ?</string>
+    <string name="dialog_message_removeall_later">Quite todos de reloj más tarde?</string>
+    <string name="dialog_message_removeall_share">Quite todo de la lista la cuota ?</string>
+    <string name="dialog_title_add">Añadir</string>
+    <string name="dialog_title_mark">Marcos</string>
+</resources>

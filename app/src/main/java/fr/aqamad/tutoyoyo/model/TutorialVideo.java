@@ -7,6 +7,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -56,16 +57,8 @@ public class TutorialVideo extends Model {
                 .execute();
     }
 
-    public static int countAll() {
-        Cursor c = ActiveAndroid.getDatabase().rawQuery("SELECT COUNT(*) as total FROM " + new TutorialVideo().getTableName(), null);
-        c.moveToFirst();
-        int total = c.getInt(c.getColumnIndex("total"));
-        c.close();
-        return total;
-    }
-
     public static int countCache(Resources res) {
-        Cursor c = ActiveAndroid.getDatabase().rawQuery("SELECT COUNT(*) as total FROM " + new TutorialVideo().getTableName() + " where Channel in (select Id from Channels where Source in (select Id from Sources where Key <> '" + res.getString(R.string.localChannelKey) + "'))",null);
+        Cursor c = ActiveAndroid.getDatabase().rawQuery("SELECT COUNT(*) as total FROM " + new TutorialVideo().getTableName() + " where Channel in (select Id from Channels where Source in (select Id from Sources where Key <> '" + res.getString(R.string.LOCAL_CHANNEL) + "'))", null);
         c.moveToFirst();
         int total = c.getInt(c.getColumnIndex("total"));
         c.close();
@@ -87,7 +80,7 @@ public class TutorialVideo extends Model {
     public static TutorialVideo getRandomInChannel(String channelKey) {
         return new Select()
                 .from(TutorialVideo.class)
-                .where("Channel=(select id from Channels where Key=?)",channelKey)
+                .where("Channel=(select id from Channels where Key=?)", channelKey)
                 .orderBy("RANDOM()")
                 .executeSingle();
     }
@@ -99,14 +92,39 @@ public class TutorialVideo extends Model {
                 .distinct()
                 .from(TutorialVideo.class)
                 .limit(30)
-                .where("Name Like ?", "%" + searchCriteria + "%")
+                .where("Name Like ? or Description like ?", "%" + searchCriteria + "%", "%" + searchCriteria + "%")
                 .groupBy("Key")
                 .orderBy("Name ASC")
                 .execute();
     }
 
+    public void addToLocal(String playlistKey) {
+        TutorialPlaylist destination = TutorialPlaylist.getByKey(playlistKey);
+        //safeguard, make sure vid does not exist in destination
+        if (destination.hasVideo(this.key)) {
+            //nothing to do already present
+            return;
+        }
+        //channel is ok, build video model
+        TutorialVideo vid = new TutorialVideo();
+        vid.channel = destination;
+        vid.key = this.key;
+        //get name from interface
+        vid.name = this.name;
+        vid.description = this.description;
+        vid.defaultThumbnail = this.defaultThumbnail;
+        vid.mediumThumbnail = this.mediumThumbnail;
+        vid.highThumbnail = this.highThumbnail;
+        vid.duration = this.duration;
+        vid.save();
+    }
 
     private String getTableName() {
         return "Videos";
+    }
+
+    public void removeLocal(String localChannelKey) {
+        TutorialPlaylist later = TutorialPlaylist.getByKey(localChannelKey);
+        new Delete().from(TutorialVideo.class).where("Key = ? and Channel = ?", this.key, later.getId()).execute();
     }
 }

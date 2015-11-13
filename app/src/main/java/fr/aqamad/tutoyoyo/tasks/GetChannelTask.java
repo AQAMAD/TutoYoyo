@@ -7,9 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import fr.aqamad.commons.youtube.YoutubeChannel;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
-import fr.aqamad.youtube.YoutubeChannel;
 
 
 /**

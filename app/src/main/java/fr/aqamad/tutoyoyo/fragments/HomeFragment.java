@@ -22,7 +22,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import fr.aqamad.commons.youtube.YoutubeVideo;
+import fr.aqamad.tutoyoyo.Application;
 import fr.aqamad.tutoyoyo.R;
+import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.Sponsor;
 import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
@@ -31,7 +34,6 @@ import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.utils.Debug;
 import fr.aqamad.tutoyoyo.utils.NetworkState;
 import fr.aqamad.tutoyoyo.views.HomeVideoView;
-import fr.aqamad.youtube.YoutubeVideo;
 
 /**
  * Created by Gregoire on 19/10/2015.
@@ -73,10 +75,10 @@ public class HomeFragment extends Fragment {
     private void createSponsorsView(View rootView) {
         //let's add some images to the flowLayout
         FlowLayout flSponsors = (FlowLayout) rootView.findViewById(R.id.flSponsors);
-        Sponsors sps = new Sponsors(getResources());
+        //Sponsors sps = new Sponsors(flSponsors.getContext());
+        Sponsors sps = Application.getSponsors().getCopy();
         //exclude the local sponsors from this list
         sps.remove(Sponsors.R_ID.my.getKey());
-//        sps.remove(Sponsors.R_ID.frn.getKey());
         //okay, we got everything we need
         ImageView v;
         SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -93,6 +95,7 @@ public class HomeFragment extends Fragment {
                 v = new ImageView(getActivity());
                 v.setLayoutParams(lp);
                 v.setImageResource(sp.logoResId);
+                v.setPadding(10, 10, 10, 10);
                 //now set up the onclick
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -157,13 +160,6 @@ public class HomeFragment extends Fragment {
         pT2.setText(info.playlistsProgress + "/" + info.playlistsMax + " (" + info.totalVideos + " vids)");
     }
 
-    public interface SponsorsCallbacks {
-        public void onSponsorSelected(int navigationId);
-        public void onInitializeDB();
-        public void onUpdateDB();
-        public boolean isStillWorking();
-    }
-
     /**
      * Utility method to findviews
      * @param ID
@@ -189,8 +185,6 @@ public class HomeFragment extends Fragment {
         TextView wt= (TextView) findViewById(R.id.welcomeText);
         wt.setVisibility(View.VISIBLE);
     }
-
-
 
     private boolean checkDatabase() {
         //at the moment, delete everything before setting up a new DB
@@ -258,7 +252,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
     public void displayHome() {
         //hide progressinterface
         hideProgress();
@@ -285,7 +278,7 @@ public class HomeFragment extends Fragment {
         fl.addView(tv);
         //get next
         //then wrap it in a view
-        TutorialVideo nextTut=TutorialVideo.getRandomInChannel(getString(R.string.localFavoritesKey));
+        TutorialVideo nextTut = TutorialVideo.getRandomInChannel(getString(R.string.LOCAL_FAVORITES_PLAYLIST));
         if (nextTut==null){
             tv=new TextView(getActivity());
             tv.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
@@ -299,7 +292,7 @@ public class HomeFragment extends Fragment {
             //position colors
             ((HomeVideoView) convertView).setForeGroundColor(android.R.color.white);
             //bind item
-            YoutubeVideo vid=YoutubeVideo.fromModel(nextTut);
+            YoutubeVideo vid = ModelConverter.fromModel(nextTut);
             ((HomeVideoView) convertView).bind(vid);
         }
     }
@@ -324,7 +317,7 @@ public class HomeFragment extends Fragment {
         fl.addView(tv);
         //get next
         //then wrap it in a view
-        TutorialVideo nextTut=TutorialVideo.getNextUnviewedInChannel(getString(R.string.localLaterKey));
+        TutorialVideo nextTut = TutorialVideo.getNextUnviewedInChannel(getString(R.string.LOCAL_LATER_PLAYLIST));
         if (nextTut==null){
             tv=new TextView(getActivity());
             tv.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
@@ -338,7 +331,7 @@ public class HomeFragment extends Fragment {
             //position colors
             ((HomeVideoView) convertView).setForeGroundColor(android.R.color.white);
             //bind item
-            YoutubeVideo vid=YoutubeVideo.fromModel(nextTut);
+            YoutubeVideo vid = ModelConverter.fromModel(nextTut);
             ((HomeVideoView) convertView).bind(vid);
         }
     }
@@ -361,16 +354,26 @@ public class HomeFragment extends Fragment {
         ((HomeVideoView) convertView).setForeGroundColor(android.R.color.white);
         //bind item
         TutorialVideo randomTut=TutorialVideo.getRandom();
-        YoutubeVideo vid=YoutubeVideo.fromModel(randomTut);
+        YoutubeVideo vid = ModelConverter.fromModel(randomTut);
         ((HomeVideoView) convertView).bind(vid);
     }
-
 
     private void displayTotalVids() {
         TextView nbt= (TextView) findViewById(R.id.textNbTuts);
         int nbVids = TutorialVideo.countCache(getResources());
         nbt.setVisibility(View.VISIBLE);
         nbt.setText(String.format(getString(R.string.tutStats), nbVids));
+    }
+
+
+    public interface SponsorsCallbacks {
+        void onSponsorSelected(int navigationId);
+
+        void onInitializeDB();
+
+        void onUpdateDB();
+
+        boolean isStillWorking();
     }
 
 }

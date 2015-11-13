@@ -3,9 +3,11 @@ package fr.aqamad.tutoyoyo.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gregoire on 09/10/2015.
@@ -51,4 +53,25 @@ public class TutorialSeenVideo extends Model {
             tsv.save();
         }
     }
+
+    public static void unseeThisVideo(String keyId) {
+        new Delete().from(TutorialSeenVideo.class).where("Key = ?", keyId).execute();
+    }
+
+    public static void markSeen(String mVideoID, boolean state) {
+        if (state) {
+            //mark as seen
+            seenThisVideo(mVideoID);
+        } else {
+            //try to delete
+            unseeThisVideo(mVideoID);
+        }
+    }
+
+    public static List<TutorialSeenVideo> getAll() {
+        return new Select()
+                .from(TutorialSeenVideo.class)
+                .execute();
+    }
+
 }

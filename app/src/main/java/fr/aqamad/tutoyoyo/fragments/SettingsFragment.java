@@ -12,7 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.Locale;
+
+import fr.aqamad.tutoyoyo.Application;
 import fr.aqamad.tutoyoyo.R;
+import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.Sponsor;
 import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
@@ -31,7 +35,8 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.fragment_settings);
         //add all preferences from fragment
-        Sponsors sponsors=new Sponsors(getResources());
+        final String lang = Locale.getDefault().getLanguage();
+        Sponsors sponsors = Application.getSponsors();
         PreferenceCategory cat=(PreferenceCategory)findPreference(getString(R.string.sponsor_preference_category));
         for (Sponsor spo :
                 sponsors.values()) {
@@ -39,8 +44,15 @@ public class SettingsFragment extends PreferenceFragment {
                 CheckBoxPreference cb = new CheckBoxPreference(getActivity());
                 cb.setKey(spo.preferenceKey);
                 cb.setTitle(spo.name);
-                cb.setSummary(cb.getContext().getString(R.string.prefUseTutorialsFrom) + " " + spo.name);
-                cb.setOrder(spo.order);        //not working...
+                //check language to know
+                if (spo.language != null && spo.language.contains(lang)) {
+                    cb.setSummary(cb.getContext().getString(R.string.prefUseTutorialsFrom) + " " + spo.name);
+                } else if (spo.language != null && !spo.language.contains(lang)) {
+                    cb.setSummary(cb.getContext().getString(R.string.prefUseTutorialsFrom) + " " + spo.name + " (" + spo.language + ")");
+                } else {
+                    cb.setSummary(cb.getContext().getString(R.string.prefUseTutorialsFrom) + " " + spo.name);
+                }
+                cb.setOrder(spo.order);
                 cb.setDefaultValue(true);
                 Log.d("SF.OC", "Created Preference for " + spo.name + " using order " + spo.order);
                 cat.addPreference(cb);
@@ -58,17 +70,30 @@ public class SettingsFragment extends PreferenceFragment {
             }
         });
 
-        Preference btnDelDb = findPreference(getString(R.string.btn_pref_del_db_key));
-        btnDelDb.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        Preference btnExport = findPreference(getString(R.string.btn_pref_export_data));
+        btnExport.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 //code for what you want it to do
-                TutorialSource.clearDB();
-                Toast.makeText(preference.getContext(), "DB Deleted, App will restart", Toast.LENGTH_SHORT).show();
-                rebootApp();
+                if (ModelConverter.savePersonnalData(SettingsFragment.this.getActivity())) {
+                    Toast.makeText(preference.getContext(), "Personal Data Exported to : " + ModelConverter.exportDirectory + ", you can backup the following files : " + ModelConverter.backupFiles, Toast.LENGTH_LONG).show();
+                }
                 return true;
             }
         });
+
+        Preference btnImport = findPreference(getString(R.string.btn_pref_import_data));
+        btnImport.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                //code for what you want it to do
+                if (ModelConverter.restorePersonnalData(SettingsFragment.this.getActivity())) {
+                    Toast.makeText(preference.getContext(), "Personal Data Imported from : " + ModelConverter.importDirectory + ", you can delete the following files : " + ModelConverter.backupFiles, Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
 
     }
 

@@ -6,13 +6,8 @@
 
     <string name="action_settings">Настройки</string>
     <string name="mytutos">Мои туториалы</string>
-    <string name="yoyoexpert">YoYoExpert</string>
-    <string name="clyw">Cabin Tutorials</string>
-    <string name="yoyoblast">YoYoBlast (фр)</string>
-    <string name="yoyothrower">MrYoyoThrower</string>
-    <string name="blackhop">BlackHop.com (фр)</string>
 
-    <string name="Social">Соцсети</string>
+    <string name="Social">Социальныесети</string>
     <string name="Share">Поделиться</string>
     <string name="Send">Отправить</string>
 
@@ -24,7 +19,7 @@
     <string name="shareable">Поделиться</string>
     <string name="shareableDesc"> Здесь будут сохраняться туториалы, которыми Вы хотите поделиться</string>
     <string name="myTutsTitle">Мои туториалы</string>
-    <string name="myTutsDesc">Добавляйте туториалы в эти списки воспроизведения, чтобы затем выучить их.</string>
+    <string name="myTutsDesc">Добавляйте туториалы в списки воспроизведения, чтобы затем выучить их.</string>
     <string name="myTutosChannelTitle">Мои туториалы </string>
     <string name="myTutosChannelDescription">Список ваших туториалов.</string>
     <string name="action_about">О нас...</string>
@@ -36,20 +31,20 @@
     <string name="msg_video_added">Видео добавлено</string>
     <string name="msg_video_removed">Видео удалено</string>
     <string name="dialog_title_about">О нас</string>
-    <string name="dialog_msg_about">Данное приложение разработано, чтобы помочь Вам развить Ваши навыки игры с йо-йо и предоставить быстрый и просто доступ к Вашим любимым туториалам.\n\tВы можете начать, открыв меню слева и просмотрев Ваши любимые серии туториалов, когда Вы найдете то, что Вам понравится, просто нажмите кнопку «Добавить», чтобы добавить его в один из списков туториалов. \n\tПосле добавления туториалов в списки Вы можете поделиться ими с друзьями.\n\tДля просмотра видео на устройстве мы рекомендуем программу YTD от Dentex : \n\thttp://dentex.github.io/apps/youtubedownloader</string>
+    <string name="dialog_msg_about">Данное приложение разработано, чтобы помочь Вам развить Ваши навыки игры с йо-йо и предоставить быстрый и простой доступ к Вашим любимым туториалам.\n\tОткройте меню слева и просмотрите Ваши любимые серии туториалов. Понравившийся туториал Вы можете добавить в один из списков, после этого Вы можете поделиться ими с друзьями.\n\tДля просмотра видео на устройстве мы рекомендуем Вам установить программу YTD от Dentex : \n\thttp://dentex.github.io/apps/youtubedownloader</string>
     <string name="dialog_title_credits">Благодарности</string>
     <string name="dialog_msg_credits">Создатели хотели бы поблагодарить: \n\n\t-Андрэ Буле - YoYoExpert\n\n\t-Стив Браун и Крис Микулин - CLYW\n\n\t-Колинн - YoYoBlast\n\n\t-Джереми МакКей - MrYoyoThrower \n\n\t-Эммануэль Габриэль - BlackHop\n\n за предоставленную возможность использовать их видео.</string>
     <string name="activity_label_settings">Настройки</string>
 
-    <string name="mailto_message">Привет, я хотел бы предложить что-то касательно Вашего приложения!</string>
-    <string name="mailto_bugmessage">Привет, я обнаружил ошибку в приложении, файл с базой данных прикреплен к письму. Далее подробнее… </string>
+    <string name="mailto_message">Привет, я хотел бы предложить что-то для Вашего приложения!</string>
+    <string name="mailto_bugmessage">Привет, я обнаружил ошибку в Вашем приложении.</string>
     <string name="action_reportbugs">Сообщить об ошибке</string>
-    <string name="mailto_examplefriend">yourfriend@hisdomain.com</string>
+    <string name="mailto_examplefriend">example@mail.ru</string>
     <string name="mailto_letmeshare">Хочу поделить с тобой туториалами…</string>
     <string name="mailto_letmesharesubject">Привет!\n Я думаю, что эти туториалы тебя заинтересуют. Если они тебе понравятся, то рекомендую установить приложение:  </string>
     <string name="action_suggest">Предложения</string>
     <string name="ihelp_later">= Добавить в список «Смотреть позже»</string>
-    <string name="ihelp_social">= Добавить в список «Соцсети»</string>
+    <string name="ihelp_social">= Добавить в список «Социальные сети»</string>
     <string name="ihelp_favorites">= Добавить в список «Избранное» </string>
     <string name="ihelp_ishare">= Поделиться сейчас</string>
     <string name="loading">Загрузка</string>
@@ -59,19 +54,34 @@
     <string name="randomTut">Случайный туториал :</string>
     <string name="tutStats">Доступно %d туториалов.</string>
     <string name="search_results_title">Результаты поиска :</string>
-    <string name="spbyys">СПбШЙЙ (SPbYYS)</string>
     <string name="other_friends">Наши друзья </string>
     <string name="ihelp_seen">= Я уже видел это видео </string>
     <string name="app_name">YoyoTuts</string>
     <string name="mailto_address">contact@aqamad.fr</string>
     <string name="word_from">из</string>
     <string name="dialog_help_title">Помогите</string>
-    <string name="monkeyfinger">MonkeyfingeR Design</string>
     <string name="prefUseTutorialsFrom">Используйте обучающие программы с</string>
     <string name="randomFavorite">Случайные учебник в избранное:</string>
     <string name="randomFavoriteHelp">Добавить видео в \'Избранное \', и они будут случайно появляются здесь.</string>
     <string name="nextWatchLater">Следующая учебник в \'Посмотреть позже\':</string>
     <string name="nextWatchLaterHelp">Добавить видео в \'Посмотреть позже \', и они появятся здесь, в порядке, выбранном (если вы еще не видели их уже).</string>
+    <string name="action_cat_help_and_credits">Help and credits</string>
+    <string name="action_cat_settings_and_contact">Settings and bug reports</string>
+    <string name="settingsClearCache">Clear Cache</string>
+    <string name="settingsClearCacheHelp">Clear out your cached content, you will lose nothing at all, content should be refreshed on access, counts and durations might be off until next restart.</string>
+    <string name="settingsDbAndCache">Database and Cache</string>
+    <string name="settingsRefreshFrequency">Playlist refresh frequency</string>
+    <string name="settingsRefreshFrequencyHelp">Playlists refresh …</string>
+    <string name="dialog_message_addall_favorites">Добавить все в список избранных ?</string>
+    <string name="dialog_message_addall_later">Добавить все посмотреть позже ?</string>
+    <string name="dialog_message_addall_share">Добавить все в список разделить ?</string>
+    <string name="dialog_message_mark_seen">Отметить все как невидимая видео ?</string>
+    <string name="dialog_message_mark_unseen">Отметить все видео , как видно ?</string>
+    <string name="dialog_message_removeall_favorites">Удалить все из списка избранных ?</string>
+    <string name="dialog_message_removeall_later">Удалить все из часы позже?</string>
+    <string name="dialog_message_removeall_share">Удалить все из списка акций ?</string>
+    <string name="dialog_title_add">Добавить</string>
+    <string name="dialog_title_mark">отметка</string>
 
 
 </resources>

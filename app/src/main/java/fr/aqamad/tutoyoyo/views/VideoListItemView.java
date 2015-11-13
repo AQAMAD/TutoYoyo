@@ -16,6 +16,8 @@ import com.activeandroid.query.Delete;
 
 import java.util.List;
 
+import fr.aqamad.commons.youtube.YoutubeUtils;
+import fr.aqamad.commons.youtube.YoutubeVideo;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSeenVideo;
@@ -23,14 +25,14 @@ import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.utils.PicassoHelper;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.tutoyoyo.utils.UI;
-import fr.aqamad.youtube.YoutubeUtils;
-import fr.aqamad.youtube.YoutubeVideo;
 
 /**
  * Created by Gregoire on 28/10/2015.
  */
 public class VideoListItemView  extends LinearLayout implements View.OnClickListener {
 
+    protected ImageView btnSeen;
+    protected YoutubeVideo boundVideo;
     private ImageView imgThumb;
     private TextView plName;
     private TextView plDesc;
@@ -41,24 +43,10 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
     private ImageView btnFav;
     private ImageView btnSha;
     private ImageView btnWat;
-    protected ImageView btnSeen;
     private ImageView btnExpandVideo;
     private ImageView btnShareVideo;
-
-    protected YoutubeVideo boundVideo;
-
     private ScreenSize screenSize;
-
-    public int getForeGroundColor() {
-        return foreGroundColor;
-    }
-
-    public void setForeGroundColor(int foreGroundColor) {
-        this.foreGroundColor = foreGroundColor;
-    }
-
     private int foreGroundColor=android.R.color.darker_gray;
-
 
     public VideoListItemView(Context context) {
         this(context, null);
@@ -100,8 +88,17 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
         btnSha.setOnClickListener(this);
         btnFav.setOnClickListener(this);
         btnWat.setOnClickListener(this);
+        btnSeen.setOnClickListener(this);
         btnExpandVideo.setOnClickListener(this);
         btnShareVideo.setOnClickListener(this);
+    }
+
+    public int getForeGroundColor() {
+        return foreGroundColor;
+    }
+
+    public void setForeGroundColor(int foreGroundColor) {
+        this.foreGroundColor = foreGroundColor;
     }
 
     public void bind(YoutubeVideo vid) {
@@ -135,11 +132,11 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
         for (TutorialVideo vi:
                 lst) {
             //Log.d("VA","TVListbykey channelkey=" + vi.channel.key);
-            if (vi.channel.key.equals(getContext().getResources().getString(R.string.localFavoritesKey))){
+            if (vi.channel.key.equals(getContext().getResources().getString(R.string.LOCAL_FAVORITES_PLAYLIST))) {
                 isFavorite=true;
-            }else if (vi.channel.key.equals(getContext().getResources().getString(R.string.localLaterKey))){
+            } else if (vi.channel.key.equals(getContext().getResources().getString(R.string.LOCAL_LATER_PLAYLIST))) {
                 isLater=true;
-            }else if (vi.channel.key.equals(getContext().getResources().getString(R.string.localSocialKey))){
+            } else if (vi.channel.key.equals(getContext().getResources().getString(R.string.LOCAL_SOCIAL_PLAYLIST))) {
                 isShared=true;
             }
         }
@@ -176,6 +173,12 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
         if (vid.getStandardThumb()!=null){
             imgThumb.setTag(R.id.standardThumb,vid.getStandardThumb().getUrl());
         }
+        //reset expandable section
+        int visibility = expandSection.getVisibility();
+        if (visibility == View.VISIBLE) {
+            expandSection.setVisibility(GONE);
+            btnExpandVideo.setRotation(0);
+        }
     }
 
 
@@ -187,6 +190,11 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
                 break;
             case R.id.vidName:
                 openVideo(v);
+                break;
+            case R.id.btnSeen:
+                Boolean status = (Boolean) v.getTag();
+                TutorialSeenVideo.markSeen(boundVideo.getID(), !status);
+                UI.colorizeAndTag(btnSeen, !status);
                 break;
             case R.id.btnShare:
                 addShare(v);
@@ -208,17 +216,17 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
 
     private void addLater(View v) {
         //get button tag
-        addToPrivatePlaylist(btnWat,R.string.localLaterKey
+        addToPrivatePlaylist(btnWat, R.string.LOCAL_LATER_PLAYLIST
                 ,R.string.dialog_msg_remove_later);
     }
     private void addShare(View v) {
         //get button tag
-        addToPrivatePlaylist(btnSha,R.string.localSocialKey
+        addToPrivatePlaylist(btnSha, R.string.LOCAL_SOCIAL_PLAYLIST
                 ,R.string.dialog_msg_remove_share);
     }
     private void addFavorite(View v) {
         //get button tag
-        addToPrivatePlaylist(btnFav,R.string.localFavoritesKey
+        addToPrivatePlaylist(btnFav, R.string.LOCAL_FAVORITES_PLAYLIST
                 ,R.string.dialog_msg_remove_favorite);
     }
 
@@ -256,23 +264,6 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
             UI.animRevealExpand(expandSection);
             UI.animRotate(view, 90, 400);
         }
-        //different behaviours based on underlying parent
-//        Log.d("VLIV.ES", "Parent type is " + this.getParent().getClass().getSimpleName());
-//        if (this.getParent() instanceof GridView){
-//            GridView parent= (GridView) getParent();
-//            int position=parent.getPositionForView(this);
-//            int rowNumber=position/parent.getNumColumns();
-//            int positionInRow = position - rowNumber*parent.getNumColumns();
-//            //only if not last column, force redraw based on height
-//            Log.d("VLIV.ES", "Position is " + position + " row " + rowNumber + " col " + positionInRow);
-//        }
-//        expandSection.requestLayout();
-//        this.requestLayout();
-//        //should refresh the parent item (list or gridview)
-//        this.getParent().requestLayout();
-//        //et pour la bonne mesure
-//        this.getParent().getParent().requestLayout();
-        //requestLayout();
     }
 
     public void confirmRemove(int confirmMessageResId,ImageView view, String playlistKey){
@@ -306,21 +297,9 @@ public class VideoListItemView  extends LinearLayout implements View.OnClickList
         //add to local channel
         Log.d("PF.ATLC","Add to local Channel " + boundVideo.getID());
         //get data from model and not from view
-        TutorialPlaylist later = TutorialPlaylist.getByKey(playlistKey);
         TutorialVideo oVid=TutorialVideo.getByKey(boundVideo.getID()).get(0);
-        //channel is ok, build video model
-        TutorialVideo vid = new TutorialVideo();
-        vid.channel = later;
-        vid.key = oVid.key;
-        //get name from interface
-        vid.name = oVid.name;
-        vid.description = oVid.description;
-        vid.defaultThumbnail = oVid.defaultThumbnail;
-        vid.mediumThumbnail = oVid.mediumThumbnail;
-        vid.highThumbnail = oVid.highThumbnail;
-        vid.duration= oVid.duration;
-        vid.save();
+        oVid.addToLocal(playlistKey);
         Snackbar.make(this, R.string.msg_video_added, Snackbar.LENGTH_SHORT).show();
-        UI.colorizeAndTag((ImageView) view,true);
+        UI.colorizeAndTag(view, true);
     }
 }

@@ -23,6 +23,9 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import fr.aqamad.commons.youtube.YoutubeChannel;
+import fr.aqamad.commons.youtube.YoutubePlaylist;
+import fr.aqamad.tutoyoyo.Application;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.adapters.PlaylistListViewAdapter;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
@@ -30,8 +33,6 @@ import fr.aqamad.tutoyoyo.model.Sponsor;
 import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.tasks.GetChannelTask;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
-import fr.aqamad.youtube.YoutubeChannel;
-import fr.aqamad.youtube.YoutubePlaylist;
 
 public class SourceFragment extends Fragment {
 
@@ -43,23 +44,18 @@ public class SourceFragment extends Fragment {
     private final int DEFAULT_FG=android.R.color.black;
     private final int DEFAULT_LAYOUT=R.layout.header_simple_logo_left;
     private final int DEFAULT_ITEM_LAYOUT=R.layout.playlist_item;
+    public Activity parentActivity;
     private String mChannelID;
     private Sponsor mSponsor;
-
-
     private YoutubeChannel mChannel;
-
     private OnPlaylistSelectedListener mListener;
+    // This is the handler that receives the response when the YouTube task has finished
+    Handler responseHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            populateListWithVideos(msg);
+        }
 
-    private YoutubeChannel getChannel() {
-        return mChannel;
-    }
-
-    private void setChannel(YoutubeChannel c) {
-        mChannel = c;
-    }
-
-    public Activity parentActivity;
+    };
 
     public SourceFragment() {
         super();
@@ -74,6 +70,14 @@ public class SourceFragment extends Fragment {
         fragment.setArguments(args);
         Log.d("MTF", "Source newInstance");
         return fragment;
+    }
+
+    private YoutubeChannel getChannel() {
+        return mChannel;
+    }
+
+    private void setChannel(YoutubeChannel c) {
+        mChannel = c;
     }
 
     @Override
@@ -204,23 +208,6 @@ public class SourceFragment extends Fragment {
         Log.d("SF", "SourceFragment onSaveInstanceState : " + mChannelID);
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnPlaylistSelectedListener {
-        // TODO: Update argument type and name
-        public void OnPlaylistSelected(YoutubePlaylist mPlaylist,String mChannelID,int mBgColor,int mFgColor);
-    }
-
-
     public void onPlaylistSelected(View view) {
         if (mListener != null) {
             TextView vwID = (TextView) view.findViewById(R.id.plID);
@@ -249,15 +236,6 @@ public class SourceFragment extends Fragment {
         Log.d("SF", "SourceFragment onDetach : " + mChannelID);
     }
 
-    // This is the handler that receives the response when the YouTube task has finished
-    Handler responseHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            populateListWithVideos(msg);
-        }
-
-        ;
-    };
-
     private void populateListWithVideos(Message msg) {
         // Retreive the videos are task found from the data bundle sent back
         YoutubeChannel channel = (YoutubeChannel) msg.getData().get(GetChannelTask.CHANNEL);
@@ -278,7 +256,7 @@ public class SourceFragment extends Fragment {
     public void fetchChannel(Handler handler, Activity act) {
         //here we need to determine if playlist expand is needed (for clyw and similar)
         //based on the sponsors api
-        Sponsors sponsors=new Sponsors(getResources());
+        Sponsors sponsors = Application.getSponsors();
         Sponsor sp=sponsors.getByChannelKey(getChannelId());
         String[] expandPlaylists=sp.expandablePlaylists;
         if (expandPlaylists!=null){
@@ -289,7 +267,6 @@ public class SourceFragment extends Fragment {
     }
 
     public void prepareChannel() {
-        //todo : par défaut, on trie les playlists, voir pour modelConverter tout ca...
         YoutubeChannel channel = this.getChannel();
         //Sorting by title
         ModelConverter.prepareChannel(channel,getActivity());
@@ -301,6 +278,20 @@ public class SourceFragment extends Fragment {
         }else {
             return (AdapterView) this.getActivity().findViewById(R.id.playListsListView);
         }
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnPlaylistSelectedListener {
+        void OnPlaylistSelected(YoutubePlaylist mPlaylist, String mChannelID, int mBgColor, int mFgColor);
     }
 
 }

@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="localChannelKey" translatable="false">LOCAL_CHANNEL_KEY</string>
-    <string name="localFavoritesKey" translatable="false">LOCAL_FAVORITES_KEY</string>
-    <string name="localSocialKey" translatable="false">LOCAL_SOCIAL_KEY</string>
-    <string name="localLaterKey" translatable="false">LOCAL_LATER_KEY</string>
-    <string name="CLYW_CHANNEL" translatable="false">UCXB5-ZaTfNXF6P3CBQfvE5g</string>
-    <string name="YOYOEXPERT_CHANNEL" translatable="false">YoyoExpertChannel</string>
-    <string name="YOYOBLAST_CHANNEL" translatable="false">UCJVkKRR1hf0aSZzrELEATRg</string>
-    <string name="YOYOTHROWER_CHANNEL" translatable="false">UC7iE1IfAFlLmEeHqU0a_MSQ</string>
-    <string name="BLACKHOP_CHANNEL" translatable="false">UCEYcymLnFYaTC8lv1iOaf4A</string>
-    <string name="SPBYYS_CHANNEL" translatable="false">UCeCrQ8HGD-bT6dwDIkXRPxw</string>
-    <string name="MFD_CHANNEL" translatable="false">UCyJYZnxBv_fOT9lj_OqRn6g</string>
+    <string name="LOCAL_CHANNEL" translatable="false">LOCAL_CHANNEL_KEY</string>
+    <string name="LOCAL_FAVORITES_PLAYLIST" translatable="false">LOCAL_FAVORITES_KEY</string>
+    <string name="LOCAL_SOCIAL_PLAYLIST" translatable="false">LOCAL_SOCIAL_KEY</string>
+    <string name="LOCAL_LATER_PLAYLIST" translatable="false">LOCAL_LATER_KEY</string>
     <string name="FRIENDS_CHANNEL" translatable="false">TutsFromFriends</string>
 
     <string name="btn_pref_del_db_key" translatable="false">prefBtnDelDb</string>
     <string name="btn_pref_clear_cache_key" translatable="false">prefBtnClearCache</string>
     <string name="sponsor_preference_category" translatable="false">sponsor_preference_category</string>
-    <string name="chk_pref_yoyoblast" translatable="false">chkPrefYoyoBlast</string>
-    <string name="chk_pref_yoyoexpert" translatable="false">chkPrefYoyoExpert</string>
-    <string name="chk_pref_clyw" translatable="false">chkPrefClyw</string>
-    <string name="chk_pref_yoyothrower" translatable="false">chkPrefYoyoThrower</string>
-    <string name="chk_pref_spbyys" translatable="false">chkPrefSPBYYS</string>
-    <string name="chk_pref_monkeyfinger" translatable="false">chkPrefMonkeyFinger</string>
-    <string name="chk_pref_yoyotricks" translatable="false">chkPrefYoyoTricks</string>
-    <string name="chk_pref_blackhop" translatable="false">chkPrefBlackhop</string>
     <string name="chk_pref_friends" translatable="false">chkPrefFriends</string>
     <string name="lst_pref_refresh_playlist" translatable="false">lstPrefRefreshPlaylists</string>
+    <string name="btn_pref_import_data" translatable="false">btnPrefImportPersonalData</string>
 
     <item name="standardThumb" type="id" />
     <item name="mediumThumb" type="id" />

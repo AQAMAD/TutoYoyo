@@ -10,19 +10,28 @@
     <PreferenceCategory
         android:title="@string/settingsDbAndCache">
 
-        <ListPreference android:title="@string/settingsRefreshFrequency"
-            android:key="@string/lst_pref_refresh_playlist"
+        <ListPreference
+            android:defaultValue="7"
             android:entries="@array/refresh_entries"
             android:entryValues="@array/refresh_values"
-            android:defaultValue="7"
-            android:summary="@string/settingsRefreshFrequencyHelp"/>
+            android:key="@string/lst_pref_refresh_playlist"
+            android:summary="@string/settingsRefreshFrequencyHelp"
+            android:title="@string/settingsRefreshFrequency" />
 
-        <Preference android:title="@string/settingsClearCache"
+        <Preference
             android:key="@string/btn_pref_clear_cache_key"
-            android:summary="@string/settingsClearCacheHelp"/>
+            android:summary="@string/settingsClearCacheHelp"
+            android:title="@string/settingsClearCache" />
 
-        <Preference android:title="Destroy Database"
-            android:key="@string/btn_pref_del_db_key"
-            android:summary="Destroy your database and cached content, you will lose your personnal playlists, the app will exit and try to restart"/>
+        <Preference
+            android:key="@string/btn_pref_export_data"
+            android:summary="@string/settingsExportHelp"
+            android:title="@string/settingsExport" />
+
+        <Preference
+            android:key="@string/btn_pref_import_data"
+            android:summary="@string/settingsImportHelp"
+            android:title="@string/settingsImport" />
+
     </PreferenceCategory>
 </PreferenceScreen>

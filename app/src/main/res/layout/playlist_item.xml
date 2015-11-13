@@ -11,8 +11,8 @@
             android:id="@+id/imgThumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/waiting"
             android:paddingEnd="@dimen/videoitem_horizontal_margin"
+            android:src="@drawable/waiting"
             />
 
         <LinearLayout
@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textAppearance="?android:attr/textAppearanceListItem"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/plDetails"

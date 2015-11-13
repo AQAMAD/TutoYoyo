@@ -1,37 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<item android:title="Providers"-->
-            <!--android:id="@+id/providersmenu">-->
-        <!--<menu></menu>-->
-    <!--</item>-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<group android:checkableBehavior="single">-->
-        <!--<item android:id="@+id/nav_my" android:icon="@drawable/ic_menu_yoyotuts"-->
-            <!--android:title="@string/mytutos" />-->
-        <!--<item android:id="@+id/nav_yyb" android:icon="@drawable/ic_menu_yoyoblast"-->
-            <!--android:title="@string/yoyoblast" />-->
-        <!--<item android:id="@+id/nav_yye" android:icon="@drawable/ic_menu_yoyoexpert"-->
-            <!--android:title="@string/yoyoexpert" />-->
-        <!--<item android:id="@+id/nav_clyw" android:icon="@drawable/ic_menu_clyw"-->
-            <!--android:title="@string/clyw" />-->
-        <!--<item android:id="@+id/nav_yyt" android:icon="@drawable/ic_menu_yoyothrower"-->
-            <!--android:title="@string/yoyothrower" />-->
-        <!--<item android:id="@+id/nav_bhop" android:icon="@drawable/ic_menu_blackhop"-->
-            <!--android:title="@string/blackhop" />-->
-        <!--<item android:id="@+id/nav_spyy" android:icon="@drawable/ic_menu_spbyys"-->
-            <!--android:title="@string/spbyys" />-->
-        <!--<item android:id="@+id/nav_friends" android:icon="@drawable/ic_menu_friends"-->
-            <!--android:title="@string/other_friends" />-->
-    <!--</group>-->
 
-    <item android:title="@string/Social"
-        android:orderInCategory="999"
+    <item
+        android:orderInCategory="900"
+        android:title="@string/Social"
         >
         <menu>
             <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
                 android:title="@string/Share" />
             <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
                 android:title="@string/Send" />
+        </menu>
+    </item>
+
+    <item
+        android:orderInCategory="990"
+        android:title="@string/action_cat_settings_and_contact">
+        <menu>
+            <item
+                android:id="@+id/action_settings"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="@string/action_settings"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_report"
+                android:icon="@android:drawable/ic_menu_upload"
+                android:title="@string/action_reportbugs"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_suggest"
+                android:icon="@android:drawable/ic_menu_compass"
+                android:title="@string/action_suggest"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+
+    <item
+        android:orderInCategory="999"
+        android:title="@string/action_cat_help_and_credits">
+        <menu>
+            <item
+                android:id="@+id/action_credits"
+                android:icon="@android:drawable/ic_menu_myplaces"
+                android:orderInCategory="100"
+                android:title="@string/action_thanks"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_help"
+                android:icon="@android:drawable/ic_menu_help"
+                android:orderInCategory="100"
+                android:title="@string/action_help"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_about"
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:orderInCategory="100"
+                android:title="@string/action_about"
+                app:showAsAction="never" />
         </menu>
     </item>
 

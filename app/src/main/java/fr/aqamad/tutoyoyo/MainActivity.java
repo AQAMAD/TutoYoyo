@@ -28,8 +28,10 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import fr.aqamad.commons.youtube.YoutubePlaylist;
 import fr.aqamad.tutoyoyo.fragments.HomeFragment;
 import fr.aqamad.tutoyoyo.fragments.InitialiserFragment;
 import fr.aqamad.tutoyoyo.fragments.PlaylistFragment;
@@ -43,7 +45,6 @@ import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.utils.Debug;
 import fr.aqamad.tutoyoyo.utils.IntentHelper;
 import fr.aqamad.tutoyoyo.utils.UI;
-import fr.aqamad.youtube.YoutubePlaylist;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -54,24 +55,18 @@ public class MainActivity extends AppCompatActivity
 
 {
 
+    public static final String MAINT_ACT_TAG = "MainAct";
     private static final String TAG_INIT_TASK_FRAGMENT = "fr.aqamad.tutoyoyo.initializer_task_fragment";
     private static final String TAG_UPDT_TASK_FRAGMENT = "fr.aqamad.tutoyoyo.updater_task_fragment";
-    public static final String MAINT_ACT_TAG = "MainAct";
-
+    Sponsors sponsors;
     private Fragment mTaskFragment;
-
     private Menu menu;
-
     private NavigationView navigationView;
-
     private SourceFragment currentFragment;
     private HomeFragment homeFragment;
     private SettingsFragment settingsFragment;
     private SearchFragment searchFragment;
-
     private Map<Integer,SourceFragment> fragments=new HashMap<>();
-
-    Sponsors sponsors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +79,8 @@ public class MainActivity extends AppCompatActivity
         //init fragments
         setContentView(R.layout.activity_main);
         //sponsorfragments
-        sponsors=new Sponsors(this.getResources());
+        sponsors = Application.getSponsors();
+        //sponsors=new Sponsors(this);
         fragments=sponsors.getFragments();
         //homeFragment is directly added to the ui
         //was it kept in the manager ?
@@ -120,16 +116,22 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //here
         final Menu menu = navigationView.getMenu();
-//        final MenuItem item=menu.findItem(R.id.providersmenu);
-//        final SubMenu subMenu = item.getSubMenu();
+        final String lang = Locale.getDefault().getLanguage();
+        Log.d("MA.IMS", "Language id is : " + lang);
         for (Sponsor sp:
              sponsors.values()) {
-//            MenuItem m=subMenu.add(Sponsors.R_ID.group.getKey(),sp.navigationId,sp.order,sp.name);
-            MenuItem m=menu.add(Sponsors.R_ID.group.getKey(),sp.navigationId,sp.order,sp.name);
+            //one small refinement, check current language and display additional data
+            MenuItem m;
+            if (sp.language != null && sp.language.contains(lang)) {
+                m = menu.add(Sponsors.R_ID.group.getKey(), sp.navigationId, sp.order, sp.name);
+            } else if (sp.language != null && !sp.language.contains(lang)) {
+                m = menu.add(Sponsors.R_ID.group.getKey(), sp.navigationId, sp.order, sp.name + " (" + sp.language + ")");
+            } else {
+                m = menu.add(Sponsors.R_ID.group.getKey(), sp.navigationId, sp.order, sp.name);
+            }
             m.setIcon(sp.menuitemIconResId);
         }
         //position group options
-//        subMenu.setGroupCheckable(Sponsors.R_ID.group.getKey(),true,true);
         menu.setGroupCheckable(Sponsors.R_ID.group.getKey(),true,true);
         //refresh list
         if (savedInstanceState != null) {
@@ -326,38 +328,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Log.d(MAINT_ACT_TAG, "Mainactivity onOptionItemsSelected");
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Log.d(MAINT_ACT_TAG, "Mainactivity settings selected");
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            if (settingsFragment==null){
-                Log.d(MAINT_ACT_TAG, "Fragment was null");
-                settingsFragment=new SettingsFragment();
-            }
-            fragmentTransaction.replace(R.id.frame, settingsFragment, SettingsFragment.FRAGMENT_KEY);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-            return true;
-        }else if (id==R.id.action_about){
-            showAboutBox();
-            return true;
-        }else if (id==R.id.action_credits){
-            showCreditsBox();
-            return true;
-        }else if (id==R.id.action_help){
-            showHelpBox();
-            return true;
-        }else if (id==R.id.action_suggest){
-            IntentHelper.sendMail(this,
-                    Uri.fromParts("mailto",
-                    getString(R.string.mailto_address), null),
-                    getString(R.string.app_name),
-                    getString(R.string.mailto_message));
-            return true;
-        }else if (id==R.id.action_report){
-            reportBug();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -388,7 +358,6 @@ public class MainActivity extends AppCompatActivity
         UI.alertDialog(this, R.string.dialog_title_about, R.string.dialog_msg_about);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -398,14 +367,24 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //Snackbar.make(navigationView, item.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
-        item.setChecked(true);
+        if (handleNavigation(id)) {
+            item.setChecked(true);
+        }
 
-        handleNavigation(id);
+        handleActions(id);
 
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        Log.d(MAINT_ACT_TAG, "Mainactivity onNavigationItemSelected end");
+
+        return true;
+    }
+
+    private boolean handleActions(int id) {
         if (id == R.id.nav_share) {
             //handle other actions
             //get the "social playlist" and share it
-            TutorialPlaylist pl=TutorialPlaylist.getByKey(getString(R.string.localSocialKey));
+            TutorialPlaylist pl = TutorialPlaylist.getByKey(getString(R.string.LOCAL_SOCIAL_PLAYLIST));
             if (pl.videos().size()==0){
                 Snackbar.make(navigationView, "First add something to your social playlist !!", Snackbar.LENGTH_LONG).show();
             }else{
@@ -416,9 +395,10 @@ public class MainActivity extends AppCompatActivity
                 intent.setType("text/plain");
                 startActivity(intent);
             }
+            return true;
         } else if (id == R.id.nav_send) {
             //get the "social playlist" and share it
-            TutorialPlaylist pl=TutorialPlaylist.getByKey(getString(R.string.localSocialKey));
+            TutorialPlaylist pl = TutorialPlaylist.getByKey(getString(R.string.LOCAL_SOCIAL_PLAYLIST));
             if (pl.videos().size()==0){
                 Snackbar.make(navigationView, "First add something to your social playlist !!", Snackbar.LENGTH_LONG).show();
             }else {
@@ -427,23 +407,52 @@ public class MainActivity extends AppCompatActivity
                 //like sending through mail for instance
                 IntentHelper.sendMail(this,
                         Uri.fromParts("mailto",
-                        getString(R.string.mailto_examplefriend), null),
+                                getString(R.string.mailto_examplefriend), null),
                         getString(R.string.mailto_letmeshare) + " " + getString(R.string.app_name),
                         getString(R.string.mailto_letmesharesubject) + " " +
-                        getString(R.string.app_name) +
-                        "\n\n" +
-                        TextUtils.join("\n", videoUrls));
+                                getString(R.string.app_name) +
+                                "\n\n" +
+                                TextUtils.join("\n", videoUrls));
             }
+            return true;
+        } else if (id == R.id.action_settings) {
+            Log.d(MAINT_ACT_TAG, "Mainactivity settings selected");
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if (settingsFragment == null) {
+                Log.d(MAINT_ACT_TAG, "Fragment was null");
+                settingsFragment = new SettingsFragment();
+            }
+            fragmentTransaction.replace(R.id.frame, settingsFragment, SettingsFragment.FRAGMENT_KEY);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            return true;
+        } else if (id == R.id.action_about) {
+            showAboutBox();
+            return true;
+        } else if (id == R.id.action_credits) {
+            showCreditsBox();
+            return true;
+        } else if (id == R.id.action_help) {
+            showHelpBox();
+            return true;
+        } else if (id == R.id.action_suggest) {
+            IntentHelper.sendMail(this,
+                    Uri.fromParts("mailto",
+                            getString(R.string.mailto_address), null),
+                    getString(R.string.app_name),
+                    getString(R.string.mailto_message));
+            return true;
+        } else if (id == R.id.action_report) {
+            reportBug();
+            return true;
         }
 
-        drawerLayout.closeDrawer(GravityCompat.START);
+        return false;
 
-        Log.d(MAINT_ACT_TAG, "Mainactivity onNavigationItemSelected end");
-
-        return true;
     }
 
-    private void handleNavigation(int id) {
+    private boolean handleNavigation(int id) {
         SourceFragment newFragment=null;
 
         newFragment=fragments.get(id);
@@ -460,7 +469,9 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+            return true;
         }
+        return false;
     }
 
 

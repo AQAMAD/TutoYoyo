@@ -1,0 +1,372 @@
+{
+  "listInfo": {
+    "totalSponsors": 1
+  },
+  "sponsors": [
+    {
+      "name": "YoyoBlast",
+      "language": "fr",
+      "description": "yoyo store and tutorials (apprendre à faire du yoyo)",
+      "contactNames": "Colinn",
+      "websiteURL": "http://www.yoyoblast.com",
+      "channelKey": "UCJVkKRR1hf0aSZzrELEATRg",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_yoyoblast",
+      "iconResource": "ic_menu_yoyoblast",
+      "listItems": "box",
+      "backgroundColor": "black",
+      "foregroundColor": "orange",
+      "cleanVideos": [
+        " - YoyoBlast"
+      ]
+    },
+    {
+      "name": "Yoyoexpert",
+      "description": "Make the simple Amazing",
+      "language": "en",
+      "contactNames": "André Boulay",
+      "websiteURL": "http://www.yoyoexpert.com",
+      "channelKey": "YoyoExpertChannel",
+      "noPreferenceKey": false,
+      "headerLayout": "header_yoyoexpert",
+      "logoResource": "logo_yoyoexpert",
+      "iconResource": "ic_menu_yoyoexpert",
+      "listItems": "box",
+      "backgroundColor": "black",
+      "foregroundColor": "white",
+      "includePlaylists": [
+        "PL5fEaQ2mpy1DvDzmmeV0Iz_GABwdzVwGD",
+        "PLD65657CD0CA7EAD4",
+        "PL4CF43DD91C848E5A",
+        "PLFB4661EE4BBCA1ED",
+        "PLC3742039F7C8359F",
+        "PL3B8719FC83AF35DB",
+        "PLF0CEDAB14CEF4A67",
+        "PL8749C6A79DC85F76",
+        "PLA8855EAF38C2B0FA",
+        "PL3718073C10A9A7CA",
+        "PLCA5BA8D19F61DD3D",
+        "PLD136F5AA490BE3C6",
+        "PL592ABBE6C9186E22",
+        "PL2EE39E52C0C72284"
+      ],
+      "expandPlaylists": [
+        "PL5fEaQ2mpy1DvDzmmeV0Iz_GABwdzVwGD"
+      ],
+      "cleanPlaylists": [
+        "Expert Village Yo Yo Tricks: ",
+        "Expert Village Yo Yo tricks: ",
+        "Expert village Yo Yo Tricks: ",
+        "YoyoExpert ",
+        "How To ",
+        "How to ",
+        "Expert Village: "
+      ],
+      "cleanVideos": [
+        "How To Do ",
+        "Learn the ",
+        " Yoyo trick - YoYoExpert Tutorials",
+        "How To ",
+        "How to "
+      ]
+    },
+    {
+      "name": "Caribou Lodge",
+      "description": "CLYW is managed by Chris Mikulin and Steve Brown, together they work daily to contribute to the future of yoyoing.",
+      "language": "en",
+      "contactNames": "Chris Mikulin & Steve Brown",
+      "websiteURL": "http://www.clyw.ca",
+      "channelKey": "UCXB5-ZaTfNXF6P3CBQfvE5g",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_clyw",
+      "iconResource": "ic_menu_clyw",
+      "listItems": "list",
+      "backgroundColor": "white",
+      "foregroundColor": "black",
+      "includePlaylists": [
+        "PLVLLF_sWPwMxR8TQv_FpKZC_W6knxdiln"
+      ],
+      "expandPlaylists": [
+        "PLVLLF_sWPwMxR8TQv_FpKZC_W6knxdiln"
+      ],
+      "cleanVideos": [
+        "CLYW Cabin Tutorials - ",
+        "CLYW Cabin Tutorial - ",
+        "Cabin Tutorial - "
+      ]
+    },
+    {
+      "name": "MrYoyoThrower",
+      "description": "Learn to Yoyo.",
+      "language": "en",
+      "contactNames": "Jeremy MacKay",
+      "websiteURL": "http://www.mryoyothrower.com",
+      "channelKey": "UC7iE1IfAFlLmEeHqU0a_MSQ",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_yoyothrower",
+      "iconResource": "ic_menu_yoyothrower",
+      "listItems": "box",
+      "backgroundColor": "black",
+      "foregroundColor": "lightblue",
+      "includePlaylists": [
+        "PLwMQ2twUtKwIRTisOwx81Au2iXzaWws10",
+        "PLwMQ2twUtKwILBwrAw8fiWwMSLwCPAQtU",
+        "PLwMQ2twUtKwInJNi1gB2fPMzphtLLqKAu",
+        "PLwMQ2twUtKwJUICDNZpWcZVUkrDutPm8w",
+        "PLwMQ2twUtKwIE2dPBnXquZOkuZmqOzS5v",
+        "PLwMQ2twUtKwJSuxDWvLQieUgWAIJJjwEm",
+        "PLwMQ2twUtKwLbAE0ulhlw6inghUX4p2Vh",
+        "PLwMQ2twUtKwJtMLOE8_yZFzP96c21HEFs",
+        "PLwMQ2twUtKwIMoOLSXbPyX8G3dEY1ULaV",
+        "PLwMQ2twUtKwJxW1TnERDstwnr-nfZj-sr",
+        "PLwMQ2twUtKwLKIbFxzRpd86Rwlgg9sFXw",
+        "PLwMQ2twUtKwLOY9fPHepZai81tW9qQ_pF",
+        "PLwMQ2twUtKwKu-XM4pSKmUvCFbWb4E0N8",
+        "PLwMQ2twUtKwKR9GC1a3oTE7UnBb-D8xMe",
+        "PLwMQ2twUtKwIutslagYaloqLSv-Hu35yT"
+      ],
+      "cleanVideos": [
+        "Learn to Yo-yo ",
+        "Yoyo Trick Tutorial - ",
+        "Yo-yo Trick Tutorial - ",
+        "Yo-yo Trick Tutorial -",
+        "Yo-yo trick Tutorial - ",
+        "Yo-yo trick tutorial - ",
+        "Yo yo tutorial - ",
+        "Yoyo trick tutorial - ",
+        "Yoyo Trick Tutorial-",
+        "Yoyo trick tutorial-",
+        "Yoyo trick tutorial  ",
+        "yoyo tutorial",
+        "Yo-yo Trick - ",
+        "Yoyo Trick - ",
+        "Yoyo trick - ",
+        "Yoyo Tutorial - ",
+        "Yo-Yo Tutorial - ",
+        "Yoyo Trick Tutorial ",
+        "1a Tutorial - ",
+        "1a Yo-Yo Tutorial - ",
+        "1a Yo-yo Tutorial - ",
+        "1am Tutorial - ",
+        "1A Tutorial - ",
+        "1a tutorial "
+      ]
+    },
+    {
+      "name": "Blackhop",
+      "description": "Yoyo Lifestyle",
+      "language": "fr",
+      "contactNames": "Emmanuel Gabriel",
+      "websiteURL": "https://www.youtube.com/user/hadoq",
+      "channelKey": "UCEYcymLnFYaTC8lv1iOaf4A",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_blackhop",
+      "iconResource": "ic_menu_blackhop",
+      "listItems": "list",
+      "backgroundColor": "black",
+      "foregroundColor": "white",
+      "includePlaylists": [
+        "PL31896775C716B8B3",
+        "PL8C046415EB38C4F4"
+      ],
+      "cleanVideos": [
+        "yoyo-france.net - tuto yoyo - debutant - ",
+        "yoyo-france.net - tuto yoyo - intermédiaire - ",
+        "yoyo-france.net - tuto yoyo - ",
+        "blackhop.com - tuto yoyo intermediaire - ",
+        "blackhop.com - tuto intermediaire - "
+      ]
+    },
+    {
+      "name": "SPbYYS",
+      "description": "Saint Petersburg Yo-Yo School shares with YOU the best yo-yo videos and yo-yo trick tutorials",
+      "language": "en",
+      "contactNames": "Ilya Shaposhnikov",
+      "websiteURL": "https://www.facebook.com/SPbYYS",
+      "channelKey": "UCeCrQ8HGD-bT6dwDIkXRPxw",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_spbyys",
+      "iconResource": "ic_menu_spbyys",
+      "listItems": "list",
+      "backgroundColor": "black",
+      "foregroundColor": "white",
+      "includePlaylists": [
+        "PL4nKaZchMa6sEdmNmcowwdXXrBVCUYqdm",
+        "PL4nKaZchMa6tT8Y9xqY3TN6YJ2Njbjflq"
+      ],
+      "expandPlaylists": [
+        "PL4nKaZchMa6sEdmNmcowwdXXrBVCUYqdm",
+        "PL4nKaZchMa6tT8Y9xqY3TN6YJ2Njbjflq"
+      ],
+      "cleanVideos": [
+        "SPbYYS Tutorials: ",
+        "YoYoMad1001 x C3yoyodesign x Throw-YoYo Contest - ",
+        "Rethinkyoyo Contest 2012 - ",
+        "Rethinkyoyo Contest 2012 -- ",
+        "TYYT - ",
+        "1a Tutorial - ",
+        "1a Tutorial ",
+        "1a tutorial ",
+        " Tutorial"
+      ]
+    },
+    {
+      "name": "MonkeyfingeR Design",
+      "description": "Customize your own yoyo today!!!",
+      "language": "en",
+      "contactNames": "Ray Smith",
+      "websiteURL": "http://www.mfdyoyo.com",
+      "channelKey": "UCyJYZnxBv_fOT9lj_OqRn6g",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_monkeyfinger",
+      "iconResource": "ic_menu_monkeyfinger",
+      "listItems": "box",
+      "backgroundColor": "black",
+      "foregroundColor": "white",
+      "includePlaylists": [
+        "PLQ127so8iTNVeMayoqMyyR9-CxyJHS3r9",
+        "PLQ127so8iTNWMO2lP6x6bkZFaxHyOF8Kr",
+        "PLQ127so8iTNXNsT4PmnjeCxND7VFcpSrr",
+        "PLQ127so8iTNWpEBYkyCsvBzE1V7JMamBa",
+        "PLQ127so8iTNWcqCgwsienEoi5gbL15-AP",
+        "PLQ127so8iTNVQM44aeDzg46UsuFOD-8LN"
+      ],
+      "cleanVideos": [
+        "Learn how to do ",
+        " Yoyo Trick",
+        " yoyo trick",
+        "Learn yoyo sports ladder trick ",
+        "Learn yoyo sport ladder trick ",
+        "Learn yoyo sports ladder ",
+        "Learn yoyo sport ladder ",
+        "Tutorial Easyish - "
+      ]
+    },
+    {
+      "name": "YoYoTricks.com",
+      "description": "YOYO TRICKS AND YOYO SHOP TO HELP YOU LEARN HOW TO YOYO.",
+      "language": "en",
+      "contactNames": "Adam D Bottiglia",
+      "websiteURL": "http://www.yoyotricks.com",
+      "channelKey": "UC6qYGx_P4jH6hwCW2wjAygQ",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_left",
+      "logoResource": "logo_yotricks",
+      "iconResource": "ic_menu_yotricks",
+      "listItems": "box",
+      "backgroundColor": "white",
+      "foregroundColor": "black",
+      "includePlaylists": [
+        "PLB9C93039FFBD2D24",
+        "PLFupjUECrwwvtI-zQoFsn98hinTufP42j",
+        "PLD8D3F8248D776DE9",
+        "PL86AA7BC1F5526FAD",
+        "PLFC58874788AFC753",
+        "PLFupjUECrwwupL4bsiAfFaXgulJhDbm98",
+        "PLFupjUECrwwsjf3i8gax08GrhNjv6A49M",
+        "PL97F20DB55914530C",
+        "PL2106EF93AD2A6208",
+        "PLF7800866F2CE894F",
+        "PLB7506D64F77C63F1",
+        "PL22839D5E83EFC52D",
+        "PLD9681B4D2A2E3264",
+        "PLFupjUECrwwuly0n-fGyGWYnYxL0nCm94"
+      ]
+    },
+    {
+      "name": "MikeMonty.Net",
+      "description": "Get a solid start in your new hobby of yo-yoing!",
+      "language": "en",
+      "contactNames": "Mike Montgomery",
+      "websiteURL": "http://www.mikemonty.net",
+      "channelKey": "UCJ-RzdiqHwEyds71w9XIOUA",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_right",
+      "logoResource": "logo_mikemonty",
+      "iconResource": "ic_menu_mikemonty",
+      "listItems": "list",
+      "backgroundColor": "mikemontybg",
+      "foregroundColor": "white",
+      "includePlaylists": [
+        "PLMC7MNHZTulvr8ltf5g8vn69rKlYv_qaQ",
+        "PLMC7MNHZTulujEBFLHUhoMr2FLZw1HR3d",
+        "PLMC7MNHZTulsp8XAb7p_6QNzyQX2PhC_2",
+        "PLMC7MNHZTultR-XCf_Afz6dwbVi7koiLE",
+        "PLMC7MNHZTultyXfXXLY59rcz0X-GrU183"
+      ],
+      "cleanVideos": [
+        " - Beginner Yo-Yo Trick",
+        " - Intermediate Yo-Yo Trick",
+        " - Intermediate Yo-Yo Tr",
+        " - Intermediate Y",
+        " - Intermediate Yo",
+        " - Advanced Yo-Yo Trick",
+        " - Advance Yo-Yo Trick",
+        " - Advance Yo-Yo T",
+        " - Let\'s Play Yo-Yo"
+      ]
+    },
+    {
+      "name": "SLUSNY",
+      "description": "NAUČTE SE YOYOVAT",
+      "language": "en,cz",
+      "contactNames": "Vashek Kroutil",
+      "websiteURL": "http://www.slusny.net",
+      "channelKey": "UCyZZeGkRmJ1F6a-ZUpkGEdw",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_right",
+      "logoResource": "logo_slusny",
+      "iconResource": "ic_menu_slusny",
+      "listItems": "box",
+      "backgroundColor": "black",
+      "foregroundColor": "purple",
+      "includePlaylists": [
+        "PLjsnPtQYJ328ydpAKocdBceSvYd2w4fA4",
+        "PLB60F419C4121A515",
+        "PL2AD25B56C9C98DF1",
+        "PL3C9636E00E6FC553",
+        "PLACB2948741246C51",
+        "PLjsnPtQYJ328q57DQcXe_TcUC7YR8VS43",
+        "PLjsnPtQYJ329489oCzUs7MDwGEzxMyHsa",
+        "PLjsnPtQYJ32_khQNbE5G1BQ0cQcY8zwpE",
+        "PLjsnPtQYJ329GcGD5qqjdhyyTBK7BCmT8"
+      ],
+      "cleanPlaylists": [
+        "TUTORIALS - "
+      ],
+      "cleanVideos": [
+        " - SLUSNY Yoyo Tutorials",
+        " - SLUSNY Yoyo Tutorial"
+      ]
+    },
+    {
+      "name": "Perfect Elements",
+      "description": "Perfect Elements - it's time to create!",
+      "language": "en,ru",
+      "contactNames": "Igor Galiev",
+      "websiteURL": "http://perfectelements.net",
+      "channelKey": "UCace1lIG7PewNFU49rd6e1w",
+      "noPreferenceKey": false,
+      "headerLayout": "header_simple_logo_right",
+      "logoResource": "logo_perfectelements",
+      "iconResource": "ic_menu_perfectelements",
+      "listItems": "list",
+      "backgroundColor": "black",
+      "foregroundColor": "silver",
+      "includePlaylists": [
+        "PL13BC4AA6D22DDF5C",
+        "PLC29520ECF3FDF6C8",
+        "PLB0D173C71376780E"
+      ],
+      "cleanPlaylists": [
+        "TUTORIALS - "
+      ]
+    }
+  ]
+}

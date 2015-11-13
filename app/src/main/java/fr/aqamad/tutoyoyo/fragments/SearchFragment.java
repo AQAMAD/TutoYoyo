@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import fr.aqamad.commons.youtube.YoutubeVideo;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.adapters.VideosListViewAdapter;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.TutorialVideo;
 import fr.aqamad.tutoyoyo.tasks.GetPlaylistTask;
-import fr.aqamad.youtube.YoutubeVideo;
 
 /**
  * Created by Gregoire on 19/10/2015.
@@ -28,12 +28,17 @@ import fr.aqamad.youtube.YoutubeVideo;
 public class SearchFragment extends Fragment {
     public static final String ARG_QUERY = "fr.aqamad.youtube.playlist.query";
     public static final String FRAGMENT_KEY = "fr.aqamad.tutoyoyo.searchfragment";
-
+    // This is the handler that receives the response when the YouTube task has finished
+    Handler responseHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            populateListWithVideos(msg);
+        }
+    };
     private String mQuery;
+
 
     public SearchFragment(){
     }
-
 
     public static SearchFragment newInstance(String query) {
         SearchFragment fragment = new SearchFragment();
@@ -59,14 +64,12 @@ public class SearchFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's state here
         outState.putString(ARG_QUERY, mQuery);
     }
-
 
     @Nullable
     @Override
@@ -80,7 +83,6 @@ public class SearchFragment extends Fragment {
 
         return rootView;
     }
-
 
     @Override
     public void onStart() {
@@ -110,13 +112,6 @@ public class SearchFragment extends Fragment {
         msg.setData(data);
         responseHandler.sendMessage(msg);
     }
-
-    // This is the handler that receives the response when the YouTube task has finished
-    Handler responseHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            populateListWithVideos(msg);
-        };
-    };
 
     /**
      * This method retrieves the Library of videos from the task and passes them to our ListView

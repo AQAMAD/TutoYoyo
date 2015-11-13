@@ -6,11 +6,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="mytutos">My tuts</string>
-    <string name="yoyoexpert">Yoyoexpert</string>
-    <string name="clyw">Cabin tutorials</string>
-    <string name="yoyoblast">Yoyoblast (fr)</string>
-    <string name="yoyothrower">MrYoyoThrower</string>
-    <string name="blackhop">Blackhop.com (fr)</string>
 
     <string name="Social">Social</string>
     <string name="Share">Share</string>
@@ -30,7 +25,7 @@
     <string name="myTutsDesc">Add tutorials to these playlists so you can remember them and sync them.</string>
     <string name="myTutosChannelTitle">My tutos</string>
     <string name="myTutosChannelDescription">Here are your tuts lists.</string>
-    <string name="action_about">About...</string>
+    <string name="action_about">About…</string>
     <string name="action_thanks">Credits</string>
     <string name="dialog_title_remove">Delete</string>
     <string name="dialog_msg_remove_later">Do you really want to remove this video from your \'Watch Later\' list ?</string>
@@ -64,8 +59,6 @@
     <string name="randomTut">Random tutorial :</string>
     <string name="tutStats">%d available tutorials.</string>
     <string name="search_results_title">Search results :</string>
-    <string name="spbyys">SPbYYS</string>
-    <string name="monkeyfinger">MonkeyfingeR Design</string>
     <string name="other_friends">Other Friends</string>
     <string name="ihelp_seen">= I\'ve seen this video</string>
     <string name="dialog_help_title">Help</string>
@@ -75,10 +68,25 @@
     <string name="nextWatchLaterHelp">Add videos to \'Watch Later\' and they will appear here in the order you selected them (if you haven\'t seen them already).</string>
     <string name="prefUseTutorialsFrom">Use Tutorials from </string>
     <string name="settingsDbAndCache">Database and Cache</string>
-    <string name="settingsRefreshFrequency">Refresh playlists</string>
-    <string name="settingsRefreshFrequencyHelp">Playlists refresh ...</string>
+    <string name="settingsRefreshFrequency">Playlist refresh frequency</string>
+    <string name="settingsRefreshFrequencyHelp">Playlists refresh …</string>
     <string name="settingsClearCache">Clear Cache</string>
     <string name="settingsClearCacheHelp">Clear out your cached content, you will lose nothing at all, content should be refreshed on access, counts and durations might be off until next restart.</string>
-    <string name="yoyotricks">YoYoTricks.com</string>
-    <string name="YOYOTRICKS_CHANNEL">UC6qYGx_P4jH6hwCW2wjAygQ</string>
+    <string name="action_cat_help_and_credits">Help and credits</string>
+    <string name="action_cat_settings_and_contact">Settings and bug reports</string>
+    <string name="dialog_title_add">Add</string>
+    <string name="dialog_title_mark">Mark</string>
+    <string name="dialog_message_mark_unseen">Mark all videos as seen ?</string>
+    <string name="dialog_message_mark_seen">Mark all videos as unseen ?</string>
+    <string name="dialog_message_addall_share">Add all to share list ?</string>
+    <string name="dialog_message_removeall_share">Remove all from share list ?</string>
+    <string name="dialog_message_addall_favorites">Add all to favorites list ?</string>
+    <string name="dialog_message_addall_later">Add all to watch later ?</string>
+    <string name="dialog_message_removeall_favorites">Remove all from favorites list ?</string>
+    <string name="dialog_message_removeall_later">Remove all from watch later ?</string>
+    <string name="settingsExport">Export Personal Data</string>
+    <string name="settingsImport">Import Personal Data</string>
+    <string name="settingsExportHelp">Export your personal lists and seen videos for later import, think of it as a backup of your personal data.</string>
+    <string name="settingsImportHelp">Import your personal lists and seen videos from previous export, think of it as restoring your personal data.</string>
+    <string name="btn_pref_export_data" translatable="false">btnPrefExportPersonalData</string>
 </resources>

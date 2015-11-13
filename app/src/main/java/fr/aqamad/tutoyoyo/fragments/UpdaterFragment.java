@@ -8,10 +8,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import fr.aqamad.commons.youtube.YoutubeChannel;
+import fr.aqamad.commons.youtube.YoutubePlaylist;
+import fr.aqamad.commons.youtube.YoutubeThumbnail;
+import fr.aqamad.commons.youtube.YoutubeUtils;
+import fr.aqamad.tutoyoyo.Application;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.Sponsor;
@@ -19,10 +25,6 @@ import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialPlaylist;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
 import fr.aqamad.tutoyoyo.utils.Debug;
-import fr.aqamad.youtube.YoutubeChannel;
-import fr.aqamad.youtube.YoutubePlaylist;
-import fr.aqamad.youtube.YoutubeThumbnail;
-import fr.aqamad.youtube.YoutubeUtils;
 
 
 /**
@@ -35,23 +37,8 @@ public class UpdaterFragment extends Fragment {
      * @return
      */
 
-    /**
-     * Callback interface through which the fragment will report the
-     * task's progress and results back to the Activity.
-     */
-    public interface TaskCallbacks {
-        void onPreExecute();
-
-        void onProgressUpdate(ProgressInfo info);
-
-        void onCancelled();
-
-        void onPostExecute();
-    }
-
     protected TaskCallbacks mCallbacks;
     private UpdaterTask mTask;
-
 
     /**
      * Hold a reference to the parent Activity so we can report the
@@ -91,6 +78,20 @@ public class UpdaterFragment extends Fragment {
         mCallbacks = null;
     }
 
+    /**
+     * Callback interface through which the fragment will report the
+     * task's progress and results back to the Activity.
+     */
+    public interface TaskCallbacks {
+        void onPreExecute();
+
+        void onProgressUpdate(ProgressInfo info);
+
+        void onCancelled();
+
+        void onPostExecute();
+    }
+
     public class ProgressInfo{
         public int playlistsProgress;
         public int playlistsMax;
@@ -124,9 +125,11 @@ public class UpdaterFragment extends Fragment {
         protected Void doInBackground(Void... params) {
             //depends on preferences
             //get preference value for refreshing
+            //prepare sources for refteching
             SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String refreshPeriod = appPreferences.getString(getString(R.string.lst_pref_refresh_playlist), "7");
             Log.d("MA.CD", "RefreshPeriod : " + refreshPeriod);
+            List<Sponsor> sponsorsToRefresh = new ArrayList<Sponsor>();
             Date refreshDate=new Date();
             Calendar c = Calendar.getInstance();
             c.setTime(refreshDate);
@@ -149,7 +152,7 @@ public class UpdaterFragment extends Fragment {
             //and get refresh dates for the playlists
             List<TutorialPlaylist> lists =TutorialPlaylist.getOlderThan(refreshDate);
             //get sponsors
-            Sponsors sponsors=new Sponsors(getResources());
+            Sponsors sponsors = Application.getSponsors();
             //we'eve got the playlists
             ProgressInfo pi=new ProgressInfo();
             pi.playlistsMax=lists.size();
@@ -193,23 +196,35 @@ public class UpdaterFragment extends Fragment {
                     publishProgress(pi);
                     Log.d("MA.CD", "Playlist fetchedAt : " + pl.fetchedAt);
                 } else {
-                    //for CLYW
+                    //for CLYW and similars,
                     //the whole channel must reload and expand
-                    YoutubeChannel channel= ModelConverter.loadChannel(getActivity(), source.key, sp.expandablePlaylists, getActivity().getString(R.string.youtubeapikey));
-                    ModelConverter.prepareChannel(channel, getActivity());
-                    ModelConverter.cacheChannel(channel);
-                    //next we move on to the playlists and precache them too
-                    for (YoutubePlaylist clpl :
-                            channel.getPlaylists()) {
-                        YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), clpl.getID(), getActivity().getString(R.string.youtubeapikey));
-                        //data from pl goes to pl2
-                        clpl.copyTo(pl2);
-                        //got it, now cache it
-                        ModelConverter.cachePlaylist(pl2, channel.getID());
-                        pi.playlistsProgress++;
-                        pi.totalVideos=pi.totalVideos+pl2.getVideos().size();
-                        publishProgress(pi);
+                    //so we MUST destroy all playlists available for this provider
+                    //but only once since they will be rebuilt
+                    //so we add this to a "doLater" queue
+                    if (!sponsorsToRefresh.contains(sp)) {
+                        sponsorsToRefresh.add(sp);
                     }
+                }
+            }
+            //all simple playlists done, refetch full content providers
+            for (Sponsor sp :
+                    sponsorsToRefresh) {
+                //We must delete the entire source in database
+                TutorialSource.deleteSource(sp.channelKey);
+                YoutubeChannel channel = ModelConverter.loadChannel(getActivity(), sp.channelKey, sp.expandablePlaylists, getActivity().getString(R.string.youtubeapikey));
+                ModelConverter.prepareChannel(channel, getActivity());
+                ModelConverter.cacheChannel(channel);
+                //next we move on to the playlists and precache them too
+                for (YoutubePlaylist clpl :
+                        channel.getPlaylists()) {
+                    YoutubePlaylist pl2 = ModelConverter.loadPlaylist(getActivity(), clpl.getID(), getActivity().getString(R.string.youtubeapikey));
+                    //data from pl goes to pl2
+                    clpl.copyTo(pl2);
+                    //got it, now cache it
+                    ModelConverter.cachePlaylist(pl2, channel.getID());
+                    pi.playlistsProgress++;
+                    pi.totalVideos = pi.totalVideos + pl2.getVideos().size();
+                    publishProgress(pi);
                 }
             }
             //now the db is initialized, we do the first pre-caches

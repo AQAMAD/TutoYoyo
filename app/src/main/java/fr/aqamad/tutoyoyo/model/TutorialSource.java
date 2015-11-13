@@ -33,10 +33,6 @@ public class TutorialSource extends Model {
     @Column(name = "LastRefreshed")
     public Date lastRefreshed;
 
-    public List<TutorialPlaylist> channels() {
-        return getMany(TutorialPlaylist.class, "Source");
-    }
-
     public static List<TutorialSource> getAll() {
         return new Select()
                 .from(TutorialSource.class)
@@ -54,12 +50,12 @@ public class TutorialSource extends Model {
     public static void clearViewed() {
         new Delete().from(TutorialSeenVideo.class).execute();
     }
-    public static void clearCache(Context app) {
-        new Delete().from(TutorialVideo.class).where("Channel in (select Id from Channels where Source in (select Id from Sources where Key <> '" + app.getString(R.string.localChannelKey) + "'))").execute();
-        new Delete().from(TutorialPlaylist.class).where("Source in (select Id from Sources where Key <> '" + app.getString(R.string.localChannelKey) + "')").execute();
-        new Delete().from(TutorialSource.class).where("Key <> '" + app.getString(R.string.localChannelKey) + "'").execute();
-    }
 
+    public static void clearCache(Context app) {
+        new Delete().from(TutorialVideo.class).where("Channel in (select Id from Channels where Source in (select Id from Sources where Key <> '" + app.getString(R.string.LOCAL_CHANNEL) + "'))").execute();
+        new Delete().from(TutorialPlaylist.class).where("Source in (select Id from Sources where Key <> '" + app.getString(R.string.LOCAL_CHANNEL) + "')").execute();
+        new Delete().from(TutorialSource.class).where("Key <> '" + app.getString(R.string.LOCAL_CHANNEL) + "'").execute();
+    }
 
     public static void rebuildDB(Context app){
         clearDB();
@@ -84,14 +80,14 @@ public class TutorialSource extends Model {
             TutorialSource myTuts = new TutorialSource();
             myTuts.name = app.getString(R.string.myTutsTitle);
             myTuts.description = app.getString(R.string.myTutsDesc);
-            myTuts.key = app.getString(R.string.localChannelKey);
+            myTuts.key = app.getString(R.string.LOCAL_CHANNEL);
             myTuts.lastRefreshed = new Date();
             myTuts.save();
             //create channels
             TutorialPlaylist tmpChannel = new TutorialPlaylist();
             tmpChannel.source = myTuts;
             tmpChannel.name = app.getString(R.string.favorites);
-            tmpChannel.key = app.getString(R.string.localFavoritesKey);
+            tmpChannel.key = app.getString(R.string.LOCAL_FAVORITES_PLAYLIST);
             tmpChannel.description = app.getString(R.string.favoritesDesc);
             tmpChannel.mediumThumbnail = app.getString(R.string.favoritesThumb);
             tmpChannel.defaultThumbnail = tmpChannel.mediumThumbnail;
@@ -101,7 +97,7 @@ public class TutorialSource extends Model {
             tmpChannel = new TutorialPlaylist();
             tmpChannel.source = myTuts;
             tmpChannel.name = app.getString(R.string.watchLater);
-            tmpChannel.key = app.getString(R.string.localLaterKey);
+            tmpChannel.key = app.getString(R.string.LOCAL_LATER_PLAYLIST);
             tmpChannel.description = app.getString(R.string.watchLaterDesc);
             tmpChannel.mediumThumbnail = app.getString(R.string.watchLaterThumb);
             tmpChannel.defaultThumbnail = tmpChannel.mediumThumbnail;
@@ -111,7 +107,7 @@ public class TutorialSource extends Model {
             tmpChannel = new TutorialPlaylist();
             tmpChannel.source = myTuts;
             tmpChannel.name = app.getString(R.string.shareable);
-            tmpChannel.key = app.getString(R.string.localSocialKey);
+            tmpChannel.key = app.getString(R.string.LOCAL_SOCIAL_PLAYLIST);
             tmpChannel.description = app.getString(R.string.shareableDesc);
             tmpChannel.mediumThumbnail = app.getString(R.string.shareableThumb);
             tmpChannel.defaultThumbnail = tmpChannel.mediumThumbnail;
@@ -134,5 +130,15 @@ public class TutorialSource extends Model {
                 .where("Key = ?",keyId)
                 .orderBy("Name ASC")
                 .executeSingle();
+    }
+
+    public static void deleteSource(String KeyID) {
+        new Delete().from(TutorialVideo.class).where("Channel in (select Id from Channels where Source in (select Id from Sources where Key = '" + KeyID + "'))").execute();
+        new Delete().from(TutorialPlaylist.class).where("Source in (select Id from Sources where Key = '" + KeyID + "')").execute();
+        new Delete().from(TutorialSource.class).where("Key = '" + KeyID + "'").execute();
+    }
+
+    public List<TutorialPlaylist> channels() {
+        return getMany(TutorialPlaylist.class, "Source");
     }
 }

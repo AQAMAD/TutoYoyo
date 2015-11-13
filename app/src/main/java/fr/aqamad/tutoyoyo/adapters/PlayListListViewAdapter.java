@@ -7,24 +7,22 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
+import fr.aqamad.commons.youtube.YoutubePlaylist;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.tutoyoyo.utils.ThreadPreconditions;
 import fr.aqamad.tutoyoyo.views.BasePlaylistListItemView;
 import fr.aqamad.tutoyoyo.views.PlaylistBoxItemView;
 import fr.aqamad.tutoyoyo.views.PlaylistLineItemView;
-import fr.aqamad.youtube.YoutubePlaylist;
 
 /**
  * Created by Gregoire on 07/10/2015.
  */
 public class PlaylistListViewAdapter extends BaseAdapter {
 
-    //model objects
-    private List<YoutubePlaylist> mlist;
-
     //Context
     private final Activity activity;
-
+    //model objects
+    private List<YoutubePlaylist> mlist;
     private int foreGroundColor;
     private int backGroundColor;
     private boolean displayAsBox=false;

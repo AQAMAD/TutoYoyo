@@ -7,9 +7,9 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
+import fr.aqamad.commons.youtube.YoutubeVideo;
 import fr.aqamad.tutoyoyo.utils.ScreenSize;
 import fr.aqamad.tutoyoyo.views.VideoListItemView;
-import fr.aqamad.youtube.YoutubeVideo;
 
 /**
  * Created by Gregoire on 07/10/2015.

@@ -4,10 +4,7 @@
     <string name="action_settings">Réglages</string>
     <string name="navigation_drawer_close">Fermer menu</string>
     <string name="navigation_drawer_open">Ouvrir menu</string>
-    <string name="clyw">Caribou lodge (en)</string>
     <string name="mytutos">Mes tutos</string>
-    <string name="yoyoblast">Yoyoblast</string>
-    <string name="yoyoexpert">Yoyoexpert (en)</string>
     <string name="Send">Envoyer</string>
     <string name="Share">Partager</string>
     <string name="Social">Social</string>
@@ -33,8 +30,6 @@
     <string name="dialog_msg_remove_share">Etes vous sûr de vouloir supprimer cette vidéo de votre liste \'A partager\' ?</string>
     <string name="dialog_msg_about">La mission de cette application est de référencer et de vous fournir un accès rapide à vos tutoriels favoris.\n\tCommencez par ouvrir le menu de gauche et visiter les sources de tutos référencées, quand une des vidéos vous plaît, cliquez sur un des boutons pour l\'ajouter à l\'une de vos listes personnelles.\n\tQuand vous aurez quelques vidéos dans vos listes, vous pourrez les partager avec vos amis.\n\tPour une consultation hors-connexion, nous recommandons l\'excellente appli YTD de dentex sur : \n\thttp://dentex.github.io/apps/youtubedownloader</string>
     <string name="dialog_msg_credits">Les créateurs aimeraient remercier, sans ordre particulier : \n\n\ %s pour leur permission d\'indexer leur contenu, et tout simplement parce qu\'ils sont géniaux .</string>
-    <string name="yoyothrower">MrYoyothrower (en)</string>
-    <string name="blackhop">Blackhop.com</string>
     <string name="mailto_address">contact@aqamad.fr</string>
     <string name="mailto_message">Bonjour, j\'aimerais vous suggérer quelque chose pour cette super application !!</string>
     <string name="mailto_bugmessage">Bonjour, il s\'est passé quelque chose d\'étrange dans l\'application, ma base de données est en pièce jointe, maintenant je vais vous expliquer ca en détail ....</string>
@@ -54,14 +49,12 @@
     <string name="search_results_title">Résultats de recherche : </string>
     <string name="search_hint">Chercher dans les tutos</string>
     <string name="msg_video_removed">La vidéo à été retirée</string>
-    <string name="other_friends">Autres amis (en)</string>
+    <string name="other_friends">Autres amis</string>
     <string name="action_help">Aide</string>
     <string name="action_search">Recherche</string>
-    <string name="spbyys">SPbYYS (en)</string>
     <string name="ihelp_seen">= J\'ai vu cette vidéo</string>
     <string name="word_from">de</string>
     <string name="dialog_help_title">Aide</string>
-    <string name="monkeyfinger">MonkeyfingeR Design (en)</string>
     <string name="nextWatchLater">Prochain tutoriel à voir :</string>
     <string name="nextWatchLaterHelp">Ajoute des vidéos dans ta liste \'A voir plus tard\' et ils apparaitront ici dans l\'ordre de sélection (si tu ne les a pas déja vus)</string>
     <string name="randomFavorite">Tutoriel Favori aléatoire :</string>
@@ -70,7 +63,19 @@
     <string name="settingsClearCache">Vider le cache</string>
     <string name="settingsDbAndCache">Données et cache</string>
     <string name="settingsRefreshFrequency">Fréquence de rafraichissement</string>
-    <string name="settingsRefreshFrequencyHelp">Les playlists se rafraichissent ...</string>
+    <string name="settingsRefreshFrequencyHelp">Les playlists se rafraichissent …</string>
     <string name="settingsClearCacheHelp">Vide le contenu du cache, vous ne perdez aucune de vos données, le contenu va se rafaichir progressivement, les comptages et durées peuvent ètre faux jusqu\'au prochain démarrage.</string>
+    <string name="action_cat_help_and_credits">Help and credits</string>
+    <string name="action_cat_settings_and_contact">Réglages et contacts</string>
+    <string name="dialog_message_addall_favorites">Tout ajouter aux favoris ?</string>
+    <string name="dialog_message_addall_later">Tout ajouter à voir plus tard ?</string>
+    <string name="dialog_message_addall_share">Tout ajouter à partager ?</string>
+    <string name="dialog_message_mark_seen">Tout marquer comme vu ?</string>
+    <string name="dialog_message_mark_unseen">Tout marquer comme pas vu ?</string>
+    <string name="dialog_message_removeall_favorites">Tout enlever des favoris ?</string>
+    <string name="dialog_message_removeall_later">Tout enlever de \'voir plus tard\' ?</string>
+    <string name="dialog_message_removeall_share">Tout enlever  de \'à partager\' ?</string>
+    <string name="dialog_title_add">Ajouter</string>
+    <string name="dialog_title_mark">Marquer</string>
 
 </resources>

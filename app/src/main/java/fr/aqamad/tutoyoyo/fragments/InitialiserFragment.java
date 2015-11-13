@@ -9,13 +9,14 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 
+import fr.aqamad.commons.youtube.YoutubeChannel;
+import fr.aqamad.commons.youtube.YoutubePlaylist;
+import fr.aqamad.tutoyoyo.Application;
 import fr.aqamad.tutoyoyo.R;
 import fr.aqamad.tutoyoyo.model.ModelConverter;
 import fr.aqamad.tutoyoyo.model.Sponsor;
 import fr.aqamad.tutoyoyo.model.Sponsors;
 import fr.aqamad.tutoyoyo.model.TutorialSource;
-import fr.aqamad.youtube.YoutubeChannel;
-import fr.aqamad.youtube.YoutubePlaylist;
 
 
 /**
@@ -28,23 +29,8 @@ public class InitialiserFragment extends Fragment {
      * @return
      */
 
-    /**
-     * Callback interface through which the fragment will report the
-     * task's progress and results back to the Activity.
-     */
-    public interface TaskCallbacks {
-        void onPreExecute();
-
-        void onProgressUpdate(ProgressInfo info);
-
-        void onCancelled();
-
-        void onPostExecute();
-    }
-
     protected TaskCallbacks mCallbacks;
     private InitialiserTask mTask;
-
 
     /**
      * Hold a reference to the parent Activity so we can report the
@@ -82,6 +68,20 @@ public class InitialiserFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+
+    /**
+     * Callback interface through which the fragment will report the
+     * task's progress and results back to the Activity.
+     */
+    public interface TaskCallbacks {
+        void onPreExecute();
+
+        void onProgressUpdate(ProgressInfo info);
+
+        void onCancelled();
+
+        void onPostExecute();
     }
 
     public class ProgressInfo{
@@ -131,7 +131,7 @@ public class InitialiserFragment extends Fragment {
             //depends on preferences
             SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             //drive all this via the sponsors collection
-            Sponsors sponsors=new Sponsors(InitialiserFragment.this.getResources());
+            Sponsors sponsors = Application.getSponsors().getCopy();
             //remove local sponsor
             sponsors.remove(Sponsors.R_ID.my);
             //iterate and get numbers of sponsors
